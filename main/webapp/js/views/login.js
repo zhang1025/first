@@ -10,9 +10,9 @@ function initClick() {
         var pw = $("#pw").val();
         $.post("login",{user:user,pw:pw},function (data) {
             if(data.status==1){
-                window.location.href = '/test/main';
+                window.location.href = '/liaoyuan/homepage';
             }else{
-                window.location.href = '/test/loginErr';
+                window.location.href = '/liaoyuan/loginErr';
             }
         });
     });

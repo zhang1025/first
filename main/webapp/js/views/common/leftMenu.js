@@ -67,10 +67,6 @@ function bindLeftMenuClick() {
         $(this).addClass('active');
         $(this).css("background","#1c202a");
         $(this).css("color","#fff");
-        //数据报表页面由于屏幕分辨率问题 隐藏左侧菜单以便显示全部
-        if(windowWidth <=1300 && url.indexOf("dataReport")>=0){
-            $('.toggle-sidebar>a').trigger("click");
-        }
         $.ajax({
             type: "post",
             url: '/authc/checkSession',

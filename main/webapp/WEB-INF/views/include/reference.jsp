@@ -1,5 +1,6 @@
 <%@ page import="java.util.*" %>
 <%@ page import="org.springframework.web.util.WebUtils" %>
+<%@ page import="com.liaoyuan.web.utils.JodaUtil" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -35,8 +36,12 @@
     <%--//增加服务器时间--%>
     <%--String serverDate = JodaUtil.formatDate(new Date(),JodaUtil.YYYYMMDD);--%>
 <%--%>--%>
+<%
+    //增加服务器时间
+    String serverDate = JodaUtil.formatDate(new Date(),JodaUtil.YYYYMMDD);
+%>
 <script type="text/javascript">
-
+    var serverDate = "<%=serverDate%>";
 </script>
 <!-- 公共引用CSS，JS文件区域 -->
 <!-- Css files -->

@@ -2,15 +2,17 @@ package com.liaoyuan.web.controller.general;
 
 import com.liaoyuan.web.controller.base.BaseController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/liaoyuan")
 @Slf4j
 public class GeneralController extends BaseController {
 
@@ -32,10 +34,17 @@ public class GeneralController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/homepage", method = RequestMethod.GET)
+    public ModelAndView homepage(){
+        //要判断是否登录
+        System.out.println("=============homepage============");
+        return new ModelAndView("index");
+    }
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView main(){
         System.out.println("=============main============");
-        return new ModelAndView("index");
+        return new ModelAndView("main");
     }
     /**
      * 登陆错误页面
@@ -45,6 +54,23 @@ public class GeneralController extends BaseController {
     public ModelAndView loginErr(){
         System.out.println("=============loginErr============");
         return new ModelAndView("login_err");
+    }
+
+    @RequestMapping(value = "/data", method = RequestMethod.GET)
+    public ModelAndView showData(){
+        log.debug("---------enter function {}  ,visit {}","showData","data");
+        return new ModelAndView("/general/dataReport");
+    }
+    /**
+     * 获取数据报表对应的平台数据
+     * @param jsonString 参数
+     * @throws Exception
+     */
+    @RequestMapping(value = "/get_data_table", method = RequestMethod.POST)
+    public void getDataTable( HttpServletResponse response,
+                             @RequestParam("dt_json") String jsonString)  throws Exception {
+        log.debug("-----------enter function {}  ,visit {}---------","get_data_table","getDataTable");
+        printDataTables(response, 0, new ArrayList());
     }
 
 }
