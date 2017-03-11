@@ -31,6 +31,7 @@ public class GeneralController extends BaseController {
         return result;
     }
 
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public ModelAndView main(){
         System.out.println("=============main============");
