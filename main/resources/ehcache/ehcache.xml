@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false">
+
+    <diskStore path="java.io.tmpdir"/>
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+                                     properties="peerDiscovery=automatic,
+                                                    multicastGroupAddress=230.0.0.1,
+                                                    multicastGroupPort=4446"/>
+
+    <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"/>
+
+    <defaultCache maxElementsInMemory="5000" eternal="false"
+                  timeToIdleSeconds="0" timeToLiveSeconds="600"
+                  overflowToDisk="false" overflowToOffHeap="false"
+                  diskPersistent="false" statistics="true"
+                  memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- 10秒缓存  timeToIdleSeconds对象多长时间没有访问缓存就失效 0是不限制，timeToLiveSeconds从缓存到失效的时间间隔
+      diskPersistent 是否在磁盘上持久化-（bi缓存暂时没有必要）重启之后删除缓存.data文件
+      maxElementsInMemory 指当缓存中的Elements达到指定个数的时候采用缓存清理策略
+      memoryStoreEvictionPolicy如果内存超过限制，向磁盘缓存采取什么策略
+      LRU最近最少使用   LFU最少使用   FIFO先进先出  add by zhangji
+    -->
+
+    <cache name="cache5min" eternal="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="300"
+           overflowToDisk="false" maxElementsInMemory="3000" overflowToOffHeap="false"
+           diskPersistent="false" statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <cache name="cache2hour" eternal="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="7200" maxElementsInMemory="5000"
+           overflowToDisk="false" overflowToOffHeap="false"
+           diskPersistent="false" statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+    <cache name="cache6hour" eternal="false"
+           timeToIdleSeconds="0" timeToLiveSeconds="21600" maxElementsInMemory="5000"
+           overflowToDisk="false" overflowToOffHeap="false"
+           diskPersistent="false" statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+
+</ehcache>
