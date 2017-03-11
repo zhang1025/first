@@ -94,7 +94,7 @@
 
     //初始化加载页面
     function initLoadPage() {
-        $("#innerPage").load("/manager/index");
+        $("#innerPage").load("/test/index");
         $(".sub li:first a").attr("class", "cli-type active").css("background", "#1c202a");
     }
 </script>

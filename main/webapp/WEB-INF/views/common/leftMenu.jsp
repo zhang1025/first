@@ -46,12 +46,12 @@
 
             <li><a href="#" class="test"><i class="" id="styleIcon1"></i><span class="txt">财务组</span></a>
               <ul class="sub">
-                  <li style="background: #1c2028"><a href="#" class="cli-type "  path="/manager/index"><span class="txt">测试测试1</span></a></li>
+                  <li style="background: #1c2028"><a href="#" class="cli-type "  path="/test/index"><span class="txt">测试测试1</span></a></li>
               </ul>
             </li>
             <li><a href="#" class="test"><i class="" id="styleIcon2"></i><span class="txt">财务组</span></a>
               <ul class="sub">
-                <li style="background: #1c2028"><a href="#" class="cli-type "  path="/manager/index"><span class="txt">测试测试1</span></a></li>
+                <li style="background: #1c2028"><a href="#" class="cli-type "  path="/test/index"><span class="txt">测试测试1</span></a></li>
               </ul>
             </li>
         </ul>
