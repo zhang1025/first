@@ -5,9 +5,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.liaoyuan.web.entity.BaseQueryBean;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.IOException;
@@ -113,5 +115,39 @@ public class JsonParserUtil {
 			return null;
         }
     }
+	/**
+	 * 获取基础查询的BaseQuerybean
+	 * @param jsonStr json串
+	 * @param game  游戏简称
+	 */
+	public static BaseQueryBean getBaseBeanFromJson(String jsonStr, String game){
+		BaseQueryBean bean = new BaseQueryBean();
+		try {
+			bean = mapper.readValue(jsonStr,BaseQueryBean.class);
+			bean.setGame(game);
+			return bean;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Map转化为BaseQuerybean，特殊处理单字母开头的3个分页变量
+	 */
+	public static BaseQueryBean getBaseBeanFromMap(Map<String, Object> params){
+		BaseQueryBean bean = new BaseQueryBean();
+		try {
+			int iDisplayLength = Integer.parseInt(params.get("iDisplayLength")+"");
+			int iDisplayStart = Integer.parseInt(params.get("iDisplayStart")+"");
+			int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal")+"");
+			BeanUtils.populate(bean, params);
+			bean.setIDisplayLength(iDisplayLength);
+			bean.setIDisplayStart(iDisplayStart);
+			bean.setIRecordsTotal(iRecordsTotal);
+			return bean;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 }
