@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoyuan.web.dao.IUserDao">
+
+
+    <select id="countUsers"  resultType="java.lang.Integer" parameterType="UserBean">
+        SELECT count(1) FROM t_user  where 1=1
+        <if test="account!='' and account!=null">
+            and account like "%"#{account}"%"
+        </if>
+        <if test="roleId!='' and roleId!=null">
+            and role_id = #{roleId}
+        </if>
+    </select>
+
+    <select id="selectUsers" resultType="UserBean" parameterType="UserBean">
+        select u.id, u.account,u.pw,r.role_name as roleName,u.department from t_user u left JOIN t_role r on u.role_id = r.role_id where 1=1
+        <if test="account!='' and account!=null">
+            and account like "%"#{account}"%"
+        </if>
+        <if test="roleId!='' and roleId!=null">
+            and u.role_id = #{roleId}
+        </if>
+          limit ${iDisplayStart},${iDisplayLength}
+    </select>
+
+    <select id="alreadyUser"  resultType="java.lang.Integer" parameterType="UserBean">
+        SELECT count(1) FROM t_user  where account=#{account} and id != #{id}
+    </select>
+
+    <insert id="insertUser" parameterType="UserBean">
+    	insert into t_user(account,pw,role_id,department) values (#{account},#{pw},${roleId},#{department})
+    </insert>
+    
+    <delete id="deleteUSer">
+    	delete from t_user  where id=${id}
+    </delete>
+    
+    <update id="editUser" parameterType="UserBean">
+        update t_user set account=#{account},pw=#{pw},role_id=#{roleId},department=#{department} where id=#{id}
+    </update>
+
+
+    <!--通过account查询用户信息-->
+    <select id="checkUser"  resultType="UserBean">
+        SELECT account,pw,role_id FROM t_user  where account=#{account}
+    </select>
+    <!--用户登录查询相应的菜单信息-->
+    <select id="getMenus" resultType="Permission">
+        select p.permission_id as permissionId,p.resource_url as resourceUrl,p.resource_name as resourceName,p.menu_name as menuName from t_user u, t_role r, t_permission p,
+        t_permission_mapping m where u.role_id=r.role_id and r.role_id =m.role_id and m.permission_id = p.permission_id and u.role_id=${roleId} order by p.resource_order
+    </select>
+</mapper>

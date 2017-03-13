@@ -1,71 +1,70 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ include file="../include/taglib.jsp" %>
 <!-- .page-content -->
-<div class="page-content sidebar-page right-sidebar-page clearfix">
+<div class="page-content sidebar-page clearfix" style="top:0;">
     <!-- .page-content-wrapper -->
     <div class="page-content-wrapper">
         <div class="page-content-inner">
-
             <div class="row">
-                <!-- Start .row -->
                 <div class="col-md-12">
                     <div class="panel panel-default toggle">
-                        <!-- Start .panel -->
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="fa fa-search"></i>查询</h4>
                         </div>
-
                         <div class="panel-body">
                             <div class="row">
                                 <!-- 查询条件 -->
-                                <%@ include file="../common/searchConditions.jsp" %>
-
-                                <!-- 其他自定义的查询添加在下面添加 -->
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px">
+                                <div id="type_select" class="col-sm-2 col-md-2 col-lg-2" style="z-index:0;padding: 5px">
                                     <div class="input-group">
-                                        <span class="input-group-addon">角色名称</span>
-                                        <input type="text" id="roleName" class="form-control white-bg text-center">
+                                        <span class="input-group-addon">选择角色：</span>
+                                        <select id="roleParam" class="fancy-select form-control" style="width: 120px">
+                                            <option value="">请选择</option>
+                                            <c:forEach var="role" items="${roles}" varStatus="s">
+                                                <option value="${role.roleId}">${role.roleName}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
-                                <!--button按钮-->
-                                <div class="input-group" style="padding-top: 7px">
-                                    <button id="searchBtn" class="btn btn-primary mr5 mb10" type="button">
-                                        查询
-                                    </button>&nbsp;&nbsp;
-                                    <button id="addRole" class="btn btn-success mr5 mb10" type="button"  data-toggle="modal" data-target="#myModal">
-                                        添加角色
-                                    </button>
+                                <!-- 查询按钮-->
+                                <div class="col-md-1" style="padding-top:7px;padding-left: 50px">
+                                    <div class="input-group">
+                                        <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 5px;float: right">
+                                    <div class="input-group">
+                                        <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default"  id="panel_1">
-                <div class="row" id="channelData">
-                    <div class="col-lg-12">
-                        <!-- col-lg-12 start here -->
-                        <div class="panel panel-default toggle ">
-                            <!-- Start .panel -->
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><i class="fa fa-table">&nbsp;角色信息</i>
-                                </h4>
-                            </div>
-                            <div class="panel-body">
-                                <table id="roleDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 12px" width="100%">
-                                </table>
-                            </div>
+            <div class="row" id="roleData">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;角色信息</i>
+                            </h4>
                         </div>
-                        <!-- End .panel -->
+                        <div class="panel-body">
+                            <table id="roleDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 5px;" width="100%">
+                            </table>
+                        </div>
                     </div>
-                    <!-- col-lg-12 end here -->
+                    <!-- End .panel -->
                 </div>
+                <!-- col-lg-12 end here -->
             </div>
         </div>
+        <!-- / .page-content-inner -->
     </div>
+    <!-- / page-content-wrapper -->
 </div>
-<!--提交表单-->
-<input type="hidden" id="channelOldId"><input type="hidden" id="platOldId">
+<!--新增用戶信息-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width: 550px">
         <div class="modal-content">
@@ -73,32 +72,76 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">提示</h4>
+                <h4 class="modal-title" id="myModalLabel2">新增角色</h4>
             </div>
             <div class="modal-body">
-                <form id="validateChannel" class="form-horizontal group-border stripped" role="form">
+                <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
-                        <label for="channel_id" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">角色名称:</label>
+                        <label for="roleName" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">角色名:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="channel_id" class="form-control required" aria-required="true" placeholder="请输入角色名称">
+                            <input type="text" id="roleName" class="form-control required" aria-required="true" placeholder="请输入角色名">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="channel_name"  class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">角色标示:</label>
-                        <div class="col-lg-10" style="width: 300px; padding-left: 5px">
-                            <input type="text" class="form-control required" id="channel_name"  aria-required="true" placeholder="请输入角色标示">
+                        <label for="desc" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">角色描述:</label>
+                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                            <input type="text" id="desc" class="form-control"  placeholder="请输入角色描述">
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="submitChannelBut" class="btn btn-primary">提交</button>
+                <button type="button" id="submitBut" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>
 </div>
+
+<!--绑定-->
+<div class="modal fade" id="myModalBind" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">绑定权限----<span id="bindRoleName"></span></h4>
+            </div>
+            <input type="hidden" id="bindRoleId">
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span class='badge badge-important'>未绑定权限</span></th>
+                        <th>&nbsp;</th>
+                        <th><span class='badge badge-success'>已绑定权限</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <select id="unbindPermission_selectId" size="20" style="width: 200px" multiple="multiple">
+                            </select>
+                        </td>
+                        <td style="padding-top: 100px;">
+                            <button id="bindPermission_imgId"  class="btn btn-success">绑定</button>
+                            <br>
+                            <br>
+                            <br>
+                            <button id="unbindPermission_imgId"  class="btn btn-danger">解除</button></td>
+                        <%--<td><form:select id="bindPermission_selectId" size="40" style="width: 400px" path="bindPermissions" items="${bindPermissions}" itemValue="permissionId" itemLabel="resourceName" multiple="true"></form:select></td>--%>
+                        <td><select id="bindPermission_selectId" size="20" style="width: 200px"  multiple="multiple"></select></td>
+                        <td width="200px"></td>
+                        <td width="200px"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--删除提示modal-style6-->
 <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -108,14 +151,14 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
-                <h4 class="modal-title" id="mySmallModalLabel">是否确认该操作？</h4>
+                <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
             </div>
             <div class="modal-body">
-                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;&nbsp;问题
+                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;&nbsp;您确认要进行此操作吗？
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="deleteChannelBut" class="btn btn-primary">提交</button>
+                <button type="button" id="deleteBut" class="btn btn-primary">确认</button>
             </div>
         </div>
     </div>
@@ -125,9 +168,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">结果</h4>
+                <h4 class="modal-title">操作结果</h4>
             </div>
-            <div class="modal-body" id="resultMessage">
+            <div class="modal-body" id="wordsMessage">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="myResult" data-dismiss="modal">确认</button>
@@ -135,5 +178,10 @@
         </div>
     </div>
 </div>
-<button type='button' id="resultChannelBut" class="btn btn-success mr5 mb10" data-toggle='modal' data-target='#modelResult'></button>
-<script src="<c:url value="/js/views/serverManager/channelData.js"/> "></script>
+<button type='button' id="resultBut" class="btn btn-success mr5 mb10" data-toggle='modal' data-target='#modelResult'></button>
+<script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
+<script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
+<script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
+<script src="<c:url value="/js/views/system/role.js"/> "></script>
+
+<!-- / page-content -->

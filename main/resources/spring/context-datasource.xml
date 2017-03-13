@@ -63,9 +63,9 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--<property name="typeAliasesPackage" value="com.liaoyuan.web.entity"/>-->
+        <property name="typeAliasesPackage" value="com.liaoyuan.web.entity"/>
         <!--当映射mapper xml和 接口 不在相同的路径时  需要制定xml的路径-->
-        <!--<property name="mapperLocations" value="classpath:/mappers/**/*.xml"/>-->
+        <property name="mapperLocations" value="classpath:/mappers/**/*.xml"/>
     </bean>
 
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

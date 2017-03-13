@@ -1,54 +1,93 @@
 package com.liaoyuan.web.controller.general;
 
 import com.liaoyuan.web.controller.base.BaseController;
+import com.liaoyuan.web.entity.Permission;
+import com.liaoyuan.web.entity.SessionUser;
+import com.liaoyuan.web.entity.UserBean;
+import com.liaoyuan.web.service.UserService;
+import com.liaoyuan.web.utils.AESUtil;
+import com.liaoyuan.web.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/liaoyuan")
+@RequestMapping("/general")
 @Slf4j
 public class GeneralController extends BaseController {
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    UserService userService;
+
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView index(){
         System.out.println("=============index============");
         return new ModelAndView("login");
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map login(String user, String pw){
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout(){
+        httpSession.removeAttribute(SessionUser.SESSION_ROOT_KEY);
+        return new ModelAndView("login");
+    }
+
+    @RequestMapping(value = "/submit_login", method = RequestMethod.POST)
+    public Map login(String account, String pw){
         Map<String,Object> result = new HashMap<>();
-        if("admin".equals(user) ){
-            result.put("status",1);
-        }else{
-            result.put("status",0);
+        UserBean bean =  userService.getUserFromAccount(account);
+        if(bean == null){
+            result.put("status",-1);
+            return result;
         }
+        if(!pw.equals(AESUtil.decrypt(bean.getPw(), Constant.AES_ENCRYPT_KEY))){
+            result.put("status",-2);
+            return result;
+        }
+        SessionUser sessionUser = (SessionUser)httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY);
+        if(sessionUser == null ){
+            sessionUser = new SessionUser();
+        }
+        sessionUser.setBean(bean);
+        //获取该用户的权限菜单
+        Map<String,List<Permission>> map = userService.getMenus(bean.getRoleId());
+        if(map==null || map.size()<=0){
+            result.put("status",-3);
+            return result;
+        }
+        sessionUser.setMenuMap(map);
+        httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
+        result.put("status",1);
         return result;
     }
 
 
-    @RequestMapping(value = "/homepage", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView homepage(){
-        //要判断是否登录
-        System.out.println("=============homepage============");
-        return new ModelAndView("index");
+        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
+            return new ModelAndView("index");
+        }else{
+            return new ModelAndView("login");
+        }
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public ModelAndView main(){
-        System.out.println("=============main============");
-        return new ModelAndView("main");
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    public ModelAndView welcome(){
+        return new ModelAndView("welcome");
     }
     /**
-     * 登陆错误页面
-     * @return
+     * 登陆错误页面 无权限
      */
     @RequestMapping(value = "/loginErr", method = RequestMethod.GET)
     public ModelAndView loginErr(){
@@ -56,6 +95,7 @@ public class GeneralController extends BaseController {
         return new ModelAndView("login_err");
     }
 
+    //测试
     @RequestMapping(value = "/data", method = RequestMethod.GET)
     public ModelAndView showData(){
         log.debug("---------enter function {}  ,visit {}","showData","data");

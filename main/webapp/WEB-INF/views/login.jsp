@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="include/taglib.jsp" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>商家登录</title>
+    <title>用户登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Joychao <joy@joychao.cc>">
 <style type="text/css">
@@ -34,14 +35,7 @@
                 <section class="span1"><input type="button" id="submit" value=" 登录 " class="btn btn-primary"></section>
             </section>
         </section>
-        <%--<section class="span5 right">--%>
-            <%--<h2>没有帐户？</h2>--%>
-            <%--<section>--%>
-                <%--<p>这里有一段文字啊，很多的文字啊，太多太多的文字了，主要可以介绍介绍注册的好处和公司或者项目概况。。。</p>--%>
 
-                <%--<p><input type="button" value=" 注册 " class="btn regBtn"></p>--%>
-            <%--</section>--%>
-        <%--</section>--%>
     </section><!-- /loginBox -->
 </div> <!-- /container -->
 <script  src="/js/views/login.js" type="text/javascript"></script>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="include/taglib.jsp" %>
 <%@ include file="include/reference.jsp" %>
+<c:set  var="menuMap" value="<%=menuMap%>" scope="page"/>
 <script src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/js/views/common/common.js"/> "></script>
 <script src="${ctx}/js/views/common/main.js"></script>
@@ -34,43 +35,6 @@
     </div>
     <!-- / page-sidebar -->
     <!-- Start #right-sidebar -->
-    <aside id="right-sidebar" class="right-sidebar hidden-md hidden-sm hidden-xs hide-sidebar">
-        <!-- Start .sidebar-inner -->
-        <div class="sidebar-inner">
-            <!-- Start .sidebar-scrollarea -->
-            <div class="sidebar-scrollarea">
-                <div class="tabs">
-                    <!-- Start .rs tabs -->
-                    <ul id="rstab" class="nav nav-tabs nav-justified">
-                        <li class="active">
-                            <a href="#china" data-toggle="tab" aria-expanded="true"><i class="fa fa-cny"></i> 国内 </a>
-                        </li>
-                        <li class="">
-                            <a href="#abroad" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-usd"></i>海外</a>
-                        </li>
-                    </ul>
-                    <div id="rstab-content" class="tab-content">
-                        <div  id="china" class="tab-pane fade active in">
-                            <div class="chat-user-list">
-                                <ul class="user-list list-group" id="right_tab_1">
-                                </ul>
-                            </div>
-                        </div>
-                        <div  id="abroad" class="tab-pane fade">
-                            <div class="chat-user-list">
-                                <ul class="user-list list-group" id="right_tab_2">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End .rs tabs -->
-            </div>
-            <!-- End .sidebar-scrollarea -->
-        </div>
-        <!-- End .sidebar-inner -->
-    </aside>
-    <!-- End #right-sidebar -->
 
     <!-- .page-content  所有innerPage都需要用<div class="ledo">包最外一层，界面渲染使用 -->
     <div id="innerPage">
@@ -89,14 +53,13 @@
 <script type="text/javascript">
     $(function () {
         //加载主界面
-        initLoadPage();
+        $("#innerPage").load("/general/welcome");
     });
 
-    //初始化加载页面
-    function initLoadPage() {
-        $("#innerPage").load("/liaoyuan/main");
-        $(".sub li:first a").attr("class", "cli-type active").css("background", "#1c202a");
-    }
+//    function initLoadPage() {
+//        $("#innerPage").load("/general/welcome");
+//        $(".sub li:first a").attr("class", "cli-type active").css("background", "#1c202a");
+//    }
 </script>
 </body>
 </html>

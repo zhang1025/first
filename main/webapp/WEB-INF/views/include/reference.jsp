@@ -1,6 +1,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="org.springframework.web.util.WebUtils" %>
 <%@ page import="com.liaoyuan.web.utils.JodaUtil" %>
+<%@ page import="com.liaoyuan.web.entity.Permission" %>
+<%@ page import="com.liaoyuan.web.entity.SessionUser" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -9,38 +11,19 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<%--<%--%>
-    <%--String currentGameShort = (String)WebUtils.getSessionAttribute(request,SessionUser.SESSION_CURRENT_GAME_SHORT);--%>
-    <%--SessionUser sessionUser = (SessionUser) WebUtils.getSessionAttribute(request,SessionUser.SESSION_ROOT_KEY);--%>
-    <%--if(null == sessionUser){--%>
-        <%--return ;--%>
-    <%--}--%>
-    <%--Map<String, GameBean> gameMap = sessionUser.getGameMap();--%>
-    <%--GameBean gameBean = gameMap.get(currentGameShort);--%>
-    <%--Integer gameId = -1;--%>
-    <%--String gameName = "";--%>
-    <%--Integer isClient = -1; //标识是否分端--%>
-    <%--String unit = "￥"; //充值单位--%>
-    <%--if (gameBean != null) {--%>
-        <%--gameId = gameBean.getGameId();--%>
-        <%--gameName = gameBean.getGameName();--%>
-        <%--isClient = gameBean.getClient();--%>
-        <%--unit = gameBean.getUnit();--%>
-    <%--}--%>
-    <%--List<String> authorityGameList = sessionUser.getAuthorityGameList();--%>
-    <%--String username = (String)WebUtils.getSessionAttribute(request,CommonUtils.SESSION_UID_KEY);--%>
-    <%--String roleCode = sessionUser.getRoleCode();--%>
-
-    <%--//研发角色信息--%>
-    <%--String roleForResearch = AuthcConstants.ROLE_RESEARCH;--%>
-    <%--//增加服务器时间--%>
-    <%--String serverDate = JodaUtil.formatDate(new Date(),JodaUtil.YYYYMMDD);--%>
-<%--%>--%>
 <%
-    //增加服务器时间
+    SessionUser sessionUser = (SessionUser) WebUtils.getSessionAttribute(request, SessionUser.SESSION_ROOT_KEY);
+    if(null==sessionUser|| null==sessionUser.getBean()){
+        return ;
+    }
+    String account = sessionUser.getBean().getAccount();
+    Map<String,List<Permission>> menuMap = sessionUser.getMenuMap();
+
+    //服务器时间
     String serverDate = JodaUtil.formatDate(new Date(),JodaUtil.YYYYMMDD);
 %>
 <script type="text/javascript">
+    var account = "<%=account%>";
     var serverDate = "<%=serverDate%>";
 </script>
 <!-- 公共引用CSS，JS文件区域 -->

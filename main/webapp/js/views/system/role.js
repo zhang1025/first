@@ -1,114 +1,199 @@
 /**
- * Created by zj on 2016/10/25
+ * Created by admin on 2016/11/28 0028
  */
-var channelType =1;
-$(function () {
-    $("body").lydata();
-    //初始化访问人数和访问量
-    initVisitorsAndViews();
-    //初始化时间下拉框，平台、渠道、区服、国家
-    initSearchCondition(true,{"begin":"none","end":"none","channel":"none","server":"none","country": "none"});
-    getChannelMenuTables();
-    $("#searchBtn").click(function () {
-        getChannelMenuTables();
+var path = "/system/";
+var roleType =1;
+$(document).ready(function() {
+    $("body").ledo();
+    queryRoleData();
+    initButtonClick();
+    //initFormValid();
+    //绑定权限操作
+    $("#bindPermission_imgId").click(function() {
+        bindPermissionUpdate($("#unbindPermission_selectId").val());
     });
-    $(".tip").tooltip ({placement: 'top', container: 'body'});
-    initFormValid();
-    butChannelClickInit();
+
+    $("#unbindPermission_imgId").click(function() {
+        unbindPermissionUpdate($("#bindPermission_selectId").val());
+    });
 });
+function queryRoleData() {
+    var aoColumns = dealTableTitle();
+    var roleId = $("#roleParam").val();
+    var params = [
+        {name: 'roleId', value: roleId}
+    ];
+    var url = path+'get_roles_table';
+    playLoading("roleData");
+    commonDataTables("roleDataTables", url, aoColumns, params,"roleData");
+}
+//处理table的公共title
+function dealTableTitle() {
+    var aoColumns = new Array();
+    aoColumns .push(
+        {"sTitle": "角色名称", "mData": "roleName"},
+        {"sTitle": "角色描述", "mData": "described"},
+        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+    return	aoColumns;
+}
+function operateButton(cellvalue, options, rowObject) {
+    var id = rowObject['roleId'];
+    var desc = rowObject['described'];
+    var roleName = rowObject['roleName'];
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editRole('"
+        + desc + "','"
+        + roleName
+        + "')\">编辑</button>";
+    var delBtn = "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteRole("+id+")'>移除</button>"
+    var bindBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModalBind' id='editorServer' onclick=\"bindRole('"
+        + roleName + "','"
+        + id
+        + "')\">绑定权限</button>";
+    return editBtn + "&ensp;"+delBtn+"&ensp;"+bindBtn;
+}
 
-function getChannelMenuTables() {
-    var url = "get_channel_table";
-    var aoColumns = [
-        {"sTitle": channelId, "mData": "channelId"},
-        {"sTitle": channelName, "mData": "channelName"},
-        {"sTitle": plat, "mData": "platId"},
-        {"sTitle": platName, "mData": "platName"},
-        {"sTitle": operator, "mData": "serverId", "mRender": function(data, type, row) {return operateChannelButton(data, type, row);}}];
-    var params =[{name: 'plat',  value: $.trim($("#all_plat").val())},
-        {name: 'channel', value: $.trim($("#channelId").val())}];
-    playLoading("channelData");
-    commonDataTables("channelDataTables", url, aoColumns, params,"channelData");
+//编辑
+function editRole(desc,roleName) {
+    roleType=2;
+    $("#roleName").val(roleName);
+    $("#desc").val(desc);
 }
-function operateChannelButton(cellvalue, options, rowObject) {
-    var channelId = rowObject['channelId'];
-    var channelName = rowObject['channelName'];
-    var platId = rowObject['platId'];
-    var platName = rowObject['platName'];
-    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editChannelMenu('"
-        + channelId + "','"
-        + channelName + "','"
-        + platId + "','"
-        + platName
-        + "')\">"+editor+"</button>";
-    var deleteBtn = "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete' onclick=\"deleteChannelMenu('"
-        + channelId+ "','"
-        + platId+ "')"
-        + "\">"+deleteTis+"</button>";
-    return editBtn + "&ensp;" + deleteBtn;
-}
+//绑定
+function bindRole(roleName,id) {
+    $("#bindRoleId").val(id);
+    $("#bindRoleName").html(roleName);
+    $("#bindPermission_selectId").empty();
 
-function editChannelMenu(channelId,channelName, platId,platName) {
-    channelType=2;
-    $("#channel_id").val(channelId);
-    $("#channelOldId").val(channelId);
-    $("#channel_name").val(channelName);
-    $("#plat option[value='"+platId+"']").attr("selected",true);
-    $("#platOldId").val(platId);
-}
-//删除操作
-function deleteChannelMenu(channelId,platId) {
-    $("#deleteChannelBut").on("click",function () {
-        $.goAjax("POST","delete_channel",{channelId:channelId,plat:platId},function(result){
-            $('#modalDelete').trigger('click');
-            if(result > 0){
-                showResultInfo(operatorSuccess,true);
-            }else{
-                showResultInfo(operatorFail,false);
-            }
-        });
+
+    $.post(path+"getBindPermission",{roleId:id},function(data){
+        $.each(data,function (i,item) {
+            $("#bindPermission_selectId").append("<option value='"+item.permissionId+"'>"+item.resourceName+"</option>");
+        })
+    });
+
+    $("#unbindPermission_selectId").empty();
+    $.post(path+"getUnbindPermission",{roleId:id},function(data){
+        $.each(data,function (i,item) {
+            $("#unbindPermission_selectId").append("<option value='"+item.permissionId+"'>"+item.resourceName+"</option>");
+        })
     });
 }
 
-function butChannelClickInit() {
-    $("#addChannel").on("click",function () {
-        channelType = 1;
+function initButtonClick() {
+    $("#searBtn").on("click",function () {
+        queryRoleData();
     });
-    $("#submitChannelBut").on("click",function () {
-        var $form = $('#validateChannel');
+    $("#addBtn").on("click",function () {
+        roleType = 1;
+    });
+    //新增role
+    $("#submitBut").on("click",function () {
+        var $form = $('#validate');
         if(!$form.valid()){
             return false;
         }
-        var url = channelType==1?"insert_channel":"update_channel";
-        $.goAjax("POST",url,{channel:$.trim($("#channel_id").val()),channelName:$.trim($("#channel_name").val()),plat:$.trim($("#plat").val()),
-                channelOldId:$.trim($("#channelOldId").val()),platOldId:$.trim($("#platOldId").val())},
+        var url = roleType==1?path+"addRole":path+"editRole";
+        $.post(url,{roleName:$.trim($("#roleName").val())
+                ,described:$.trim($("#desc").val())},
             function(result){
                 $('#myModal').trigger('click');
                 if (result > 0) {
-                    showResultInfo(operatorSuccess,true);
+                    showResultInfo("操作成功！",true);
                 }else if (result == -1){
-                    showResultInfo(channelAlready,false);
+                    showResultInfo("该用户已经存在！",false);
                 }else{
-                    showResultInfo(operatorFail,false);
+                    showResultInfo("操作失败！",false);
                 }
             });
     });
 }
-
+//移除
+function deleteRole(id) {
+    $("#deleteBut").on("click",function () {
+        $.post(path+"deleteRole",{id:id},function (data) {
+            $('#modalDelete').trigger('click');
+            if(data==1){
+                showResultInfo("操作成功！",true);
+            }else{
+                showResultInfo("操作失败！",false);
+            }
+        });
+    })
+}
 //操作结果
 function showResultInfo(message,isFlush) {
-    $("#resultMessage").html(isFlush?'<i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i>':
+    $("#wordsMessage").html(isFlush?'<i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i>':
     '<i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i>');
-    $('#resultChannelBut').trigger('click');
+    $('#resultBut').trigger('click');
     $("#myResult").on('click',function () {
         if(isFlush){
-            getChannelMenuTables();
+            queryRoleData();
+        }
+    });
+}
+
+function bindPermissionUpdate(_permissionIds) {
+    if (_permissionIds == null || _permissionIds.length == 0) {
+        alert("请选择权限！");
+        return;
+    }
+
+    $.ajax({
+        url : path+"bind_permissions",
+        data : {
+            'roleId' : $("#bindRoleId").val(),
+            'permissionIds' : _permissionIds.toString()
+        },
+        dataType : 'html',
+        type : 'POST',
+        async : true,
+        success : function(response) {
+            if (response > 0) {
+                $("#myModalBind").trigger("click");
+                showResultInfo("操作成功！",false);
+            } else {
+                showResultInfo("操作失败！",false);
+            }
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            showResultInfo("操作失败，请稍后重试！",false);
+            return false;
+        }
+    });
+}
+
+function unbindPermissionUpdate(_permissionIds) {
+    if (_permissionIds == null || _permissionIds.length == 0) {
+        alert("请选择权限！");
+        return;
+    }
+
+    $.ajax({
+        url : path+"unbind_permissions",
+        data : {
+            'roleId' : $("#bindRoleId").val(),
+            'permissionIds' : _permissionIds.toString()
+        },
+        dataType : 'html',
+        type : 'POST',
+        async : true,
+        success : function(response) {
+            if (response > 0) {
+                $("#myModalBind").trigger("click");
+                showResultInfo("操作成功！",false);
+            } else {
+                showResultInfo("操作失败！",false);
+            }
+        },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+            showResultInfo("操作失败！",false);
+            return false;
         }
     });
 }
 //form表单提交 格式规则校验
 function initFormValid() {
-    $("#validateChannel").validate({
+    $("form[role='form']").validate({
         ignore: null,
         ignore: 'input[type="hidden"]',
         errorPlacement: function( error, element ) {
@@ -125,12 +210,11 @@ function initFormValid() {
         },
         errorClass: 'help-block',
         rules: {
-            select2: "required",
-            serverInfo: "required"
+            word: "required",
+            file: "required"
         },
         messages: {
-            select2: "Please select something",
-            serverInfo: "This field is required."
+            word: "This field is required."
         },
         highlight: function( label ) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');

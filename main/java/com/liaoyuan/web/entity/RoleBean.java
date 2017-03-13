@@ -6,15 +6,12 @@ import lombok.Data;
  * Created by zj on 2017/3/13 0013
  */
 @Data
-public class UserBean {
-    private int id;
-    private String account;
-    private String pw;
+public class RoleBean {
+
     private int roleId;
     private String roleName;
-    private String department;
-    private String email;
-    private String type;
+    private String described;
+    private int status;
     //分页用
     private int iDisplayStart;
     private int iDisplayLength;

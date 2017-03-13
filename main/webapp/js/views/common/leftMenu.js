@@ -54,7 +54,7 @@ $(function(){
             $(this).find('.sideNav-arrow').removeClass('rotate90').addClass('rotate0');
         }
     });
-    $styleIcon.parents("a").click();
+    // $styleIcon.parents("a").click();
 });
 
 function bindLeftMenuClick() {

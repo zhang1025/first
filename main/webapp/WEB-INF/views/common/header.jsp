@@ -2,7 +2,7 @@
 <!-- .page-navbar -->
 <div id="header" class="page-navbar">
   <!-- .navbar-brand -->
-  <a href="index.html" class="navbar-brand hidden-xs hidden-sm">
+  <a href="/general/index" class="navbar-brand hidden-xs hidden-sm">
     <img src="${ctx}/img/logo.png" class="logo hidden-xs" alt="Dynamic logo">
     <img src="${ctx}/img/logosm.png" class="logo-sm hidden-lg hidden-md" alt="Dynamic logo">
   </a>
@@ -27,7 +27,7 @@
     <ul class="nav navbar-nav navbar-right">
 
       <li>
-        <a href="${ctx}?logout=logout" class="tipB" title="注销">
+        <a href="/general/logout" class="tipB" title="注销">
           <i class="fa fa-power-off"></i>
           <span class="sr-only">Logout</span>
         </a>

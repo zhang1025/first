@@ -1,110 +1,157 @@
 package com.liaoyuan.web.controller.manager;
 
 import com.liaoyuan.web.controller.base.BaseController;
-import com.liaoyuan.web.entity.BaseQueryBean;
-import com.liaoyuan.web.utils.JsonParserUtil;
+import com.liaoyuan.web.entity.Permission;
+import com.liaoyuan.web.entity.RoleBean;
+import com.liaoyuan.web.entity.UserBean;
+import com.liaoyuan.web.service.RoleService;
+import com.liaoyuan.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zj on 2017/3/12
- * 权限后台管理
+ * Created by zj on 2017/3/13 0013
  */
 @RestController
-@RequestMapping("/system")
+@RequestMapping(value = "/system")
 @Slf4j
-public class SystemController extends BaseController{
+public class SystemController extends BaseController {
     @Autowired
-    private HttpSession session;
+    UserService userService;
 
-    /**
-     * user列表
-     */
+    @Autowired
+    RoleService roleService;
+
+
     @RequestMapping(value = "/show_user_page", method = RequestMethod.GET)
-    public ModelAndView userPage() {
-
+    public ModelAndView showUsers(ModelMap modelMap){
+        log.info("================showUsers page==================");
+        List<RoleBean> list = roleService.listRoles();
+        modelMap.put("roles", list);
         return new ModelAndView("/system/user");
     }
 
-    @RequestMapping(value = "/get_user_table", method = RequestMethod.POST)
-    public void getDataTable(HttpServletResponse response,
-                             @RequestParam("dt_json") String jsonString)   throws Exception {
+    /**
+     * @param jsonString 参数
+     * @throws Exception
+     */
+    @RequestMapping(value = "/get_users_table", method = RequestMethod.POST)
+    public void getUserDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         // 把参数 转换为Map
         Map<String, Object> params = jsonToMap(jsonString);
-        BaseQueryBean bean = JsonParserUtil.getBaseBeanFromMap(params);
-        //分页的总记录数没必要每次都查，获取url中的总数参数判断是否需要查询
-//        int count = bean.getIRecordsTotal()== 0 ?iReportDataService.getPlatReportDataCount(bean): bean.getIRecordsTotal();
-//        List<ReportData> gridData = iReportDataService.getReportDataPlatGrid(bean);
-        printDataTables(response, 0, new ArrayList());
+        UserBean bean = new UserBean();
+        int iDisplayLength = Integer.parseInt(params.get("iDisplayLength")+"");
+        int iDisplayStart = Integer.parseInt(params.get("iDisplayStart")+"");
+        int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal")+"");
+        BeanUtils.populate(bean, params);
+        bean.setIDisplayLength(iDisplayLength);
+        bean.setIDisplayStart(iDisplayStart);
+        bean.setIRecordsTotal(iRecordsTotal);
+        int count = bean.getIRecordsTotal()== 0 ?userService.countUsers(bean): bean.getIRecordsTotal();
+        List<UserBean> gridData = userService.selectUsers(bean);
+        printDataTables(response, count, gridData);
     }
-    /**
-     * 添加user
-     */
+
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public int addUser() {
-
-        return 1;
+    public Integer addUser(UserBean bean){
+        return userService.insertUser(bean);
     }
-    /**
-     * 编辑user
-     */
+
     @RequestMapping(value = "/editUser", method = RequestMethod.POST)
-    public int editUser() {
-
-        return 1;
-    }
-    @RequestMapping(value = "/delUser", method = RequestMethod.POST)
-    public int delUser() {
-
-        return 1;
+    public Integer editUser(UserBean bean){
+        return userService.editUser(bean);
     }
 
-    /**
-     * 角色列表
-     */
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+    public Integer deleteUser(int id){
+        return userService.deleteUSer(id);
+    }
+
+
+
+
+
+
     @RequestMapping(value = "/show_role_page", method = RequestMethod.GET)
-    public ModelAndView RolePage() {
-
+    public ModelAndView showRoles(ModelMap modelMap){
+        log.info("================showRoles page==================");
+        List<RoleBean> list = roleService.listRoles();
+        modelMap.put("roles", list);
         return new ModelAndView("/system/role");
     }
-    @RequestMapping(value = "/get_role_table", method = RequestMethod.POST)
-    public void getRoleDataTable( HttpServletResponse response,
-                             @RequestParam("dt_json") String jsonString)   throws Exception {
-        log.debug("-----------enter function {} ,visit {}---------","get_role_table","getRoleDataTable");
+    /**
+     * @param jsonString 参数
+     * @throws Exception
+     */
+    @RequestMapping(value = "/get_roles_table", method = RequestMethod.POST)
+    public void getRoleDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         // 把参数 转换为Map
         Map<String, Object> params = jsonToMap(jsonString);
-        BaseQueryBean bean = JsonParserUtil.getBaseBeanFromMap(params);
-        //分页的总记录数没必要每次都查，获取url中的总数参数判断是否需要查询
-//        int count = bean.getIRecordsTotal()== 0 ?iReportDataService.getPlatReportDataCount(bean): bean.getIRecordsTotal();
-//        List<ReportData> gridData = iReportDataService.getReportDataPlatGrid(bean);
-        printDataTables(response, 0, new ArrayList());
+        RoleBean bean = new RoleBean();
+        int iDisplayLength = Integer.parseInt(params.get("iDisplayLength")+"");
+        int iDisplayStart = Integer.parseInt(params.get("iDisplayStart")+"");
+        int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal")+"");
+        BeanUtils.populate(bean, params);
+        bean.setIDisplayLength(iDisplayLength);
+        bean.setIDisplayStart(iDisplayStart);
+        bean.setIRecordsTotal(iRecordsTotal);
+        int count = bean.getIRecordsTotal()== 0 ?roleService.countRoles(bean): bean.getIRecordsTotal();
+        List<RoleBean> gridData = roleService.selectRoles(bean);
+        printDataTables(response, count, gridData);
     }
-    /**
-     * 添加role
-     */
     @RequestMapping(value = "/addRole", method = RequestMethod.POST)
-    public int addRole() {
-
-        return 1;
+    public Integer addRole(RoleBean bean){
+        return roleService.insertRole(bean);
     }
-    /**
-     * 编辑role
-     */
+
     @RequestMapping(value = "/editRole", method = RequestMethod.POST)
-    public int editRole() {
-
-        return 1;
+    public Integer editRole(RoleBean bean){
+        return roleService.editRole(bean);
     }
-    @RequestMapping(value = "/delRole", method = RequestMethod.POST)
-    public int delRole() {
 
-        return 1;
+    @RequestMapping(value = "/deleteRole", method = RequestMethod.POST)
+    public Integer deleteRole(int id){
+        return roleService.deleteRole(id);
+    }
+
+
+    @RequestMapping(value = "/getBindPermission", method = RequestMethod.POST)
+    public List<Permission> getBindPermission(int roleId){
+        return  roleService.selectBindPermission(roleId);
+    }
+
+    @RequestMapping(value = "/getUnbindPermission", method = RequestMethod.POST)
+    public List<Permission> getUnbindPermission(int roleId){
+        return  roleService.selectUnbindPermission(roleId);
+    }
+
+    @RequestMapping(value = "/bind_permissions", method = RequestMethod.POST)
+    public Integer bindPermission(int roleId,String permissionIds){
+        int result = 0;
+        if (StringUtils.isBlank(permissionIds)){
+            return result;
+        }
+        return roleService.insertPermission(roleId,permissionIds);
+    }
+
+    @RequestMapping(value = "/unbind_permissions", method = RequestMethod.POST)
+    public Integer unbindPermission(int roleId,String permissionIds){
+        int result = 0;
+        if (StringUtils.isBlank(permissionIds)){
+            return result;
+        }
+        return roleService.deletePermission(roleId,permissionIds);
     }
 }
