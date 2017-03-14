@@ -31,7 +31,7 @@ public class BaseController {
 	protected Map<String, Object> jsonToMap(String dtjson) {
 
 		JSONArray jsonArray = JSONArray.fromObject(dtjson);
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 		for (Object object : jsonArray) {
 			JSONObject jsonObject = JSONObject.fromObject(object);
 			map.put(jsonObject.getString("name"), jsonObject.getString("value"));

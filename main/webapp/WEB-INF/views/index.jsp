@@ -44,7 +44,7 @@
 <!-- / #wrapper -->
 
 <!-- Start #footer  -->
-<%@include file="common/footer.jsp"%>
+<%--<%@include file="common/footer.jsp"%>--%>
 <!-- End #footer  -->
 
 <!-- Back to top -->
@@ -61,5 +61,6 @@
 //        $(".sub li:first a").attr("class", "cli-type active").css("background", "#1c202a");
 //    }
 </script>
+<script src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
 </body>
 </html>

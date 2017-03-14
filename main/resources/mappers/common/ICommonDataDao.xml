@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoyuan.web.dao.ICommonDataDao">
+
+    <!--井区信息操作-->
+    <select id="countWells" parameterType="DataBean" resultType="java.lang.Integer">
+        select count(*) from dm_wells  where 1=1
+        <if test="name!=null and name!=''">
+            and w_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and w_mnc like "%"#{mnc}"%"
+        </if>
+    </select>
+    <select id="getTableWells" parameterType="DataBean" resultType="DataBean">
+        select w_id as id,w_name as name,w_mnc as mnc from dm_wells where 1=1
+        <if test="name!=null and name!=''">
+            and w_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and w_mnc like "%"#{mnc}"%"
+        </if>
+        order by w_id desc
+    </select>
+    <insert id="addWells" parameterType="DataBean" >
+        insert into dm_wells(w_name,w_mnc) values (#{name},#{mnc})
+    </insert>
+    <update id="editWells" parameterType="DataBean" >
+        update dm_wells set w_name=#{name},w_mnc=#{mnc} where w_id=${id}
+    </update>
+
+    <delete id="deleteWells">
+        delete from dm_wells where w_id=${id}
+    </delete>
+    <!--城市信息操作-->
+    <select id="countCity" parameterType="DataBean" resultType="java.lang.Integer">
+        select count(*) from dm_city  where 1=1
+        <if test="name!=null and name!=''">
+            and c_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and c_mnc like "%"#{mnc}"%"
+        </if>
+    </select>
+    <select id="getTableCity" parameterType="DataBean" resultType="DataBean">
+    	select c_id as id,c_name as name,c_mnc as mnc from dm_city where 1=1
+        <if test="name!=null and name!=''">
+            and c_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and c_mnc like "%"#{mnc}"%"
+        </if>
+    	order by c_id desc
+    </select>
+    <insert id="addCity" parameterType="DataBean" >
+    	insert into dm_city(c_name,c_mnc) values (#{name},#{mnc})
+    </insert>
+    <update id="editCity" parameterType="DataBean" >
+        update dm_city set c_name=#{name},c_mnc=#{mnc} where c_id=${id}
+    </update>
+    
+    <delete id="deleteCity">
+    	delete from dm_city where c_id=${id}
+    </delete>
+    <!--批量入库-->
+    <select id="saveBatchCity">
+        LOAD DATA LOCAL INFILE #{path} ignore into table dm_city
+        FIELDS TERMINATED BY ','
+        ENCLOSED BY ""
+        (c_name,c_mnc)
+    </select>
+    <!--煤炭信息操作-->
+    <select id="countCoal" parameterType="DataBean" resultType="java.lang.Integer">
+        select count(*) from dm_coal  where 1=1
+        <if test="name!=null and name!=''">
+            and c_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and c_mnc like "%"#{mnc}"%"
+        </if>
+    </select>
+    <select id="getTableCoal" parameterType="DataBean" resultType="DataBean">
+        select c_id as id,c_name as name,c_mnc as mnc,c_type as coalType from dm_coal where 1=1
+        <if test="name!=null and name!=''">
+            and c_name like "%"#{name}"%"
+        </if>
+        <if test="mnc!=null and mnc!=''">
+            and c_mnc like "%"#{mnc}"%"
+        </if>
+        order by c_id desc
+    </select>
+    <insert id="addCoal" parameterType="DataBean" >
+        insert into dm_coal(c_name,c_mnc,c_type) values (#{name},#{mnc},#{coalType})
+    </insert>
+    <update id="editCoal" parameterType="DataBean" >
+        update dm_coal set c_name=#{name},c_mnc=#{mnc},c_type=#{coalType} where c_id=${id}
+    </update>
+
+    <delete id="deleteCoal">
+        delete from dm_coal where c_id=${id}
+    </delete>
+
+
+</mapper>
