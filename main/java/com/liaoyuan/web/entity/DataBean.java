@@ -12,18 +12,26 @@ public class DataBean {
     private String mnc;
     private int pId;
 
-    private String coleType;
-
+    //吨数
     private int tonnage;
 
+    //运费
     private double cost;
 
     private String method;
     private String industry;
 
     private String province;
+    //煤炭种类
+    private String kind;
 
+    //重点非重点
     private int type;
+
+
+    private String model;
+    private String table;
+
 
 
     //分页用

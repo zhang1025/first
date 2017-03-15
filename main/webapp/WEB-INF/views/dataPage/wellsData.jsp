@@ -15,24 +15,24 @@
                             <div class="row">
                                 <!-- 查询条件 -->
 
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">井区名</span>
-                                        <input type="text" id="c_name" placeholder="请输入井区名" class="form-control white-bg text-center" style="width: 120px"/>
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<span class="input-group-addon">井区名</span>--%>
+                                        <%--<input type="text" id="c_name" placeholder="请输入井区名" class="form-control white-bg text-center" style="width: 120px"/>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 40px">
                                     <div class="input-group">
                                         <span class="input-group-addon">井区简记符</span>
-                                        <input type="text" id="c_mnc" placeholder="井区简记符" class="form-control white-bg text-center" style="width: 120px"/>
+                                        <input type="text" id="myInput" placeholder="井区简记符" class="form-control white-bg text-center" style="width: 120px"/>
                                     </div>
                                 </div>
-                                <!-- 查询按钮-->
-                                <div class="col-md-1" style="padding-top: 5px;padding-left: 80px">
-                                    <div class="input-group">
-                                        <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
-                                    </div>
-                                </div>
+                                <%--<!-- 查询按钮-->--%>
+                                <%--<div class="col-md-1" style="padding-top: 5px;padding-left: 80px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="col-md-1" style="padding: 5px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
@@ -53,7 +53,7 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="wellsDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 5px;" width="100%">
+                            <table id="wellsDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             </table>
                         </div>
                     </div>
@@ -140,6 +140,7 @@
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
+<script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
 <script src="<c:url value="/js/views/dataPage/wellsData.js"/> "></script>
 
 <!-- / page-content -->

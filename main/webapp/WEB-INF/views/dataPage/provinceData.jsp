@@ -9,51 +9,51 @@
                 <div class="col-md-12">
                     <div class="panel panel-default toggle">
                         <%--<div class="panel-heading">--%>
-                            <%--<h4 class="panel-title"><i class="fa fa-search"></i>查询</h4>--%>
+                        <%--<h4 class="panel-title"><i class="fa fa-search"></i>查询</h4>--%>
                         <%--</div>--%>
                         <%--<div class="panel-body">--%>
-                            <%--<div class="row">--%>
-                                <!-- 查询条件 -->
+                        <%--<div class="row">--%>
+                        <!-- 查询条件 -->
 
-                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">--%>
-                                    <%--<div class="input-group">--%>
-                                        <%--<span class="input-group-addon">城市名</span>--%>
-                                        <%--<input type="text" id="c_name" placeholder="请输入城市名" class="form-control white-bg text-center" style="width: 120px"/>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 40px">--%>
-                                    <%--<div class="input-group">--%>
-                                        <%--<span class="input-group-addon">城市简记符</span>--%>
-                                        <%--<input type="text" id="c_mnc" placeholder="城市简记符" class="form-control white-bg text-center" style="width: 120px"/>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <%--<!-- 查询按钮-->--%>
-                                <%--<div class="col-md-1" style="padding-top: 5px;padding-left: 80px">--%>
-                                    <%--<div class="input-group">--%>
-                                        <%--<button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <div class="col-md-1" style="padding: 5px;float: right">
-                                    <div class="input-group">
-                                        <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
-                                    </div>
-                                </div>
-                            <%--</div>--%>
+                        <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">--%>
+                        <%--<div class="input-group">--%>
+                        <%--<span class="input-group-addon">城市名</span>--%>
+                        <%--<input type="text" id="c_name" placeholder="请输入城市名" class="form-control white-bg text-center" style="width: 120px"/>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 40px">--%>
+                        <%--<div class="input-group">--%>
+                        <%--<span class="input-group-addon">城市简记符</span>--%>
+                        <%--<input type="text" id="c_mnc" placeholder="城市简记符" class="form-control white-bg text-center" style="width: 120px"/>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- 查询按钮-->--%>
+                        <%--<div class="col-md-1" style="padding-top: 5px;padding-left: 80px">--%>
+                        <%--<div class="input-group">--%>
+                        <%--<button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>--%>
+                        <%--</div>--%>
+                        <%--</div>--%>
+                        <div class="col-md-1" style="padding: 5px;float: right">
+                            <div class="input-group">
+                                <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
+                            </div>
+                        </div>
+                        <%--</div>--%>
                         <%--</div>--%>
                     </div>
                 </div>
             </div>
-            <div class="row" id="cityData">
+            <div class="row" id="provinceData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;城市信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;省份信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="cityDataTables" class="table table-striped table-bordered table-hover" cellspacing="0"  width="100%">
+                            <table id="provinceDataTables" class="table table-striped table-bordered table-hover" cellspacing="0"  width="100%">
                             </table>
                         </div>
                     </div>
@@ -75,20 +75,20 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">添加城市</h4>
+                <h4 class="modal-title" id="myModalLabel2">省份信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
-                        <label for="name" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">城市名:</label>
+                        <label for="name" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">省份名:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="name" class="form-control required" aria-required="true" placeholder="请输入城市名">
+                            <input type="text" id="name" class="form-control required" aria-required="true" placeholder="请输入省份">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="mnc" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">城市简记符:</label>
+                        <label for="mnc" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">省份简记符:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="mnc" class="form-control required" aria-required="true" placeholder="城市简记符">
+                            <input type="text" id="mnc" class="form-control required" aria-required="true" placeholder="省份简记符">
                         </div>
                     </div>
                 </form>
@@ -140,7 +140,6 @@
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
-<script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
-<script src="<c:url value="/js/views/dataPage/cityData.js"/> "></script>
+<script src="<c:url value="/js/views/dataPage/provinceData.js"/> "></script>
 
 <!-- / page-content -->

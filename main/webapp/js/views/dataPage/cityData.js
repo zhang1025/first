@@ -3,6 +3,7 @@
  */
 var path = "/common/";
 var type=1;
+var model="city";
 $(document).ready(function() {
     $("body").ledo();
     queryCityData();
@@ -10,14 +11,10 @@ $(document).ready(function() {
 });
 function queryCityData() {
     var aoColumns = dealTableTitle();
-    var c_name = $("#c_name").val();
-    var c_mnc = $("#c_mnc").val();
     var params = [
-        {name: 'name', value: c_name},
-        {name: 'mnc', value: c_mnc}
+        {name: 'model', value: model}
     ];
-    var url = path+ 'get_city_table';
-    playLoading("cityData");
+    var url = path+ 'get_common_table';
     commonDataTables("cityDataTables", url, aoColumns, params,"cityData");
 }
 //处理table的公共title
@@ -54,6 +51,7 @@ function initButtonClick() {
     });
     $("#addBtn").on("click",function () {
         type = 1;
+        $("#validate input[type='text']").val("");
     });
     //新增user
     $("#submitBut").on("click",function () {
@@ -61,15 +59,16 @@ function initButtonClick() {
         if(!$form.valid()){
             return false;
         }
-        var url = type==1?path+"addCity":path+"editCity";
-        $.post(url,{name:$.trim($("#name").val()),mnc:$.trim($("#mnc").val())
+        var url = type==1?path+"addModeOne":path+"editModeOne";
+        var name = $.trim($("#name").val());
+        $.post(url,{name:name,mnc:$.trim($("#mnc").val()),model:model
                 ,id:type==1?0:$("#hideId").val()},
             function(result){
                 $('#myModal').trigger('click');
                 if (result > 0) {
                     showResultInfo("操作成功！",true);
                 }else if (result == -1){
-                    showResultInfo("该用户已经存在！",false);
+                    showResultInfo("name="+name+"已经存在！",false);
                 }else{
                     showResultInfo("操作失败！",false);
                 }
@@ -79,7 +78,7 @@ function initButtonClick() {
 //移除
 function deleteCity(id) {
     $("#deleteBut").on("click",function () {
-        $.post(path+"deleteCity",{id:id},function (data) {
+        $.post(path+"deleteCommon",{id:id,model:model},function (data) {
             $('#modalDelete').trigger('click');
             if(data==1){
                 showResultInfo("操作成功！",true);
@@ -91,8 +90,8 @@ function deleteCity(id) {
 }
 //操作结果
 function showResultInfo(message,isFlush) {
-    $("#wordsMessage").html(isFlush?'<i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i>':
-    '<i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i>');
+    $("#wordsMessage").html(isFlush?'<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i></span>':
+    '<span style="font-size:25px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
     $('#resultBut').trigger('click');
     $("#myResult").on('click',function () {
         if(isFlush){

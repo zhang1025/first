@@ -306,7 +306,7 @@ function initSelect2(selId, optn, placeholder) {
  * @param customRenderFunc 自定义处理渲染函数
  * @returns
  */
-function commonDataTables(tableId, url, aoColumns, params,lodingId,customRenderFunc) {
+function commonDataTables(tableId, url, aoColumns, params,lodingId) {
 	//初始化每页显示数量为10，可以指定，参数里面指定initLength即可
 	var initLength = 10;
 	for (var i = 0; i < params.length; i++) {
@@ -318,7 +318,7 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId,customRenderF
         {
             "bSort": false,
             "bProcessing": false, //不用自带的loading,使用系统插件waitMe
-            "bFilter": false,
+            // "bFilter": false,
             "bPaginate": true,//是否启用分页
             "bServerSide": true,
             "bLengthChange": false, //隐藏每页显示n条记录框
@@ -353,8 +353,7 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId,customRenderF
                     		//超时重新登录
                     		login_url = location.protocol+"//"+
                     					location.host+"/"+
-                    					location.pathname.split("/")[1]+
-                    					"/login";
+                    					"general/login";
                     		window.location.assign(login_url);
                     	}
                     }
@@ -362,12 +361,6 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId,customRenderF
             },
             "createdRow":function (row,data,index) { //行数据居中显示
                 $("td",row).css("text-align","center");
-                if(customRenderFunc){
-            		if($.isFunction(customRenderFunc)) 
-            			customRenderFunc(row,data,index);
-            		else
-            			window[customRenderFunc].apply(null,[row,data,index]);
-            	}
             },
             "oLanguage": {
                 "sLengthMenu": '每页显示<select class="form-control input-sm">'
@@ -391,18 +384,6 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId,customRenderF
                 }
             }
         });
-    var table = $('#' + tableId).DataTable();
-    var columnLength = $('#' + tableId).find("thead tr th").length;
-    $('#' + tableId+" tbody").on('mouseenter','td',function () {
-       var colIdx = table.cell(this).index().column;
-        if(columnLength > 3 )
-        {
-            $(table.cells().nodes()).removeClass('highlight');
-            $(table.column(colIdx).nodes()).addClass('highlight');
-        }
-        $(table.row(table.cell(this).index().row).nodes()).siblings().removeClass('highlight');
-        $(table.row(table.cell(this).index().row).nodes()).addClass('highlight');
-    });
     //列标题居中显示
     $('.sorting_disabled').css("text-align","center");
     return dt;

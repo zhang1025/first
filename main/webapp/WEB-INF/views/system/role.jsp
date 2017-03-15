@@ -51,7 +51,7 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="roleDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 5px;" width="100%">
+                            <table id="roleDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                             </table>
                         </div>
                     </div>

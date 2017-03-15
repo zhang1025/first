@@ -3,43 +3,43 @@
  */
 var path = "/common/";
 var type=1;
-var model="wells";
+var model="receive";
 $(document).ready(function() {
     $("body").ledo();
-    queryWellsData();
+    queryReceiveData();
     initButtonClick();
 });
-function queryWellsData() {
+function queryReceiveData() {
     var aoColumns = dealTableTitle();
     var params = [
         {name: 'model', value: model}
     ];
     var url = path+ 'get_common_table';
-
-    commonDataTables("wellsDataTables", url, aoColumns, params,"wellsData");
+    
+    commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "井区名称", "mData": "name"},
-        {"sTitle": "井区简记符", "mData": "mnc"},
+        {"sTitle": "省份名称", "mData": "name"},
+        {"sTitle": "省份简记符", "mData": "mnc"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
-    return  aoColumns;
+    return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {
     var c_id = rowObject['id'];
     var c_name = rowObject['name'];
     var c_mnc = rowObject['mnc'];
-    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editWells('"
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editReceive('"
         + c_id + "','"
         + c_name + "','"
         + c_mnc
         + "')\">编辑</button>";
-    return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteWells("+c_id+")'>移除</button>";
+    return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteReceive("+c_id+")'>移除</button>";
 }
 //编辑
-function editWells(c_id,c_name,c_mnc) {
+function editReceive(c_id,c_name,c_mnc) {
     type=2;
     $("#name").val(c_name);
     $("#mnc").val(c_mnc);
@@ -48,11 +48,10 @@ function editWells(c_id,c_name,c_mnc) {
 }
 function initButtonClick() {
     $("#searBtn").on("click",function () {
-        queryWellsData();
+        queryReceiveData();
     });
     $("#addBtn").on("click",function () {
         type = 1;
-        $("#validate input[type='text']").val("");
     });
     //新增user
     $("#submitBut").on("click",function () {
@@ -69,19 +68,15 @@ function initButtonClick() {
                 if (result > 0) {
                     showResultInfo("操作成功！",true);
                 }else if (result == -1){
-                    showResultInfo("name="+name+"已经存在！",false);
+                    showResultInfo("该用户已经存在！",false);
                 }else{
                     showResultInfo("操作失败！",false);
                 }
             });
     });
-    // #myInput is a <input type="text"> element
-    // $('#myInput').on( 'keyup', function () {
-    //     $('#wellsDataTables').DataTable().search( this.value ).draw();
-    // } );
 }
 //移除
-function deleteWells(id) {
+function deleteReceive(id) {
     $("#deleteBut").on("click",function () {
         $.post(path+"deleteCommon",{id:id,model:model},function (data) {
             $('#modalDelete').trigger('click');
@@ -96,11 +91,11 @@ function deleteWells(id) {
 //操作结果
 function showResultInfo(message,isFlush) {
     $("#wordsMessage").html(isFlush?'<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i></span>':
-    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
+    '<span style="font-size:25px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
     $('#resultBut').trigger('click');
     $("#myResult").on('click',function () {
         if(isFlush){
-            queryWellsData();
+            queryReceiveData();
         }
     });
 }

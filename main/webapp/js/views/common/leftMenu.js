@@ -76,7 +76,9 @@ function bindLeftMenuClick() {
                 if(result.status==-1){
                     window.location.href = url;
                 }else{
-                    $("#innerPage").load(url);
+                    $("#innerPage").load(url,function () {//页面加载完成后定位到顶部
+                        $("html body").animate({scrollTop:$("#header").offset().top},0);
+                    });
                 }
             },
             error: function(){
