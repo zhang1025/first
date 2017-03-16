@@ -17,12 +17,16 @@ public class CommonDataServiceImpl implements CommonDataService {
     @Autowired
     ICommonDataDao iCommonDataDao;
 
-    /**
-     * 三个表字段的 公用modelOne方法
-     */
+
     @Override
     public int countData(DataBean bean) {
         bean = dealBean(bean);
+        if(bean.getModel().contains("freight")){//运费表信息
+            return iCommonDataDao.countFreight(bean);
+        }
+        if(bean.getModel().contains("settlement")){//结算单位表
+            return iCommonDataDao.countSettlement(bean);
+        }
         return iCommonDataDao.countData(bean);
     }
 
@@ -30,6 +34,12 @@ public class CommonDataServiceImpl implements CommonDataService {
     @Override
     public List<DataBean> getTableData(DataBean bean) {
         bean = dealBean(bean);
+        if(bean.getModel().contains("freight")){//运费表信息
+            return iCommonDataDao.getTableFreight(bean);
+        }
+        if(bean.getModel().contains("settlement")){//结算单位表
+            return iCommonDataDao.getTableSettlement(bean);
+        }
         return iCommonDataDao.getTableData(bean);
     }
 
@@ -51,6 +61,9 @@ public class CommonDataServiceImpl implements CommonDataService {
 
     }
 
+    /**
+     * 三个表字段的 公用modelOne方法
+     */
     //井区 站点  省份 城市 字段一致的
     @Override
     public int addModeOne(DataBean bean) {
@@ -61,7 +74,7 @@ public class CommonDataServiceImpl implements CommonDataService {
     }
 
 
-    //资金方式 行业 字段一致的
+    //资金方式 行业 字段一致的  一个字段的
     @Override
     public int addModelTwo(DataBean bean) {
         if (isAlreadyExist(bean,1)) {
@@ -80,9 +93,6 @@ public class CommonDataServiceImpl implements CommonDataService {
 
     @Override
     public int addFreight(DataBean bean) {
-        if (isAlreadyExist(bean,1)) {
-            return -1;
-        }
         return iCommonDataDao.addFreight(bean);
     }
 

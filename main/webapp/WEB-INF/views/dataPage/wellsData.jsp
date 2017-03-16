@@ -15,24 +15,19 @@
                             <div class="row">
                                 <!-- 查询条件 -->
 
-                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">--%>
-                                    <%--<div class="input-group">--%>
-                                        <%--<span class="input-group-addon">井区名</span>--%>
-                                        <%--<input type="text" id="c_name" placeholder="请输入井区名" class="form-control white-bg text-center" style="width: 120px"/>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 40px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">
                                     <div class="input-group">
-                                        <span class="input-group-addon">井区简记符</span>
-                                        <input type="text" id="myInput" placeholder="井区简记符" class="form-control white-bg text-center" style="width: 120px"/>
+                                        <span class="input-group-addon">井区名</span>
+                                        <input type="text" id="s_name" placeholder="请输入井区名" class="form-control white-bg text-center" style="width: 120px"/>
                                     </div>
                                 </div>
+
                                 <%--<!-- 查询按钮-->--%>
-                                <%--<div class="col-md-1" style="padding-top: 5px;padding-left: 80px">--%>
-                                    <%--<div class="input-group">--%>
-                                        <%--<button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
+                                <div class="col-md-1" style="padding-top: 5px;padding-left: 80px">
+                                    <div class="input-group">
+                                        <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
+                                    </div>
+                                </div>
                                 <div class="col-md-1" style="padding: 5px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
@@ -53,7 +48,7 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="wellsDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                            <table id="wellsDataTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 15px" width="100%">
                             </table>
                         </div>
                     </div>
@@ -68,7 +63,7 @@
 </div>
 <!--新增信息-->
 <input type="hidden" id="hideId">
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" style="padding-top: 100px" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width: 550px">
         <div class="modal-content">
             <div class="modal-header">
@@ -82,13 +77,13 @@
                     <div class="form-group">
                         <label for="name" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">井区名:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="name" class="form-control required" aria-required="true" placeholder="请输入城市名">
+                            <input type="text" id="name" class="form-control required"  aria-required="true" placeholder="请输入井区名">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="mnc" class="col-lg-4 control-label" style="width:30%;padding-left: 20px;padding-right: 1px">井区简记符:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="mnc" class="form-control required" aria-required="true" placeholder="城市简记符">
+                            <input type="text" id="mnc" class="form-control required" aria-required="true" placeholder="井区简记符">
                         </div>
                     </div>
                 </form>
@@ -102,16 +97,16 @@
 </div>
 
 <!--删除提示modal-style6-->
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDelete" tabindex="-1" style="padding-top: 100px" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
                 <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: 20px">
                 <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;&nbsp;您确认要进行此操作吗？
             </div>
             <div class="modal-footer">
@@ -122,7 +117,7 @@
     </div>
 </div>
 <!--操作结果展示-->
-<div class="modal fade" id="modelResult" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modelResult" tabindex="-1" style="padding-top: 100px" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

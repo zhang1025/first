@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryFundData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
@@ -21,6 +23,7 @@ function queryFundData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "资金方式", "mData": "name"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;

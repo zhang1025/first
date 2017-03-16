@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryWellsData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
 
@@ -22,6 +24,7 @@ function queryWellsData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "井区名称", "mData": "name"},
         {"sTitle": "井区简记符", "mData": "mnc"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
@@ -75,10 +78,12 @@ function initButtonClick() {
                 }
             });
     });
-    // #myInput is a <input type="text"> element
-    // $('#myInput').on( 'keyup', function () {
-    //     $('#wellsDataTables').DataTable().search( this.value ).draw();
-    // } );
+    $('#validate').validate({
+        rules: {
+            name: "required",
+            mnc: "required"
+        }
+    })
 }
 //移除
 function deleteWells(id) {

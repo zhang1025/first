@@ -10,15 +10,30 @@ import java.util.List;
  * Created by zj on 2017/3/14 0014
  */
 @Repository
- public interface ICommonDataDao {
+public interface ICommonDataDao {
 
 
     
+    //维护数据功能查询信息获取 
      int countData(DataBean bean);
 
     
      List<DataBean> getTableData(DataBean bean);
+
+
+
+//运费表信息获取 
+     int countFreight(DataBean bean);
+
     
+     List<DataBean> getTableFreight(DataBean bean);
+    
+
+//结算表信息获取 
+     int countSettlement(DataBean bean);
+
+    
+     List<DataBean> getTableSettlement(DataBean bean);
 
 
 //井区 站点  省份 城市 字段一致的 
@@ -57,9 +72,7 @@ import java.util.List;
 
 
      int alreadyNameAdd(DataBean bean);
-
      int alreadyNameEdit(DataBean bean);
-
     
      int deleteCommon(@Param("id") int id, @Param("table") String model);
 

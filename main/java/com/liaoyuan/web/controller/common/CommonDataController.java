@@ -6,6 +6,7 @@ import com.liaoyuan.web.service.CommonDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,12 +92,20 @@ public class CommonDataController extends BaseController {
     }
 
     @RequestMapping(value = "/freightPage", method = RequestMethod.GET)
-    public ModelAndView freightPage() {
+    public ModelAndView freightPage(ModelMap modelMap) {
+        List<DataBean> sites = commonDataService.getListData("site");
+        modelMap.put("sites",sites);
         return new ModelAndView("/dataPage/freightData");
     }
 
     @RequestMapping(value = "/settlementPage", method = RequestMethod.GET)
-    public ModelAndView settlementPage() {
+    public ModelAndView settlementPage(ModelMap modelMap) {
+        List<DataBean> funds = commonDataService.getListData("fund");
+        List<DataBean> industrys = commonDataService.getListData("industry");
+        List<DataBean> provinces = commonDataService.getListData("province");
+        modelMap.put("funds",funds);
+        modelMap.put("industrys",industrys);
+        modelMap.put("provinces",provinces);
         return new ModelAndView("/dataPage/settlementData");
     }
 

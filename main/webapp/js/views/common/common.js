@@ -295,15 +295,11 @@ function initSelect2(selId, optn, placeholder) {
 }
 
 /**
- * 新增customRenderFunc为前端自定义处理row渲染函数，加入createRow函数中
- * 可以传函数本身，也可以传函数名，为此自定义函数传3个参数row,data,index 
- * row 当前tr对象  data行数据对象 index 行下标
  * @param tableId table的id
  * @param url 加载数据的url
  * @param aoColumns 数据列定义
  * @param params 访问url传参
  * @param lodingId 遮罩层的id
- * @param customRenderFunc 自定义处理渲染函数
  * @returns
  */
 function commonDataTables(tableId, url, aoColumns, params,lodingId) {
@@ -318,7 +314,7 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId) {
         {
             "bSort": false,
             "bProcessing": false, //不用自带的loading,使用系统插件waitMe
-            // "bFilter": false,
+            "bFilter": false,
             "bPaginate": true,//是否启用分页
             "bServerSide": true,
             "bLengthChange": false, //隐藏每页显示n条记录框

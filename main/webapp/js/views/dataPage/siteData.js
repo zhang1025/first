@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function querySiteData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
@@ -21,6 +23,7 @@ function querySiteData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "站点名称", "mData": "name"},
         {"sTitle": "站点简记符", "mData": "mnc"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
@@ -91,7 +94,7 @@ function deleteSite(id) {
 //操作结果
 function showResultInfo(message,isFlush) {
     $("#wordsMessage").html(isFlush?'<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i></span>':
-    '<span style="font-size:25px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
+    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
     $('#resultBut').trigger('click');
     $("#myResult").on('click',function () {
         if(isFlush){

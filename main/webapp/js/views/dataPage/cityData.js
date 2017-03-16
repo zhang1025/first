@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryCityData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     commonDataTables("cityDataTables", url, aoColumns, params,"cityData");
@@ -21,6 +23,7 @@ function queryCityData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "城市名称", "mData": "name"},
         {"sTitle": "城市简记符", "mData": "mnc"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});

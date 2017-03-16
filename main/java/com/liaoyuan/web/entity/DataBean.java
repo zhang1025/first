@@ -13,7 +13,7 @@ public class DataBean {
     private int pId;
 
     //吨数
-    private int tonnage;
+    private double tonnage;
 
     //运费
     private double cost;

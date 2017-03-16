@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryFundData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
@@ -21,6 +23,7 @@ function queryFundData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "煤炭名称", "mData": "name"},
         {"sTitle": "煤炭简记符", "mData": "mnc"},
         {"sTitle": "煤炭种类", "mData": "kind"},

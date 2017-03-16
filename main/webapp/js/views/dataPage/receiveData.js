@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryReceiveData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     
@@ -22,8 +24,9 @@ function queryReceiveData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "省份名称", "mData": "name"},
-        {"sTitle": "省份简记符", "mData": "mnc"},
+        {"sTitle": "序号", "mData": "id"},
+        {"sTitle": "收货单位名称", "mData": "name"},
+        {"sTitle": "收货单位简记符", "mData": "mnc"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
@@ -68,7 +71,7 @@ function initButtonClick() {
                 if (result > 0) {
                     showResultInfo("操作成功！",true);
                 }else if (result == -1){
-                    showResultInfo("该用户已经存在！",false);
+                    showResultInfo("name="+name+"已经存在！",false);
                 }else{
                     showResultInfo("操作失败！",false);
                 }

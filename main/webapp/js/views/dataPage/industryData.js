@@ -11,8 +11,10 @@ $(document).ready(function() {
 });
 function queryIndustryData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
     commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
@@ -21,6 +23,7 @@ function queryIndustryData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "行业名称", "mData": "name"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
@@ -87,7 +90,7 @@ function deleteIndustry(id) {
 //操作结果
 function showResultInfo(message,isFlush) {
     $("#wordsMessage").html(isFlush?'<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i></span>':
-    '<span style="font-size:25px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
+    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
     $('#resultBut').trigger('click');
     $("#myResult").on('click',function () {
         if(isFlush){

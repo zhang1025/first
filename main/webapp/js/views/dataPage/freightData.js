@@ -11,8 +11,12 @@ $(document).ready(function() {
 });
 function queryFreightData() {
     var aoColumns = dealTableTitle();
+    var name = $("#s_name").val();
+    var tonnage = $("#s_tonnage").val();
     var params = [
-        {name: 'model', value: model}
+        {name: 'model', value: model},
+        {name: 'name', value: name},
+        {name: 'tonnage', value: tonnage}
     ];
     var url = path+ 'get_common_table';
     commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
@@ -21,9 +25,11 @@ function queryFreightData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "煤炭名称", "mData": "name"},
-        {"sTitle": "煤炭简记符", "mData": "mnc"},
-        {"sTitle": "煤炭种类", "mData": "type"},
+        {"sTitle": "序号", "mData": "id"},
+        {"sTitle": "站点名称", "mData": "name"},
+        {"sTitle": "站点简记符", "mData": "mnc"},
+        {"sTitle": "吨数", "mData": "tonnage"},
+        {"sTitle": "运费", "mData": "cost"},
         {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
@@ -31,21 +37,24 @@ function operateButton(cellvalue, options, rowObject) {
     var c_id = rowObject['id'];
     var c_name = rowObject['name'];
     var c_mnc = rowObject['mnc'];
-    var c_type = rowObject['type'];
+    var tonnage = rowObject['tonnage'];
+    var cost = rowObject['cost'];
     var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editFreight('"
         + c_id + "','"
         + c_name + "','"
         + c_mnc + "','"
-        + c_type 
+        + tonnage + "','"
+        + cost
         + "')\">编辑</button>";
     return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteFreight("+c_id+")'>移除</button>";
 }
 //编辑
-function editFreight(c_id,c_name,c_mnc,c_type) {
+function editFreight(c_id,c_name,c_mnc,tonnage,cost) {
     type=2;
     $("#name").val(c_name);
      $("#mnc").val(c_mnc);
-      $("#type").val(c_type);
+    $("#tonnage").val(tonnage);
+    $("#cost").val(cost);
     $("#hideId").val(c_id);
 
 }
@@ -55,6 +64,7 @@ function initButtonClick() {
     });
     $("#addBtn").on("click",function () {
         type = 1;
+        $("#validate input[type='text']").val("");
     });
     //新增user
     $("#submitBut").on("click",function () {
@@ -62,9 +72,17 @@ function initButtonClick() {
         if(!$form.valid()){
             return false;
         }
-        var url = type==1?path+"addCoal":path+"editCoal";
-        var name = $.trim($("#name").val());
-        $.post(url,{name:name,mnc:$.trim($("#mnc").val()),type:$.trim($("#type").val()),model:model
+
+        var tonnage = $.trim($("#tonnage").val());
+        var cost  = $.trim($("#cost").val());
+        // var reg = new RegExp("^\d+(\.\d+)?$");
+        // if(!reg.test(tonnage)){
+        //     $("#tonnage").append('<label id="name-error" class="error" for="name">请输入数字</label>');
+        // }
+
+        var url = type==1?path+"addFreight":path+"editFreight";
+        var text = $("#name option:selected").text();
+        $.post(url,{name:text,mnc:$.trim($("#name").val()),tonnage:tonnage,cost:cost,model:model
                 ,id:type==1?0:$("#hideId").val()},
             function(result){
                 $('#myModal').trigger('click');

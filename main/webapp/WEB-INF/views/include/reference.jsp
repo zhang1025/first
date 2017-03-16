@@ -120,7 +120,6 @@
 
 <!-- common search conditions -->
 <script type="text/javascript" src="<c:url value="/js/views/common/searchCondition.js"/> "></script>
-<link rel="icon" href="${ctx}/img/ico/favicon.ico" type="image/png">
 
 <!-- select2 -->
 <script type="text/javascript" src="<c:url value="/plugins/forms/select2/select2.js"/> "></script>

@@ -5,38 +5,92 @@
 
     <!--common -->
     <select id="countData" parameterType="DataBean" resultType="java.lang.Integer">
-        select count(*) from ${table}  
+        select count(*) from ${table}  where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
     </select>
     <select id="getTableData" parameterType="DataBean" resultType="DataBean">
-        select * from ${table} order by id desc
+        select * from ${table}   where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+         order by id desc
+    </select>
+
+    <!--运费信息查询-->
+    <select id="countFreight" parameterType="DataBean" resultType="java.lang.Integer">
+        select count(*) from ${table}  where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+         <if test="tonnage!=null and tonnage!=''">
+            and tonnage = #{tonnage}
+        </if>
+    </select>
+    <select id="getTableFreight" parameterType="DataBean" resultType="DataBean">
+        select * from ${table}  where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+         <if test="tonnage!=null and tonnage!=''">
+            and tonnage = #{tonnage}
+        </if>
+         order by id desc
+    </select>
+
+        <!--结算信息查询-->
+    <select id="countSettlement" parameterType="DataBean" resultType="java.lang.Integer">
+        select count(*) from ${table}  where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+         <if test="method!=null and method!='' and method!='请选择'">
+            and method = #{method}
+        </if>
+            <if test="province!=null and province!='' and province!='请选择'">
+            and province = #{province}
+        </if>
+    </select>
+    <select id="getTableSettlement" parameterType="DataBean" resultType="DataBean">
+        select * from ${table}  where 1=1 
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+         <if test="method!=null and method!='' and method!='请选择'">
+            and method = #{method}
+        </if>
+        <if test="province!=null and province!='' and province!='请选择'">
+            and province = #{province}
+        </if>
+         order by id desc
     </select>
 
 
 <!--name是否已经存在-->
     <select id="alreadyNameAdd" parameterType="DataBean" resultType="java.lang.Integer">
-        select count(*) from ${table}  where name=#{name}
+        select count(*) from ${table}  where name=#{name};
     </select>
-
     <select id="alreadyNameEdit" parameterType="DataBean" resultType="java.lang.Integer">
-        select count(*) from ${table}  where name=#{name} and id != ${id};
+        select count(*) from ${table}  where name=#{name} and id!=#{id};
     </select>
 
     <insert id="addModeOne" parameterType="DataBean" >
         insert into ${table}(name,mnc) values (#{name},#{mnc})
     </insert>
     <update id="editModeOne" parameterType="DataBean" >
-        update ${table} set name=#{name},mnc=#{mnc} where id=${id}
+        update ${table} set name=#{name},mnc=#{mnc} where id=#{id}
     </update>
 
      <insert id="addModelTwo" parameterType="DataBean" >
         insert into ${table}(name) values (#{name})
     </insert>
     <update id="editModelTwo" parameterType="DataBean" >
-        update ${table} set name=#{name} where id=${id}
+        update ${table} set name=#{name} where id=#{id}
     </update>
 
     <insert id="addCoal" parameterType="DataBean" >
-        insert into ${table}(name,mnc,type) values (#{name},#{mnc},#{type})
+        insert into ${table}(name,mnc,kind) values (#{name},#{mnc},#{kind})
     </insert>
      <insert id="addFreight" parameterType="DataBean" >
         insert into ${table}(name,mnc,tonnage,cost) values (#{name},#{mnc},#{tonnage},#{cost})
@@ -46,17 +100,17 @@
     </insert>
 
     <update id="editCoal" parameterType="DataBean" >
-        update ${table} set name=#{name},mnc=#{mnc},type=#{type} where id=${id}
+        update ${table} set name=#{name},mnc=#{mnc},kind=#{kind} where id=#{id}
     </update>
      <update id="editFreight" parameterType="DataBean" >
-        update ${table} set name=#{name},mnc=#{mnc},tonnage=#{tonnage},cost=#{cost} where id=${id}
+        update ${table} set name=#{name},mnc=#{mnc},tonnage=#{tonnage},cost=#{cost} where id=#{id}
     </update>
      <update id="editSettlement" parameterType="DataBean" >
-        update ${table} set name=#{name},mnc=#{mnc},method=#{method},industry=#{industry},province=#{province},type=#{type}  where id=${id}
+        update ${table} set name=#{name},mnc=#{mnc},method=#{method},industry=#{industry},province=#{province},type=#{type}  where id=#{id}
     </update>
 
     <delete id="deleteCommon">
-        delete from ${table} where id=${id}
+        delete from ${table} where id=#{id}
     </delete>
 
 
