@@ -2,52 +2,62 @@
  * Created by admin on 2016/11/28 0028
  */
 var path = "/common/";
-var subType=1;
-var model="settlement";
-$(document).ready(function() {
+var subType = 1;
+var model = "settlement";
+$(document).ready(function () {
     $("body").ledo();
     querySettlementData();
     initButtonClick();
+    $(".select").select2();
 });
 function querySettlementData() {
     var aoColumns = dealTableTitle();
     var name = $("#s_name").val();
-    var method = $("#s_method option:selected").text();
-    var province = $("#s_province option:selected").text();
+    // var method = $("#s_method option:selected").text();
+    // var province = $("#s_province option:selected").text();
+    var method = $("#s_method").val();
+    var province = $("#s_province").val();
     var params = [
         {name: 'model', value: model},
         {name: 'name', value: name},
         {name: 'method', value: method},
         {name: 'province', value: province}
     ];
-    var url = path+ 'get_common_table';
-    playLoading(model+"Data");
-    commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
+    var url = path + 'get_common_table';
+    commonDataTables(model + "DataTables", url, aoColumns, params, model + "Data");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
-    aoColumns .push(
+    aoColumns.push(
         {"sTitle": "编号", "mData": "id"},
         {"sTitle": "结算单位名称", "mData": "name"},
         {"sTitle": "结算简记符", "mData": "mnc"},
         {"sTitle": "结算方式", "mData": "method"},
         {"sTitle": "结算行业", "mData": "industry"},
         {"sTitle": "结算省份", "mData": "province"},
-        {"sTitle": "类型", "mData": "type", "mRender": function(data, type, row) {return operateType(data, type, row);}},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
-    return  aoColumns;
+        {
+            "sTitle": "类型", "mData": "type", "mRender": function (data, type, row) {
+            return operateType(data, type, row);
+        }
+        },
+        {
+            "sTitle": "操作", "mData": "id", "mRender": function (data, type, row) {
+            return operateButton(data, type, row);
+        }
+        });
+    return aoColumns;
 }
 
 function operateType(cellvalue, options, rowObject) {
     var type = rowObject['type'];
-    if(type == 1){
+    if (type == 1) {
         return "<span class='badge badge-success'>重点</span>";
     }
-      if(type == 0){
+    if (type == 0) {
         return "<span class='badge badge-important'>非重点</span>";
     }
-     return "未知";
+    return "未知";
 }
 
 function operateButton(cellvalue, options, rowObject) {
@@ -57,83 +67,88 @@ function operateButton(cellvalue, options, rowObject) {
     var method = rowObject['method'];
     var industry = rowObject['industry'];
     var province = rowObject['province'];
-     var type = rowObject['type'];
+    var type = rowObject['type'];
     var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
         + c_id + "','"
         + c_name + "','"
-         + c_mnc + "','"
+        + c_mnc + "','"
         + method + "','"
         + industry + "','"
         + province + "','"
         + type
         + "')\">编辑</button>";
-    return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteSettlement("+c_id+")'>移除</button>";
+    return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteSettlement(" + c_id + ")'>移除</button>";
 }
 //编辑
-function editSettlement(c_id,c_name,c_mnc,method,industry,province,type) {
-    subType=2;
+function editSettlement(c_id, c_name, c_mnc, method, industry, province, type) {
+    subType = 2;
     $("#name").val(c_name);
     $("#mnc").val(c_mnc);
     $("#hideId").val(c_id);
 
-    $("#province").find("option[text='"+province+"']").attr("selected",true);
-    $("#method").find("option[text='"+method+"']").attr("selected",true);
-    $("#industry").find("option[text='"+industry+"']").attr("selected",true);
+    //由于使用select2插件，所有这里设置select选中值使用这种方式
+    $("#s2id_province").find("span[class='select2-chosen']").html(province);
+    $("#s2id_method").find("span[class='select2-chosen']").html(method);
+    $("#s2id_industry").find("span[class='select2-chosen']").html(industry);
     $("#type").val(type);
 
 }
 function initButtonClick() {
-    $("#searBtn").on("click",function () {
+    $("#searBtn").on("click", function () {
         querySettlementData();
     });
-    $("#addBtn").on("click",function () {
+    $("#addBtn").on("click", function () {
         subType = 1;
         $("#validate input[type='text']").val("");
     });
     //新增user
-    $("#submitBut").on("click",function () {
+    $("#submitBut").on("click", function () {
         var $form = $('#validate');
-        if(!$form.valid()){
+        if (!$form.valid()) {
             return false;
         }
-        var url = subType==1?path+"addSettlement":path+"editSettlement";
-        var name=$.trim($("#name").val());
-        $.post(url,{name:name,mnc:$.trim($("#mnc").val()),model:model,
-            method:$("#method option:selected").text(),industry:$("#industry option:selected").text(),
-            province:$("#province option:selected").text(),type:$("#type").val()
-                ,id:subType==1?0:$("#hideId").val()},
-            function(result){
+        var url = subType == 1 ? path + "addSettlement" : path + "editSettlement";
+        var name = $.trim($("#name").val());
+        $.post(url, {
+                name: name, mnc: $.trim($("#mnc").val()), model: model,
+                method: $("#s2id_method").find("span[class='select2-chosen']").html(),
+                industry: $("#s2id_industry").find("span[class='select2-chosen']").html(),
+                province: $("#s2id_province").find("span[class='select2-chosen']").html(),
+                type: $("#type").val()
+                , id: subType == 1 ? 0 : $("#hideId").val()
+            },
+            function (result) {
                 $('#myModal').trigger('click');
                 if (result > 0) {
-                    showResultInfo("操作成功！",true);
-                }else if (result == -1){
-                    showResultInfo("name="+name+"已经存在！",false);
-                }else{
-                    showResultInfo("操作失败！",false);
+                    showResultInfo("操作成功！", true);
+                } else if (result == -1) {
+                    showResultInfo("name=" + name + "已经存在！", false);
+                } else {
+                    showResultInfo("操作失败！", false);
                 }
             });
     });
 }
 //移除
 function deleteSettlement(id) {
-    $("#deleteBut").on("click",function () {
-        $.post(path+"deleteCommon",{id:id,model:model},function (data) {
+    $("#deleteBut").on("click", function () {
+        $.post(path + "deleteCommon", {id: id, model: model}, function (data) {
             $('#modalDelete').trigger('click');
-            if(data==1){
-                showResultInfo("操作成功！",true);
-            }else{
-                showResultInfo("操作失败！",false);
+            if (data == 1) {
+                showResultInfo("操作成功！", true);
+            } else {
+                showResultInfo("操作失败！", false);
             }
         });
     })
 }
 //操作结果
-function showResultInfo(message,isFlush) {
-    $("#wordsMessage").html(isFlush?'<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i></span>':
-    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i></span>');
+function showResultInfo(message, isFlush) {
+    $("#wordsMessage").html(isFlush ? '<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>' + message + '</strong></i></span>' :
+    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>' + message + '</strong></i></span>');
     $('#resultBut').trigger('click');
-    $("#myResult").on('click',function () {
-        if(isFlush){
+    $("#myResult").on('click', function () {
+        if (isFlush) {
             querySettlementData();
         }
     });

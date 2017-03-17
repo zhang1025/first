@@ -8,6 +8,8 @@ $(document).ready(function() {
     $("body").ledo();
     queryFreightData();
     initButtonClick();
+    // $(".select").select2();
+    initFormValid();
 });
 function queryFreightData() {
     var aoColumns = dealTableTitle();
@@ -51,8 +53,7 @@ function operateButton(cellvalue, options, rowObject) {
 //编辑
 function editFreight(c_id,c_name,c_mnc,tonnage,cost) {
     type=2;
-    $("#name").val(c_name);
-     $("#mnc").val(c_mnc);
+     $("#name").val(c_mnc);
     $("#tonnage").val(tonnage);
     $("#cost").val(cost);
     $("#hideId").val(c_id);
@@ -72,14 +73,8 @@ function initButtonClick() {
         if(!$form.valid()){
             return false;
         }
-
-        var tonnage = $.trim($("#tonnage").val());
-        var cost  = $.trim($("#cost").val());
-        // var reg = new RegExp("^\d+(\.\d+)?$");
-        // if(!reg.test(tonnage)){
-        //     $("#tonnage").append('<label id="name-error" class="error" for="name">请输入数字</label>');
-        // }
-
+        var tonnage = $("#tonnage").val();
+        var cost  = $("#cost").val();
         var url = type==1?path+"addFreight":path+"editFreight";
         var text = $("#name option:selected").text();
         $.post(url,{name:text,mnc:$.trim($("#name").val()),tonnage:tonnage,cost:cost,model:model
@@ -89,7 +84,7 @@ function initButtonClick() {
                 if (result > 0) {
                     showResultInfo("操作成功！",true);
                 }else if (result == -1){
-                    showResultInfo("name="+name+" 已经存在！",false);
+                    showResultInfo("信息已经存在！",false);
                 }else{
                     showResultInfo("操作失败！",false);
                 }
@@ -117,6 +112,45 @@ function showResultInfo(message,isFlush) {
     $("#myResult").on('click',function () {
         if(isFlush){
             queryFreightData();
+        }
+    });
+}
+//form表单提交 格式规则校验
+function initFormValid() {
+    //添加ip验证规则
+    jQuery.validator.addMethod("dataNumber",function (value,element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+    },"请输入数字");
+    $("#validate").validate({
+        errorPlacement: function( error, element ) {
+            var place = element.closest('.input-group');
+            if (!place.get(0)) {
+                place = element;
+            }
+            if (place.get(0).type === 'checkbox') {
+                place = element.parent();
+            }
+            if (error.text() !== '') {
+                place.after(error);
+            }
+        },
+        errorClass: 'help-block',
+        rules: {
+            dataNumber: {
+                required: true,
+                dataNumber: true
+            },
+            number: {
+                required: true,
+                number: true
+            }
+        },
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
         }
     });
 }

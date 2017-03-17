@@ -91,6 +91,12 @@ public class CommonDataController extends BaseController {
         return new ModelAndView("/dataPage/coalData");
     }
 
+    @RequestMapping(value = "/platePage", method = RequestMethod.GET)
+    public ModelAndView platePage() {
+        return new ModelAndView("/dataPage/plateData");
+    }
+
+
     @RequestMapping(value = "/freightPage", method = RequestMethod.GET)
     public ModelAndView freightPage(ModelMap modelMap) {
         List<DataBean> sites = commonDataService.getListData("site");

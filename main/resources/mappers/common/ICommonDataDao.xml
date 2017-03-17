@@ -90,13 +90,13 @@
     </update>
 
     <insert id="addCoal" parameterType="DataBean" >
-        insert into ${table}(name,mnc,kind) values (#{name},#{mnc},#{kind})
+        insert into ${table} (name,mnc,kind) values (#{name},#{mnc},#{kind})
     </insert>
      <insert id="addFreight" parameterType="DataBean" >
-        insert into ${table}(name,mnc,tonnage,cost) values (#{name},#{mnc},#{tonnage},#{cost})
+        insert into ${table} (name,mnc,tonnage,cost) values (#{name},#{mnc},#{tonnage},#{cost})
     </insert>
      <insert id="addSettlement" parameterType="DataBean" >
-        insert into ${table}(name,mnc,method,industry,province,type) values (#{name},#{mnc},#{method},#{industry},#{province},#{type})
+        insert into ${table} (name,mnc,method,industry,province,type) values (#{name},#{mnc},#{method},#{industry},#{province},#{type})
     </insert>
 
     <update id="editCoal" parameterType="DataBean" >

@@ -25,27 +25,27 @@
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 80px">
                                     <div class="input-group">
                                         <span class="input-group-addon">结算方式</span>
-                                        <select id="s_method" class="fancy-select form-control" style="width: 110px">
+                                        <select id="s_method" class="select fancy-select form-control" style="width: 120px">
                                             <option value="">请选择</option>
                                             <c:forEach var="fund" items="${funds}" varStatus="s">
-                                                <option value="${fund.mnc}">${fund.name}</option>
+                                                <option value="${fund.name}">${fund.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 80px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 110px">
                                     <div class="input-group">
                                         <span class="input-group-addon">结算省份</span>
-                                        <select id="s_province" class="fancy-select form-control" style="width: 120px">
+                                        <select id="s_province" class="select fancy-select form-control" style="width: 120px">
                                             <option value="">请选择</option>
                                             <c:forEach var="province" items="${provinces}" varStatus="s">
-                                                <option value="${province.mnc}">${province.name}</option>
+                                                <option value="${province.name}">${province.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
                                 </div>
                                 <%--<!-- 查询按钮-->--%>
-                                <div class="col-md-1" style="padding-top: 5px;padding-left: 100px">
+                                <div class="col-md-1" style="padding-top: 5px;padding-left: 140px">
                                     <div class="input-group">
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>
@@ -120,9 +120,9 @@
                         <label for="method" class="col-lg-4 control-label"
                                style="width:30%;padding-left: 20px;padding-right: 1px">结算方式:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <select id="method" class="fancy-select form-control required">
+                            <select id="method" class=" select fancy-select form-control required">
                                 <c:forEach var="fund" items="${funds}" varStatus="s">
-                                    <option value="${fund.mnc}">${fund.name}</option>
+                                    <option value="${fund.name}">${fund.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -131,9 +131,9 @@
                         <label for="industry" class="col-lg-4 control-label"
                                style="width:30%;padding-left: 20px;padding-right: 1px">结算行业:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <select id="industry" class="fancy-select form-control required">
+                            <select id="industry" class="select fancy-select form-control required">
                                 <c:forEach var="industry" items="${industrys}" varStatus="s">
-                                    <option value="${industry.mnc}">${industry.name}</option>
+                                    <option value="${industry.name}">${industry.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -142,9 +142,9 @@
                         <label for="province" class="col-lg-4 control-label"
                                style="width:30%;padding-left: 20px;padding-right: 1px">结算省份:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <select id="province" class="fancy-select form-control required">
+                            <select id="province" class="select fancy-select form-control required">
                                 <c:forEach var="province" items="${provinces}" varStatus="s">
-                                    <option value="${province.mnc}">${province.name}</option>
+                                    <option value="${province.name}">${province.name}</option>
                                 </c:forEach>
                             </select>
                         </div>

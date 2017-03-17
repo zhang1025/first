@@ -93,6 +93,7 @@ public class CommonDataServiceImpl implements CommonDataService {
 
     @Override
     public int addFreight(DataBean bean) {
+        bean = dealBean(bean);
         return iCommonDataDao.addFreight(bean);
     }
 
@@ -134,9 +135,7 @@ public class CommonDataServiceImpl implements CommonDataService {
 
     @Override
     public int editFreight(DataBean bean) {
-        if (isAlreadyExist(bean,0)) {
-            return -1;
-        }
+        bean = dealBean(bean);
         return iCommonDataDao.editFreight(bean);
     }
 

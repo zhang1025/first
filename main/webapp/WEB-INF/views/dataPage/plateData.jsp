@@ -17,20 +17,9 @@
 
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 10px">
                                     <div class="input-group">
-                                        <span class="input-group-addon">站点名</span>
-                                        <select id="s_name" class="select fancy-select form-control" style="width: 160px">
-                                            <option value="">请选择</option>
-                                            <c:forEach var="site" items="${sites}" varStatus="s">
-                                                <option value="${site.mnc}">${site.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 60px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">吨数</span>
-                                        <input type="text" id="s_tonnage" placeholder="输入查询吨数"
-                                               class="form-control white-bg text-center" style="width: 120px"/>
+                                        <span class="input-group-addon">车牌名称</span>
+                                        <input type="text" id="s_name" placeholder="请输入车牌名称"
+                                               class="form-control white-bg text-center" style="width: 130px"/>
                                     </div>
                                 </div>
                                 <%--<!-- 查询按钮-->--%>
@@ -51,17 +40,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="freightData">
+            <div class="row" id="plateNumberData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;运费信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;车牌信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="freightDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="plateNumberDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 15px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -85,51 +74,30 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">运费信息</h4>
+                <h4 class="modal-title" id="myModalLabel2">车牌信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
                         <label for="name" class="col-lg-4 control-label"
-                               style="width:30%;padding-left: 20px;padding-right: 1px">站点名称:</label>
+                               style="width:30%;padding-left: 20px;padding-right: 1px">车牌名称:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <select id="name" class="select fancy-select form-control required">
-                                <c:forEach var="site" items="${sites}" varStatus="s">
-                                    <option value="${site.mnc}">${site.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tonnage" class="col-lg-4 control-label"
-                               style="width:30%;padding-left: 20px;padding-right: 1px">吨数:</label>
-                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="tonnage" class="form-control required" name="number"
-                                   aria-required="true" placeholder="请输入吨数">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="cost" class="col-lg-4 control-label"
-                               style="width:30%;padding-left: 20px;padding-right: 1px">运费:</label>
-                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
-                            <input type="text" id="cost" class="form-control required" name="dataNumber"
-                                   aria-required="true" placeholder="请输入运费">
+                            <input type="text" id="name" class="form-control required" aria-required="true"
+                                   placeholder="请输入行业名称">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="submit" id="submitBut" class="btn btn-primary">提交</button>
+                <button type="button" id="submitBut" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>
 </div>
 
 <!--删除提示modal-style6-->
-<div class="modal fade" id="modalDelete" tabindex="-1" style="padding-top: 100px" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDelete" tabindex="-1" style="padding-top: 100px" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -169,5 +137,6 @@
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
-<script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
-<script src="<c:url value="/js/views/dataPage/freightData.js"/> "></script>
+<script src="<c:url value="/js/views/dataPage/plateData.js"/> "></script>
+
+<!-- / page-content -->
