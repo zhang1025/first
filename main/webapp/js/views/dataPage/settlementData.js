@@ -86,10 +86,9 @@ function editSettlement(c_id, c_name, c_mnc, method, industry, province, type) {
     $("#mnc").val(c_mnc);
     $("#hideId").val(c_id);
 
-    //由于使用select2插件，所有这里设置select选中值使用这种方式
-    $("#s2id_province").find("span[class='select2-chosen']").html(province);
-    $("#s2id_method").find("span[class='select2-chosen']").html(method);
-    $("#s2id_industry").find("span[class='select2-chosen']").html(industry);
+    $("#province").val(province).select2();
+    $("#method").val(method).select2();
+    $("#industry").val(industry).select2();
     $("#type").val(type);
 
 }
@@ -111,9 +110,9 @@ function initButtonClick() {
         var name = $.trim($("#name").val());
         $.post(url, {
                 name: name, mnc: $.trim($("#mnc").val()), model: model,
-                method: $("#s2id_method").find("span[class='select2-chosen']").html(),
-                industry: $("#s2id_industry").find("span[class='select2-chosen']").html(),
-                province: $("#s2id_province").find("span[class='select2-chosen']").html(),
+                method: $("#method").val(),
+                industry: $("#industry").val(),
+                province: $("#province").val(),
                 type: $("#type").val()
                 , id: subType == 1 ? 0 : $("#hideId").val()
             },
