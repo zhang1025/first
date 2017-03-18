@@ -23,9 +23,9 @@ function queryPlateData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "序号", "mData": "id"},
-        {"sTitle": "车牌名称", "mData": "name"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "序号", "mData": "id","sWidth":"10%"},
+        {"sTitle": "车牌名称", "mData": "name","sWidth":"30%"},
+        {"sTitle": "操作", "mData": "id","sWidth":"20%", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {

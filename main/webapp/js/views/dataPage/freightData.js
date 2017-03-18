@@ -27,12 +27,12 @@ function queryFreightData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "序号", "mData": "id"},
-        {"sTitle": "站点名称", "mData": "name"},
-        {"sTitle": "站点简记符", "mData": "mnc"},
-        {"sTitle": "吨数", "mData": "tonnage"},
-        {"sTitle": "运费", "mData": "cost"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "序号", "mData": "id","sWidth":"10%"},
+        {"sTitle": "站点名称", "mData": "name","sWidth":"30%"},
+        {"sTitle": "站点简记符", "mData": "mnc","sWidth":"20%"},
+        {"sTitle": "吨数", "mData": "tonnage","sWidth":"10%"},
+        {"sTitle": "运费", "mData": "cost","sWidth":"10%"},
+        {"sTitle": "操作", "mData": "id","sWidth":"10%", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {

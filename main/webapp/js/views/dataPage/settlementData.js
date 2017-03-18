@@ -30,19 +30,19 @@ function querySettlementData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {"sTitle": "编号", "mData": "id"},
-        {"sTitle": "结算单位名称", "mData": "name"},
-        {"sTitle": "结算简记符", "mData": "mnc"},
-        {"sTitle": "结算方式", "mData": "method"},
-        {"sTitle": "结算行业", "mData": "industry"},
-        {"sTitle": "结算省份", "mData": "province"},
+        {"sTitle": "编号", "mData": "id","sWidth":"10%"},
+        {"sTitle": "结算单位名称", "mData": "name","sWidth":"20%"},
+        {"sTitle": "结算简记符", "mData": "mnc","sWidth":"15%"},
+        {"sTitle": "结算方式", "mData": "method","sWidth":"15%"},
+        {"sTitle": "结算行业", "mData": "industry","sWidth":"20%"},
+        {"sTitle": "结算省份", "mData": "province","sWidth":"15%"},
         {
-            "sTitle": "类型", "mData": "type", "mRender": function (data, type, row) {
+            "sTitle": "类型", "mData": "type","sWidth":"10%", "mRender": function (data, type, row) {
             return operateType(data, type, row);
         }
         },
         {
-            "sTitle": "操作", "mData": "id", "mRender": function (data, type, row) {
+            "sTitle": "操作", "mData": "id","sWidth":"10%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
         }
         });

@@ -24,10 +24,10 @@ function queryReceiveData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "序号", "mData": "id"},
-        {"sTitle": "收货单位名称", "mData": "name"},
-        {"sTitle": "收货单位简记符", "mData": "mnc"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "序号", "mData": "id","sWidth":"10%"},
+        {"sTitle": "收货单位名称", "mData": "name","sWidth":"30%"},
+        {"sTitle": "收货单位简记符", "mData": "mnc","sWidth":"10%"},
+        {"sTitle": "操作", "mData": "id","sWidth":"20%", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {

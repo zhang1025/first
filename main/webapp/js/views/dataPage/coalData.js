@@ -23,11 +23,11 @@ function queryFundData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "序号", "mData": "id"},
-        {"sTitle": "煤炭名称", "mData": "name"},
-        {"sTitle": "煤炭简记符", "mData": "mnc"},
-        {"sTitle": "煤炭种类", "mData": "kind"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "序号", "mData": "id","sWidth":"10%"},
+        {"sTitle": "煤炭名称", "mData": "name","sWidth":"30%"},
+        {"sTitle": "煤炭简记符", "mData": "mnc","sWidth":"20%"},
+        {"sTitle": "煤炭种类", "mData": "kind","sWidth":"20%"},
+        {"sTitle": "操作", "mData": "id","sWidth":"20%", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {
