@@ -381,10 +381,6 @@ public class ExcelUtils {
 
 	/**
 	 * 下载模板
-	 * 		add by machaozhe 2016-11-28
-	 * @param columnnames
-	 * @param filename
-	 * @param response
 	 * @throws IOException
 	 */
 	public static void exportTemplate(List<String> columnnames,String filename, HttpServletResponse response)throws IOException{
@@ -404,9 +400,6 @@ public class ExcelUtils {
 
 	/**
 	 * 写入下载模板的header
-	 * 		add by machaozhe 2016-11-28
-	 * @param columNames
-	 * @return
 	 */
 	private static Workbook writeHeader(List<String> columNames){
 		Workbook workbook = new HSSFWorkbook();

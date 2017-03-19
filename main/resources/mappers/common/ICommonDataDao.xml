@@ -15,7 +15,7 @@
         <if test="name!=null and name!=''">
             and name like "%"#{name}"%"
         </if>
-         order by id desc
+         order by id desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
     <!--运费信息查询-->
@@ -36,7 +36,7 @@
          <if test="tonnage!=null and tonnage!=''">
             and tonnage = #{tonnage}
         </if>
-         order by id desc
+         order by id desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
         <!--结算信息查询-->
@@ -63,7 +63,7 @@
         <if test="province!=null and province!='' and province!='请选择'">
             and province = #{province}
         </if>
-         order by id desc
+         order by id desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
 

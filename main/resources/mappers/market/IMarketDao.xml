@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoyuan.web.dao.IMarkerDao">
+
+    <sql id="search">
+         and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+        <if test="numNo!=null and numNo!=''">
+            and numNo like "%"#{numNo}"%"
+        </if>
+        <if test="settlement!=null and settlement!=''">
+            and settlement like "%"#{settlement}"%"
+        </if>
+        <if test="name!=null and name!=''">
+            and name like "%"#{name}"%"
+        </if>
+        <if test="status!=null and status!=''">
+            and status =#{status}
+        </if>
+        <if test="contractType!=null and contractType!=''">
+            and contractType = #{contractType}
+        </if>
+    </sql>
+    <!--common -->
+    <select id="countContractData" parameterType="ContractBean" resultType="java.lang.Integer">
+        select count(*) from car_contract  where 1=1 <include refid="search"/>
+
+    </select>
+    <select id="getTableContractData" parameterType="ContractBean" resultType="ContractBean">
+        select id,numNo,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
+        sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
+        orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
+        orderTime,createtime,status from car_contract
+        where 1=1 <include refid="search"/>
+         order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+    </select>
+
+     <insert id="addContractInfo" parameterType="ContractBean" >
+        insert into car_contract(numNo,settlement,name,orderCount,unitPrice,inputPerson,
+        usePerson,contractType,forkliftFee,orderTime,status) values (#{numNo},#{settlement},#{name},
+        #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
+        #{orderTime},#{status});
+    </insert>
+    <update id="editContractInfo" parameterType="ContractBean" >
+        update car_contract set numNo=#{numNo},settlement=#{settlement},name=#{name},
+        orderCount=#{orderCount},unitPrice=#{unitPrice},inputPerson=#{inputPerson},
+        usePerson=#{usePerson},contractType=#{contractType},
+        forkliftFee=#{forkliftFee},orderTime=#{orderTime},status=#{status} where id=#{id}
+    </update>
+
+    <update id="lockInfo" parameterType="ContractBean" >
+        update car_contract set status=2 where id=#{id}
+    </update>
+    <update id="unlockInfo" parameterType="ContractBean" >
+        update car_contract set status=1 where id=#{id}
+    </update>
+
+    <delete id="deleteContractInfo">
+        delete from car_contract where id=#{id}
+    </delete>
+</mapper>

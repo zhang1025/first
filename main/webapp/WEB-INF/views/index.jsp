@@ -2,6 +2,7 @@
 <%@ include file="include/taglib.jsp" %>
 <%@ include file="include/reference.jsp" %>
 <c:set  var="menuMap" value="<%=menuMap%>" scope="page"/>
+<c:set  var="account" value="<%=account%>" scope="page"/>
 <script src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/js/views/common/common.js"/> "></script>
 <script src="${ctx}/js/views/common/main.js"></script>

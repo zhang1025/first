@@ -1,12 +1,8 @@
 package com.liaoyuan.web.utils;
 
-import com.liaoyuan.web.entity.DataBean;
-import org.apache.commons.beanutils.BeanUtils;
-
-import java.util.Map;
 
 /**
- * Created by zj on 2017/3/13 0013.
+ * Created by zj on 2017/3/13 0013
  */
 public class Constant {
     //用户密码加密key

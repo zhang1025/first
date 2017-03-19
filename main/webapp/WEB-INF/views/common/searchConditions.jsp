@@ -7,22 +7,22 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- begin date -->
-<div id="begin_select" class="col-lg-2" style="display:none;z-index:0;padding: 5px">
+<div id="begin_select" class="col-lg-2" style="z-index:0;padding: 5px">
     <div class="input-group">
         <span class="input-group-addon">开始</span>
-        <input type="text" id="begin-date" name='date-range-single' class="datepicker form-control white-bg text-center"
-               style="cursor: pointer;font-size: 12px" readonly="readonly"/>
-        <%--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>--%>
+        <input type="text" id="beginDate"
+               class="input-small form_datetime" style="cursor: pointer;"
+               readonly="readonly" />
     </div>
 </div>
 
 <!-- end date -->
-<div id="end_select" class="col-lg-2" style="display:none;z-index:0;padding: 5px">
+<div id="end_select" class="col-lg-2" style="z-index:0;padding: 5px">
     <div class="input-group">
         <span class="input-group-addon">结束</span>
-        <input type="text" id="end-date" name='date-range-single' class="datepicker form-control white-bg text-center"
-               style="cursor: pointer;font-size: 12px" readonly="readonly"/>
-        <%--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>--%>
+        <input type="text" id="endDate"
+               class="input-small form_datetime" style="cursor: pointer;"
+               readonly="readonly" />
     </div>
 </div>
 

@@ -324,6 +324,7 @@ function commonDataTables(tableId, url, aoColumns, params,lodingId) {
             "bDeferRender":true,
             "bDestroy": true,
             "bScrollCollapse": true,
+            "scrollX": true,
             "sServerMethod": "POST",
             "aoColumns": aoColumns,
             "fnServerParams": function (aoData) {
@@ -2129,8 +2130,8 @@ function initDateRangePicker(option){
 
     var DATE_RANGE_RANGES = {
         '昨天': [moment(serverDate).subtract(1, 'days'), moment(serverDate).subtract(1, 'days')],
-        '前7天': [moment(serverDate).subtract(7, 'days'), moment(serverDate).subtract(1, 'days')],
-        '前30天': [moment(serverDate).subtract(30, 'days'), moment(serverDate).subtract(1, 'days')],
+        '前7天': [moment(serverDate).subtract(6, 'days'), moment(serverDate).subtract(0, 'days')],
+        '前30天': [moment(serverDate).subtract(29, 'days'), moment(serverDate).subtract(0, 'days')],
         // '上上周': [moment(serverDate).subtract(2, 'week').startOf('isoWeek'), moment(serverDate).subtract(2, 'week').endOf('isoWeek')],
         '上周': [moment(serverDate).subtract(1, 'week').startOf('isoWeek'), moment(serverDate).subtract(1, 'week').endOf('isoWeek')],
         '上个月': [moment(serverDate).subtract(1, 'month').startOf('month'), moment(serverDate).subtract(1, 'month').endOf('month')],
@@ -2139,9 +2140,9 @@ function initDateRangePicker(option){
 
     var DATE_RANGE_OPTIONS = {
         locale:DATE_RANGE_LOCALE,
-        maxDate:moment(serverDate).subtract(1, 'days'),
-        startDate:moment(serverDate).subtract(7, 'days'),
-        endDate:moment(serverDate).subtract(1, 'days'),
+        maxDate:moment(serverDate).subtract(0, 'days'),
+        startDate:moment(serverDate).subtract(6, 'days'),
+        endDate:moment(serverDate).subtract(0, 'days'),
         alwaysShowCalendars:true,
         ranges:DATE_RANGE_RANGES,
         linkedCalendars:false,
