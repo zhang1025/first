@@ -3,7 +3,6 @@
  */
 var path = "/market/";
 var subType = 1;
-var model = "contract";
 $(document).ready(function () {
     $("body").ledo();
     //初始化时间
@@ -40,8 +39,8 @@ function queryData() {
         {name: 'beginDate', value: beginDate},
         {name: 'endDate', value: endDate}
     ];
-    var url = path + 'get_contract_table';
-    commonDataTables("contractDataTables", url, aoColumns, params, "contractData");
+    var url = path + 'get_monthPlan_table';
+    commonDataTables("monthPlanDataTables", url, aoColumns, params, "monthPlanData");
 }
 //处理table的公共title
 function dealTableTitle() {
@@ -51,66 +50,25 @@ function dealTableTitle() {
             var id = rowObject['id'];
             return "<input type='checkbox' name='check' value='"+id+"'/>";
         }, "sWidth": "5%"},
-        {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "客户名称", "mData": "settlement", "sWidth": "10%"},
-        {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
-        {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
-        {"sTitle": "预交金额", "mData": "prepaidAmount", "sWidth": "5%"},
-        {"sTitle": "订单日期", "mData": "orderTime", "sWidth": "5%"},
-        {"sTitle": "已发送量", "mData": "sendCount", "sWidth": "5%"},
-        {"sTitle": "剩余量", "mData": "leftCount", "sWidth": "6%"},
-        {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
-        {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
-        {"sTitle": "合同状态", "mData": "status", "sWidth": "5%","mRender": function (data, type, row) {
-            var status = row['status'];
-            if(status==1){
-                return "解锁";
-            }
-            if(status==3){
-                return "正在发运";
-            }
-            if(status==2){
-                return "锁定";
-            }
-            if(status==0){
-                return "未审核";
-            }
-            if(status==-1){
-                return "未通过";
-            }
-            return "未知";
-        }},
-        {"sTitle": "经手人", "mData": "inputPerson", "sWidth": "5%"},
-        {"sTitle": "录入人", "mData": "usePerson", "sWidth": "5%"},
-        {"sTitle": "录入时间", "mData": "createtime", "sWidth": "8%"},
-        {"sTitle": "合同类型", "mData": "contractType", "sWidth": "8%","mRender": function (data, type, row) {
-            var type = row['contractType'];
-            if(type == "1"){
-                return "公用煤";
-            }
-            if(type == "2"){
-                return "零销煤";
-            }
-            if(type == "4"){
-                return "职工煤";
-            }
-            if(type == "3"){
-                return "其他";
-            }
-        }},
-        // {"sTitle": "预交欠费", "mData": "unitPrice", "sWidth": "5%"},
-        {
-            "sTitle": "铲车费", "mData": "forkliftFee", "sWidth": "10%", "mRender": function (data, type, row) {
-            return operateType(data, type, row);
-        }
-        },
-        {"sTitle": "发票公司名", "mData": "billName", "sWidth": "10%"},
-        {"sTitle": "公司地址", "mData": "address", "sWidth": "10%"},
-        {"sTitle": "税号", "mData": "billNo", "sWidth": "7%"},
-        {"sTitle": "电话", "mData": "tel", "sWidth": "7%"},
-        {"sTitle": "开户银行", "mData": "bankName", "sWidth": "7%"},
-        {"sTitle": "账号", "mData": "bankNo", "sWidth": "7%"},
+        {"sTitle": "计划号", "mData": "rid", "sWidth": "5%"},
+        {"sTitle": "收货单位", "mData": "name", "sWidth": "10%"},
+        {"sTitle": "计划车数", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "累计实发车", "mData": "actualCarNum", "sWidth": "5%"},
+        {"sTitle": "计划吨数", "mData": "planTonnoage", "sWidth": "5%"},
+        {"sTitle": "累计实发吨", "mData": "actualSendedTonnage", "sWidth": "5%"},
+        {"sTitle": "未发车数", "mData": "unsendedCarNum", "sWidth": "5%"},
+        {"sTitle": "未发吨数", "mData": "unsendedTonnage", "sWidth": "5%"},
+        {"sTitle": "单价", "mData": "actualUnitPrice", "sWidth": "6%"},
+        {"sTitle": "煤种", "mData": "coalnName", "sWidth": "6%"},
+        {"sTitle": "井别", "mData": "wellsName", "sWidth": "5%"},
+        {"sTitle": "到站", "mData": "siteName", "sWidth": "5%"},
+        {"sTitle": "专用线", "mData": "privateLine", "sWidth": "5%"},
+        {"sTitle": "结算单位", "mData": "settlement", "sWidth": "5%"},
+        {"sTitle": "资金方式", "mData": "method", "sWidth": "8%"},
+        {"sTitle": "经办人", "mData": "usePerson", "sWidth": "8%"},
+        {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
+        {"sTitle": "日期", "mData": "createtime", "sWidth": "10%"},
+        {"sTitle": "交易单号", "mData": "payId", "sWidth": "10%"},
         {
             "sTitle": "操作", "mData": "id", "sWidth": "10%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
@@ -132,35 +90,37 @@ function operateType(cellvalue, options, rowObject) {
 function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['id'];
     var status = rowObject['status'];
-    var numNo = rowObject['numNo'];
-    var settlement = rowObject['settlement'];
     var name = rowObject['name'];
-    var orderCount = rowObject['orderCount'];
-    var unitPrice = rowObject['unitPrice'];
+    var settlement = rowObject['settlement'];
+    var planCarNum = rowObject['planCarNum'];
+    var actualCarNum = rowObject['actualCarNum'];
+    var planTonnoage = rowObject['planTonnoage'];
+    var ast = rowObject['actualSendedTonnage'];
+
     var inputPerson = rowObject['inputPerson'];
     var usePerson = rowObject['usePerson'];
-    var contractType = rowObject['contractType'];
-    var forkliftFee = rowObject['forkliftFee'];
-    var orderTime = rowObject['orderTime'];
-    var billName = rowObject['billName'];
-    var address = rowObject['address'];
-    var billNo = rowObject['billNo'];
-    var tel = rowObject['tel'];
-    var bankName = rowObject['bankName'];
-    var bankNo = rowObject['bankNo'];
+
+    var actualUnitPrice = rowObject['actualUnitPrice'];
+    var wellsName = rowObject['wellsName'];
+    var coalnName = rowObject['coalnName'];
+    var siteName = rowObject['siteName'];
+    var privateLine = rowObject['privateLine'];
+    var method = rowObject['method'];
+    var createtime = rowObject['createtime'];
+    var payId = rowObject['payId'];
     return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
         + id + "','"
-        + name + "','"+ numNo + "','"+ settlement + "','"+ orderCount + "','"
-        + unitPrice + "','"+ inputPerson + "','"+ usePerson + "','"
-        + contractType + "','"+ orderTime + "','"
-        + billName + "','"+ address + "','"
-        + billNo + "','"+ tel + "','"  + bankName + "','"+ bankNo + "','"
-        + forkliftFee
+        + name + "','"+ status + "','"+ settlement + "','"+ planCarNum + "','"
+        + actualCarNum + "','"+ inputPerson + "','"+ usePerson + "','"
+        + planTonnoage + "','"+ ast + "','"  + payId + "','"
+        + actualUnitPrice + "','"+ wellsName + "','"
+        + coalnName + "','"+ siteName + "','"  + privateLine + "','"+ method + "','"
+        + createtime
         + "')\">编辑</button>";
 }
 //编辑
-function editSettlement(id,name,numNo,st,orderCount,unitPrice,ip,up,ct,orderTime,
-                        billName,address,billNo,tel,bankName,bankNo,ff) {
+function editSettlement(id,name,status,st,planCarNum,actualCarNum,ip,up,pt,ast,
+                        payId,aup,wellsName,coalnName,siteName,pl,method,time) {
     subType = 2;
     $("#numNo").val(numNo);
     $("#hideId").val(id);
@@ -254,7 +214,7 @@ function initButtonClick() {
         var dateRange = time.split("to");
         var beginDate =  $.trim(dateRange[0]);
         var endDate =  $.trim(dateRange[1]);
-        var param = 'numNo='+numNo+'&settlement='+settlements+'&beginDate='+beginDate+'&endDate='+endDate+'&name='+coal+'&status='+status+'&contractType='+type;
+        var param = 'numNo='+numNo+'&settlement='+settlements+'&beginDate='+beginDate+'&endDate='+endDate+'&coal='+coal+'&status='+status+'&contractType='+type;
         location.href=path + 'export_excel_data?'+param;
     });
     $("#lock").on("click",function () {

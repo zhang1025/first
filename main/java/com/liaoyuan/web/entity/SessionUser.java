@@ -9,7 +9,7 @@ public class SessionUser implements Serializable {
 	private static final long serialVersionUID = -3250660435051228657L;
 
 	public static final String SESSION_ROOT_KEY = SessionUser.class.getName()+ ".liaoyuan.key";
-
+	public static final String SESSION_USER = "liaoyuanUser";
 	private UserBean bean;
 	private Map<String,List<Permission>> menuMap;
 

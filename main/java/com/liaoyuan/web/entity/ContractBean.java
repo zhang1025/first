@@ -33,8 +33,17 @@ public class ContractBean {
     private String createtime;//录入时间
     private int status;
 
+    private String billName;
+    private String address;
+    private String billNo;
+    private String tel;
+    private String bankName;
+    private String bankNo;
+
     private String beginDate;
     private String endDate;
+
+
 
     //分页用
     private int iDisplayStart;

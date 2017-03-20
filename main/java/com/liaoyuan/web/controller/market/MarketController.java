@@ -4,6 +4,7 @@ import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
+import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.DataTableUtils;
@@ -51,6 +52,7 @@ public class MarketController extends BaseController {
         List<DataBean> settlements = commonDataService.getListData("settlement");
         modelMap.put("coals",coals);
         modelMap.put("settlements",settlements);
+        modelMap.put("account",httpSession.getAttribute(SessionUser.SESSION_USER));
         return new ModelAndView("/market/contractPage");
     }
     @RequestMapping(value = "/get_contract_table", method = RequestMethod.POST)
@@ -70,19 +72,34 @@ public class MarketController extends BaseController {
         return marketService.editContractInfo(bean);
     }
     @RequestMapping(value = "/deleteContractInfo", method = RequestMethod.POST)
-    public Integer deleteContractInfo(int id) {
-        return marketService.deleteContractInfo(id);
+    public Integer deleteContractInfo(String id) {
+        int rtn = 0;
+        String[] args = id.split(",");
+        for (String s : args) {
+            if(marketService.deleteContractInfo(Integer.parseInt(s))>0){
+                rtn++;
+            }
+        }
+        return rtn==args.length?1:-1;
     }
     @RequestMapping(value = "/lockInfo", method = RequestMethod.POST)
-    public Integer lockInfo(int id, int status,int type) {
-        if(type ==2 && status!=2){//解锁操作  但是该合同状态不是锁定
-            return -1;
-        }
+    public Integer lockInfo(String id,int type) {
+        int rtn = 0;
         if(type ==1){ //锁定
-            return marketService.lockInfo(id);
+            for (String s : id.split(",")) {
+                if(marketService.lockInfo(Integer.parseInt(s))>0){
+                    rtn++;
+                }
+            }
+            return rtn;
         }
         if(type == 2){
-            return marketService.unlockInfo(id);
+            for (String s : id.split(",")) {
+                if(marketService.unlockInfo(Integer.parseInt(s))>0){
+                    rtn++;
+                }
+            }
+            return rtn;
         }
         return -1;
     }

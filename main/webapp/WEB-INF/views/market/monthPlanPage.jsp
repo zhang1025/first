@@ -73,7 +73,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
                                     <div class="input-group">
@@ -120,17 +120,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="contractData">
+            <div class="row" id="monthPlanData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default downLoad toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;合同信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;外运计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="contractDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="monthPlanDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 10px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -154,7 +154,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">添加合同信息</h4>
+                <h4 class="modal-title" id="myModalLabel2">添加外运计划信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
@@ -414,6 +414,6 @@
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
 <script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
-<script src="<c:url value="/js/views/market/contractPage.js"/> "></script>
+<script src="<c:url value="/js/views/market/monthPlanPage.js"/> "></script>
 
 <!-- / page-content -->

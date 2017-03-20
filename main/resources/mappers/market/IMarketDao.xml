@@ -30,22 +30,24 @@
         select id,numNo,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
         orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
-        orderTime,createtime,status from car_contract
+        orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
         where 1=1 <include refid="search"/>
          order by createtime desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
      <insert id="addContractInfo" parameterType="ContractBean" >
         insert into car_contract(numNo,settlement,name,orderCount,unitPrice,inputPerson,
-        usePerson,contractType,forkliftFee,orderTime,status) values (#{numNo},#{settlement},#{name},
+        usePerson,contractType,forkliftFee,orderTime,status,billName,address,billNo,tel,bankName,bankNo) values (#{numNo},#{settlement},#{name},
         #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
-        #{orderTime},#{status});
+        #{orderTime},#{status},#{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
     </insert>
     <update id="editContractInfo" parameterType="ContractBean" >
         update car_contract set numNo=#{numNo},settlement=#{settlement},name=#{name},
         orderCount=#{orderCount},unitPrice=#{unitPrice},inputPerson=#{inputPerson},
         usePerson=#{usePerson},contractType=#{contractType},
-        forkliftFee=#{forkliftFee},orderTime=#{orderTime},status=#{status} where id=#{id}
+        forkliftFee=#{forkliftFee},orderTime=#{orderTime},status=#{status},
+        billName=#{billName},address=#{address},billNo=#{billNo},tel=#{tel},
+        bankName=#{bankName},bankNo=#{bankNo} where id=#{id}
     </update>
 
     <update id="lockInfo" parameterType="ContractBean" >

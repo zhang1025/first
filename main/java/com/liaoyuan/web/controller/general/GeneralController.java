@@ -68,6 +68,7 @@ public class GeneralController extends BaseController {
         }
         sessionUser.setMenuMap(map);
         httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
+        httpSession.setAttribute(SessionUser.SESSION_USER,account);
         result.put("status",1);
         return result;
     }

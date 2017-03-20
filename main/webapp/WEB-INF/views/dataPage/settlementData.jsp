@@ -154,8 +154,8 @@
                                style="width:30%;padding-left: 20px;padding-right: 1px">类型:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                             <select id="type" class="fancy-select form-control required" aria-required="true">
-                                <option value="0">非重点</option>
-                                <option value="1">重点</option>
+                                <option value="0">普通级</option>
+                                <option value="1">VIP级</option>
                             </select>
                         </div>
                     </div>

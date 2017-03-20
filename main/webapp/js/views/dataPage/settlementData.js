@@ -52,10 +52,10 @@ function dealTableTitle() {
 function operateType(cellvalue, options, rowObject) {
     var type = rowObject['type'];
     if (type == 1) {
-        return "<span class='badge badge-success'>重点</span>";
+        return "<span class='badge badge-success'>VIP级</span>";
     }
     if (type == 0) {
-        return "<span class='badge badge-important'>非重点</span>";
+        return "<span class='badge badge-important'>普通级</span>";
     }
     return "未知";
 }
