@@ -82,35 +82,35 @@
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
-                                        <button id="print" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">打印</button>
+                                        <button id="print" data-toggle="modal" data-target="#modalDelete" class="btn btn-warning mr5 mb10" type="button">打印</button>
                                     </div>
                                 </div>
-                                <div style="padding: 5px;float: right">
+                                <div style="padding: 15px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
                                                 data-target="#myModal" type="button">新增
                                         </button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="delete" data-toggle="modal" data-target="#modalDelete" class="btn btn-danger mr5 mb10" type="button">删除</button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="unlock" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">解锁</button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="lock" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">锁定</button>
                                     </div>
                                 </div>
                                 <%--<!-- 查询按钮-->--%>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>

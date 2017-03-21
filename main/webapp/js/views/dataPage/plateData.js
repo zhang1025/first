@@ -17,7 +17,7 @@ function queryPlateData() {
         {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
-    commonDataTables(model+"DataTables", url, aoColumns, params,model+"Data");
+    commonDataTablesWW(model+"DataTables", url, aoColumns, params,model+"Data");
 }
 //处理table的公共title
 function dealTableTitle() {

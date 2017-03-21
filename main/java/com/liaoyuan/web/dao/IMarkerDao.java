@@ -1,6 +1,7 @@
 package com.liaoyuan.web.dao;
 
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.PlanBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,12 @@ public interface IMarkerDao {
 
     int lockInfo(@Param(value = "id") int id);
     int unlockInfo(@Param(value = "id") int id);
+
+    //外运与计划
+    int countMonthPlanData(PlanBean bean);
+    List<PlanBean> getTableMonthPlanData(PlanBean bean);
+    int addMonthPlan(PlanBean bean);
+    int editMonthPlan(PlanBean bean);
+    int stopMonthPlan(@Param(value = "id") int id);
+    int deleteMonthPlan(@Param(value = "id") int id);
 }

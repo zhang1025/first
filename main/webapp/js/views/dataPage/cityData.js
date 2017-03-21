@@ -17,7 +17,7 @@ function queryCityData() {
         {name: 'name', value: name}
     ];
     var url = path+ 'get_common_table';
-    commonDataTables("cityDataTables", url, aoColumns, params,"cityData");
+    commonDataTablesWW("cityDataTables", url, aoColumns, params,"cityData");
 }
 //处理table的公共title
 function dealTableTitle() {

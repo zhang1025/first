@@ -15,66 +15,6 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <!-- 查询条件 -->
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 5px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">合同编号</span>
-                                        <input type="text" id="s_numNo" class="form-control white-bg"
-                                               style="width: 100px"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:5px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">客户名称</span>
-                                        <select id="s_settlements" class="select fancy-select form-control"
-                                                style="width: 150px">
-                                            <option value="">请选择</option>
-                                            <c:forEach var="st" items="${settlements}" varStatus="s">
-                                                <option value="${st.name}">${st.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 55px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">煤种</span>
-                                        <select id="s_coal" class="select fancy-select form-control"
-                                                style="width: 120px">
-                                            <option value="">请选择</option>
-                                            <c:forEach var="coal" items="${coals}" varStatus="s">
-                                                <option value="${coal.kind}">${coal.kind}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 48px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">合同状态</span>
-                                        <select id="s_status" class="fancy-select form-control" style="width: 100px">
-                                            <option value="">请选择</option>
-                                            <option value="3">正在发运</option>
-                                            <option value="2">锁定</option>
-                                            <option value="1">解锁</option>
-                                            <option value="0">未审核</option>
-                                            <option value="-1">未通过</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 50px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">合同类型</span>
-                                        <select id="s_type" class="fancy-select form-control"
-                                                style="width: 100px">
-                                            <option value="">请选择</option>
-                                            <option value="1">公用煤</option>
-                                            <option value="2">零销煤</option>
-                                            <option value="4">职工煤</option>
-                                            <option value="3">其他</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
                                     <div class="input-group">
                                         <span class="input-group-addon">时间</span>
@@ -82,35 +22,25 @@
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
-                                    <div class="input-group">
-                                        <button id="print" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">打印</button>
-                                    </div>
-                                </div>
-                                <div style="padding: 5px;float: right">
+                                <div style="padding: 15px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
                                                 data-target="#myModal" type="button">新增
                                         </button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="stopMonthPlan" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">终止月计划</button>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="delete" data-toggle="modal" data-target="#modalDelete" class="btn btn-danger mr5 mb10" type="button">删除</button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 5px;float: right">
-                                    <div class="input-group">
-                                        <button id="unlock" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">解锁</button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 5px;float: right">
-                                    <div class="input-group">
-                                        <button id="lock" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">锁定</button>
-                                    </div>
-                                </div>
                                 <%--<!-- 查询按钮-->--%>
-                                <div style="padding-top: 5px;float: right">
+                                <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>
@@ -126,7 +56,7 @@
                     <div class="panel panel-default downLoad toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;外运计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">外运计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
@@ -148,7 +78,7 @@
 <input type="hidden" id="hideId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 550px">
+    <div class="modal-dialog" style="width: 570px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
@@ -160,23 +90,125 @@
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
                         <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <label for="name" class="col-lg-4 control-label"
+                                           style="padding: 1px;width: 17%">收货单位:</label>
+                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                                        <select id="name" class="select fancy-select form-control required">
+                                            <c:forEach var="re" items="${receives}" varStatus="s">
+                                                <option value="${re.id}">${re.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="numNo" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">合同编号:</label>
+                                    <label for="planCarNum" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">计划车数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="numNo" class="form-control required" aria-required="true"
-                                               placeholder="合同编号">
+                                        <input type="text" id="planCarNum" class="form-control required" aria-required="true"
+                                               placeholder="计划车数" name="number">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="orderTime" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">订单日期:</label>
+                                    <label for="actualCarNum" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">累计实发车:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="orderTime" class="form-control form_datetime" aria-required="true"
-                                               style="cursor: pointer;"  readonly="readonly">
+                                        <input type="text" id="actualCarNum" class="form-control"
+                                                placeholder="累计实发车数" name="number">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="planTonnage" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">计划吨数:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="planTonnage" class="form-control required" aria-required="true"
+                                               placeholder="计划吨数" name="dataNumber">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="ast" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">累计实发吨:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="ast" class="form-control"
+                                               name="number" placeholder="累计实发吨">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="actualUnitPrice" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">实发单价:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="actualUnitPrice" class="form-control required" aria-required="true"
+                                               name="dataNumber" placeholder="实发单价">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="wellsName" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">井别:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <select id="wellsName" class="select fancy-select form-control">
+                                            <c:forEach var="we" items="${wells}" varStatus="s">
+                                                <option value="${we.name}">${we.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="coalName" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">煤炭种类:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <select id="coalName" class="select fancy-select form-control">
+                                            <c:forEach var="ca" items="${coals}" varStatus="s">
+                                                <option value="${ca.name}">${ca.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="siteName" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">到站:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <select id="siteName" class="select fancy-select form-control">
+                                            <c:forEach var="st" items="${sites}" varStatus="s">
+                                                <option value="${st.name}">${st.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="privateLine" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">专用线:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="privateLine" class="form-control"
+                                               placeholder="专用线">
                                     </div>
                                 </div>
                             </td>
@@ -185,9 +217,9 @@
                             <td colspan="2">
                                 <div class="form-group">
                                     <label for="settlement" class="col-lg-4 control-label"
-                                           style="padding: 1px;width: 17%">客户名称:</label>
+                                           style="padding: 1px;width: 17%">结算单位:</label>
                                     <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <select id="settlement" class="select fancy-select form-control required">
+                                        <select id="settlement" class="select fancy-select form-control">
                                             <c:forEach var="st" items="${settlements}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
                                             </c:forEach>
@@ -199,36 +231,14 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="name" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">种类:</label>
+                                    <label for="method" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">结算方式:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="name" class=" select fancy-select form-control required">
-                                            <c:forEach var="coal" items="${coals}" varStatus="s">
-                                                <option value="${coal.kind}">${coal.kind}</option>
+                                        <select id="method" class="select fancy-select form-control">
+                                            <c:forEach var="st" items="${settlements}" varStatus="s">
+                                                <option value="${st.method}">${st.method}</option>
                                             </c:forEach>
                                         </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="orderCount" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">订单总量:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="orderCount" class="form-control required" aria-required="true"
-                                               name="number" placeholder="订单总量">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="unitPrice" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">合同单价:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="unitPrice" class="form-control required" aria-required="true"
-                                               name="dataNumber" placeholder="合同单价">
                                     </div>
                                 </div>
                             </td>
@@ -238,7 +248,7 @@
                                            style="padding-right: 1px">录入人:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="inputPerson" class="form-control"
-                                               placeholder="${account}" readonly="readonly">
+                                               placeholder="${account}" value="${account}" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -249,113 +259,18 @@
                                     <label for="usePerson" class="col-lg-4 control-label"
                                            style="padding-right: 1px">经办人:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="usePerson" class="form-control required" aria-required="true"
+                                        <input type="text" id="usePerson" class="form-control"
                                                placeholder="经办人">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="contractType" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">合同类型:</label>
+                                    <label for="payId" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">交款单号:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="contractType" class="fancy-select form-control"
-                                                style="width: 130px">
-                                            <option value="">请选择</option>
-                                            <option value="1">公用煤</option>
-                                            <option value="2">零销煤</option>
-                                            <option value="4">职工煤</option>
-                                            <option value="3">其他</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="forkliftFee" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">铲车费:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="forkliftFee" class="fancy-select form-control"
-                                                style="width: 300px">
-                                            <option value="">请选择</option>
-                                            <option value="1">包括铲车费</option>
-                                            <option value="0">不包括</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: center">
-                                <span style="color: blueviolet">以下是开发票所需要的信息:</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <label for="billName" class="col-lg-4 control-label"
-                                           style="padding: 1px;width: 17%">公司名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="billName" class="form-control required" aria-required="true"
-                                               placeholder="公司名称">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <label for="address" class="col-lg-4 control-label"
-                                           style="padding: 1px;width: 17%">公司地址:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="address" class="form-control required" aria-required="true"
-                                               placeholder="公司地址">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="billNo" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">税号:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="billNo" class="form-control required" aria-required="true"
-                                               placeholder="税号">
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="tel" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">电话:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="tel" class="form-control required" aria-required="true"
-                                               placeholder="电话">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="bankName" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">开户银行:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="bankName" class="form-control required" aria-required="true"
-                                               placeholder="开户银行">
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="bankNo" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">账号:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="bankNo" class="form-control required" aria-required="true"
-                                               placeholder="账号">
+                                        <input type="text" id="payId" class="form-control"
+                                               placeholder="交款单号">
                                     </div>
                                 </div>
                             </td>

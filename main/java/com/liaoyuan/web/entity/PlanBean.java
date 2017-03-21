@@ -14,7 +14,7 @@ public class PlanBean {
     private int planCarNum;
     private int actualCarNum;
 
-    private double planTonnoage;
+    private double planTonnage;
     private double actualSendedTonnage;
     //未发车数 = 计划车数减实发车数  planCarNum-actualCarNum
     private double unsendedCarNum;
@@ -25,7 +25,7 @@ public class PlanBean {
     private double actualUnitPrice;
 
     private String wellsName;
-    private String coalnName;
+    private String coalName;
 
     private String siteName;
     private String privateLine;
@@ -43,6 +43,7 @@ public class PlanBean {
     private String beginDate;
     private String endDate;
 
+    private String searchType;
 
     //分页用
     private int iDisplayStart;

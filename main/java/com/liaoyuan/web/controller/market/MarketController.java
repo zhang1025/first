@@ -58,7 +58,6 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/get_contract_table", method = RequestMethod.POST)
     public void getUserDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         ContractBean bean = WebCommonDataUtils.getContractData(jsonString);
-        bean.setEndDate(bean.getEndDate()+" 23:59:59");
         int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
         List<ContractBean> gridData = marketService.getTableContractData(bean);
         printDataTables(response, count, gridData);
@@ -105,14 +104,20 @@ public class MarketController extends BaseController {
     }
 
     @RequestMapping(value = "/monthPlan", method = RequestMethod.GET)
-    public ModelAndView monthPlan(){
-        log.info("=============waiyun============");
-        return new ModelAndView("/market/monthPage");
+    public ModelAndView monthPlan(ModelMap modelMap){
+        log.info("=============monthPlan============");
+        modelMap.put("account",httpSession.getAttribute(SessionUser.SESSION_USER));
+        modelMap.put("coals",commonDataService.getListData("coal"));
+        modelMap.put("sites",commonDataService.getListData("site"));
+        modelMap.put("receives",commonDataService.getListData("receive"));
+        modelMap.put("wells",commonDataService.getListData("wells"));
+        modelMap.put("settlements",commonDataService.getListData("settlement"));
+        return new ModelAndView("/market/monthPlanPage");
     }
 
     @RequestMapping(value = "/dayPlan", method = RequestMethod.GET)
     public ModelAndView dayPlan(){
-        return new ModelAndView("/market/dayPage");
+        return new ModelAndView("/market/dayPlanPage");
     }
     /**
      * 月计划 日计划管理
@@ -120,37 +125,55 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/get_plans_table", method = RequestMethod.POST)
     public void getMonthPlansTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         PlanBean bean = WebCommonDataUtils.getPlanData(jsonString);
-        bean.setEndDate(bean.getEndDate()+" 23:59:59");
-//        int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
-//        List<PlanBean> gridData = marketService.getTableContractData(bean);
-//        printDataTables(response, count, gridData);
+        int count = 0;
+        List<PlanBean> gridData = new ArrayList<>();
+
+        if(bean!=null && bean.getSearchType().equals("month")){
+            count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
+            gridData = marketService.getTableMonthPlanData(bean);
+        }
+//        if(bean!=null && bean.getSearchType().equals("day")){
+//            count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+//            gridData = marketService.getTableDayPlanData(bean);
+//        }
+        printDataTables(response, count, gridData);
     }
     @RequestMapping(value = "/addMonthPlan", method = RequestMethod.POST)
     public Integer addMonthPlan(PlanBean bean) {
-//        return marketService.addContractInfo(bean);
-        return 0;
+        return marketService.addMonthPlan(bean);
     }
     @RequestMapping(value = "/editMonthPlan", method = RequestMethod.POST)
-    public Integer editMonthPlan(ContractBean bean) {
-        return marketService.editContractInfo(bean);
+    public Integer editMonthPlan(PlanBean bean) {
+        return marketService.editMonthPlan(bean);
+    }
+
+    @RequestMapping(value = "/stopMonthPlan", method = RequestMethod.POST)
+    public Integer stopMonthPlan(String id) {
+        int rtn = 0;
+        String[] args = id.split(",");
+        for (String s : args) {
+            if(marketService.stopMonthPlan(Integer.parseInt(s))>0){
+                rtn++;
+            }
+        }
+        return rtn==args.length?1:-1;
     }
     @RequestMapping(value = "/deleteMonthPlan", method = RequestMethod.POST)
-    public Integer deleteMonthPlan(int id) {
-        return marketService.deleteContractInfo(id);
+    public Integer deleteMonthPlan(String id) {
+        int rtn = 0;
+        String[] args = id.split(",");
+        for (String s : args) {
+            if(marketService.deleteMonthPlan(Integer.parseInt(s))>0){
+                rtn++;
+            }
+        }
+        return rtn==args.length?1:-1;
     }
-
-
-
-
-
-
-
-
 
 
 
     /**
-     *导出 excel数据
+     *导出 合同 excel数据
      */
     @RequestMapping(value = "/export_excel_data", method = RequestMethod.GET)
     public void exportData(ContractBean bean,HttpServletResponse response) throws Exception{
@@ -162,6 +185,31 @@ public class MarketController extends BaseController {
         columnnames = DataTableUtils.getExcelHTColumnName();
         datas = DataTableUtils.getExcelHTDataLists(gridData);
         String fileName = URLEncoder.encode("合同信息数据", "utf-8")+".xls";
+        ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+    }
+
+    /**
+     *导出 外运月计划excel数据
+     */
+    @RequestMapping(value = "/export_plan_excel_data", method = RequestMethod.GET)
+    public void exportPlanData(PlanBean bean,HttpServletResponse response) throws Exception{
+        List<String> columnnames ;
+        List<List<Object>> datas ;
+        int count=0;List<PlanBean> gridData=new ArrayList<>();
+
+        if(bean.getSearchType().equals("month")){
+            count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
+            bean.setIDisplayLength(count);
+            gridData = marketService.getTableMonthPlanData(bean);
+        }else{
+//            count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
+//            bean.setIDisplayLength(count);
+//            gridData = marketService.getTableMonthPlanData(bean);
+        }
+
+        columnnames = DataTableUtils.getExcelPlanColumnName();
+        datas = DataTableUtils.getExcelPlanDataLists(gridData);
+        String fileName = URLEncoder.encode("外运月计划信息数据", "utf-8")+".xls";
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }
 }

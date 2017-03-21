@@ -183,7 +183,7 @@ function editSettlement(id,name,numNo,st,orderCount,unitPrice,ip,up,ct,orderTime
 }
 function dealLock(id,type) {
     $("#deleteBut").on("click", function () {
-        if(checkBtn() == ""){
+        if(id == ""){
             $('#modalDelete').trigger('click');
             showResultInfo("请至少选中一行！", false);
             return;
@@ -274,7 +274,7 @@ function initButtonClick() {
 //移除
 function deleteSettlement(id) {
     $("#deleteBut").on("click", function () {
-        if(checkBtn() == ""){
+        if(id == ""){
             $('#modalDelete').trigger('click');
             showResultInfo("请至少选中一行！", false);
             return;

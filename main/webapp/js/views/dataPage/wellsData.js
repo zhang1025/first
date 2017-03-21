@@ -18,7 +18,7 @@ function queryWellsData() {
     ];
     var url = path+ 'get_common_table';
 
-    commonDataTables("wellsDataTables", url, aoColumns, params,"wellsData");
+    commonDataTablesWW("wellsDataTables", url, aoColumns, params,"wellsData");
 }
 //处理table的公共title
 function dealTableTitle() {

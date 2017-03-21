@@ -1,6 +1,7 @@
 package com.liaoyuan.web.utils;
 
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.PlanBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,67 @@ public class DataTableUtils {
                 default:row.add("其他");
             }
             row.add(reportData.getForkliftFee());
+            datas.add(row);
+        }
+        return datas;
+    }
+
+    //外运计划
+    public static List<String> getExcelPlanColumnName() {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("计划号");
+        columnnames.add("收货单位");
+        columnnames.add("计划车数");
+        columnnames.add("累计实发车数");
+        columnnames.add("计划吨数");
+        columnnames.add("累计实发吨");
+        columnnames.add("未发车数");
+        columnnames.add("未发吨数");
+        columnnames.add("单价");
+        columnnames.add("煤种");
+        columnnames.add("井别");
+        columnnames.add("到站");
+        columnnames.add("专用线");
+        columnnames.add("结算单位");
+        columnnames.add("资金方式");
+        columnnames.add("经办人");
+        columnnames.add("录入人");
+        columnnames.add("日期");
+        columnnames.add("交易单号");
+        columnnames.add("状态");
+        return columnnames;
+    }
+    public static List<List<Object>> getExcelPlanDataLists(List<PlanBean> gridData) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(PlanBean pb:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(pb.getRid());
+            row.add(pb.getName());
+            row.add(pb.getPlanCarNum());
+            row.add(pb.getActualCarNum());
+            row.add(pb.getPlanTonnage());
+            row.add(pb.getActualSendedTonnage());
+            row.add(pb.getPlanCarNum()-pb.getActualCarNum());
+            row.add(pb.getPlanTonnage()-pb.getActualSendedTonnage());
+            row.add(pb.getActualUnitPrice());
+            row.add(pb.getCoalName());
+            row.add(pb.getWellsName());
+            row.add(pb.getSiteName());
+            row.add(pb.getPrivateLine());
+            row.add(pb.getSettlement());
+            row.add(pb.getMethod());
+            row.add(pb.getUsePerson());
+            row.add(pb.getInputPerson());
+            row.add(pb.getCreatetime());
+            row.add(pb.getPayId());
+            switch (pb.getStatus()){
+                case 1: row.add("正常");
+                    break;
+                case -1: row.add("终止计划");
+                    break;
+                default:row.add("未知");
+            }
             datas.add(row);
         }
         return datas;

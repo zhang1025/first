@@ -6,6 +6,7 @@ import com.liaoyuan.web.entity.PlanBean;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class WebCommonDataUtils{
             bean.setIDisplayLength(iDisplayLength);
             bean.setIDisplayStart(iDisplayStart);
             bean.setIRecordsTotal(iRecordsTotal);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
+                bean.setEndDate(bean.getEndDate()+" 23:59:59");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,6 +67,9 @@ public class WebCommonDataUtils{
             bean.setIDisplayLength(iDisplayLength);
             bean.setIDisplayStart(iDisplayStart);
             bean.setIRecordsTotal(iRecordsTotal);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
+                bean.setEndDate(bean.getEndDate()+" 23:59:59");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

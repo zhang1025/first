@@ -60,4 +60,47 @@
     <delete id="deleteContractInfo">
         delete from car_contract where id=#{id}
     </delete>
+
+
+    <!--外运查询-->
+    <sql id="searchMonth">
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+    </sql>
+    <!--common -->
+    <select id="countMonthPlanData" parameterType="PlanBean" resultType="java.lang.Integer">
+        select count(*) from out_month_plan  where 1=1 <include refid="searchMonth"/>
+
+    </select>
+    <select id="getTableMonthPlanData" parameterType="PlanBean" resultType="PlanBean">
+        select id,rid,settlement,name,planCarNum,actualCarNum,planTonnage,actualSendedTonnage,
+        planCarNum-actualCarNum as unsendedCarNum,
+        planTonnage-actualSendedTonnage as unsendedTonnage,
+        actualUnitPrice,wellsName,coalName,siteName,privateLine,method,usePerson,inputPerson,
+        payId,createtime,status from out_month_plan
+        where 1=1 <include refid="searchMonth"/>
+        order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+    </select>
+    <insert id="addMonthPlan" parameterType="PlanBean" >
+        insert into out_month_plan (rid,name,planCarNum,actualCarNum,inputPerson,
+        usePerson,planTonnage,actualSendedTonnage,actualUnitPrice,
+        wellsName,coalName,siteName,privateLine,settlement,method,payId)
+        values (#{rid},#{name},#{planCarNum},#{actualCarNum},#{inputPerson},#{usePerson},
+        #{planTonnage},#{actualSendedTonnage},#{actualUnitPrice},
+        #{wellsName},#{coalName},#{siteName},#{privateLine},#{settlement},#{method},#{payId});
+    </insert>
+    <update id="editMonthPlan" parameterType="PlanBean" >
+        update out_month_plan set rid=#{rid},name=#{name},planCarNum=#{planCarNum},
+        actualCarNum=#{actualCarNum},usePerson=#{usePerson},planTonnage=#{planTonnage},
+        usePerson=#{usePerson},actualSendedTonnage=#{actualSendedTonnage},
+        actualUnitPrice=#{actualUnitPrice},wellsName=#{wellsName},
+        coalName=#{coalName},siteName=#{siteName},privateLine=#{privateLine},settlement=#{settlement},
+        method=#{method},payId=#{payId} where id=#{id}
+    </update>
+    <update id="stopMonthPlan">
+        update out_month_plan set status=-1 where id=#{id}
+    </update>
+    <delete id="deleteMonthPlan">
+        delete from out_month_plan where id=#{id}
+    </delete>
+
 </mapper>

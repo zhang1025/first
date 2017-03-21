@@ -1,6 +1,7 @@
 package com.liaoyuan.web.service;
 
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.PlanBean;
 
 import java.util.List;
 
@@ -19,4 +20,12 @@ public interface MarketService {
 
     int lockInfo(int id);
     int unlockInfo(int id);
+
+    //外运月计划
+    int countMonthPlanData(PlanBean bean);
+    List<PlanBean> getTableMonthPlanData(PlanBean bean);
+    int addMonthPlan(PlanBean bean);
+    int editMonthPlan(PlanBean bean);
+    int stopMonthPlan(int id);
+    int deleteMonthPlan(int id);
 }
