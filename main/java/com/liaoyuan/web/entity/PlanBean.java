@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class PlanBean {
-    private  int id;
+    private int id;
     private int rid; //收货单位id
     private String name;//收货单位
     private int planCarNum;
@@ -39,7 +39,7 @@ public class PlanBean {
     private String createtime;//录入时间
     private int status;
 
-    private int month_id;
+    private int monthId;
     private String beginDate;
     private String endDate;
 

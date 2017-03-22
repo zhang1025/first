@@ -28,4 +28,11 @@ public interface MarketService {
     int editMonthPlan(PlanBean bean);
     int stopMonthPlan(int id);
     int deleteMonthPlan(int id);
+
+    int countDayPlanData(PlanBean bean);
+    List<PlanBean> getTableDayPlanData(PlanBean bean);
+    int addDayPlan(PlanBean bean);
+    int editDayPlan(PlanBean bean);
+    int deleteDayPlan(int id);
+
 }

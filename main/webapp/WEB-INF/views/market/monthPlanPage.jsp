@@ -19,7 +19,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">时间</span>
                                         <input type="text" id="date-range" name='date-range' class="form-control white-bg text-center"
-                                               style="cursor: pointer;font-size: 12px" readonly="readonly"/>
+                                               style="cursor: pointer;font-size: 13px" readonly="readonly"/>
                                     </div>
                                 </div>
                                 <div style="padding: 15px;float: right">
@@ -27,6 +27,11 @@
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
                                                 data-target="#myModal" type="button">新增
                                         </button>
+                                    </div>
+                                </div>
+                               <div style="padding-top: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="searchDayPlan"  class="btn btn-primary mr5 mb10" type="button">查看日计划</button>
                                     </div>
                                 </div>
                                 <div style="padding-top: 15px;float: right">
@@ -61,7 +66,27 @@
                         </div>
                         <div class="panel-body">
                             <table id="monthPlanDataTables" class="table table-striped table-bordered table-hover"
-                                   style="font-size: 10px" cellspacing="0" width="100%">
+                                   style="font-size: 12px" cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
+
+            <div class="row" id="playDayPlanDiv">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default downLoad toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">日计划信息</i>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="playDayPlanTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
                     </div>
@@ -74,6 +99,36 @@
     </div>
     <!-- / page-content-wrapper -->
 </div>
+<!-- 月计划对应的日计划展示 -->
+<%--<div class="modal fade" id="playDayPlanModal" tabindex="-1" role="dialog" aria-labelledby="myDayPlanModal" aria-hidden="true">--%>
+    <%--<div class="modal-dialog" style="width: 1200px;">--%>
+        <%--<div class="modal-content">--%>
+            <%--<div class="modal-header">--%>
+            <%--<button type="button" class="close" data-dismiss="modal">--%>
+                    <%--<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>--%>
+                <%--</button>--%>
+                <%--<h4 class="modal-title" id="myHistoryModalLabel3">日计划信息</h4>--%>
+            <%--</div>--%>
+            <%--<!-- 添加 -->--%>
+            <%--<div class="modal-body">--%>
+                <%--<div class="row" id="playDayPlanDiv">--%>
+                    <%--<div class="col-lg-12">--%>
+                        <%--<!-- col-lg-12 start here -->--%>
+                        <%--<div class="panel panel-default toggle ">--%>
+                            <%--<!-- Start .panel -->--%>
+                            <%--<div class="panel-body">--%>
+                                <%--<table id="playDayPlanTables" class="table table-striped table-bordered table-hover" cellspacing="0" style="font-size: 12px;" width="100%">--%>
+                                <%--</table>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<!-- End .panel -->--%>
+                    <%--</div>--%>
+                    <%--<!-- col-lg-12 end here -->--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 <!--新增信息-->
 <input type="hidden" id="hideId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -95,7 +150,7 @@
                                     <label for="name" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">收货单位:</label>
                                     <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <select id="name" class="select fancy-select form-control required">
+                                        <select id="name" class="select fancy-select form-control">
                                             <c:forEach var="re" items="${receives}" varStatus="s">
                                                 <option value="${re.id}">${re.name}</option>
                                             </c:forEach>
@@ -111,7 +166,8 @@
                                            style="padding-right: 1px">计划车数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="planCarNum" class="form-control required" aria-required="true"
-                                               placeholder="计划车数" name="number">
+                                               name="number"
+                                               placeholder="计划车数">
                                     </div>
                                 </div>
                             </td>
@@ -121,7 +177,7 @@
                                            style="padding-right: 1px">累计实发车:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="actualCarNum" class="form-control"
-                                                placeholder="累计实发车数" name="number">
+                                               name="number1" placeholder="累计实发车数" >
                                     </div>
                                 </div>
                             </td>
@@ -133,7 +189,8 @@
                                            style="padding-right: 1px">计划吨数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="planTonnage" class="form-control required" aria-required="true"
-                                               placeholder="计划吨数" name="dataNumber">
+                                               name="number2"
+                                               placeholder="计划吨数">
                                     </div>
                                 </div>
                             </td>
@@ -143,7 +200,7 @@
                                            style="padding-right: 1px">累计实发吨:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="ast" class="form-control"
-                                               name="number" placeholder="累计实发吨">
+                                               name="dataNumber" placeholder="累计实发吨">
                                     </div>
                                 </div>
                             </td>
@@ -155,7 +212,7 @@
                                            style="padding-right: 1px">实发单价:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="actualUnitPrice" class="form-control required" aria-required="true"
-                                               name="dataNumber" placeholder="实发单价">
+                                               name="dataNumber1" placeholder="实发单价">
                                     </div>
                                 </div>
                             </td>
@@ -208,7 +265,7 @@
                                            style="padding-right: 1px">专用线:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="privateLine" class="form-control"
-                                               placeholder="专用线">
+                                               required="true" placeholder="专用线">
                                     </div>
                                 </div>
                             </td>
@@ -259,7 +316,7 @@
                                     <label for="usePerson" class="col-lg-4 control-label"
                                            style="padding-right: 1px">经办人:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="usePerson" class="form-control"
+                                        <input type="text" id="usePerson" class="form-control required" aria-required="true"
                                                placeholder="经办人">
                                     </div>
                                 </div>
@@ -325,6 +382,8 @@
 </div>
 <button type='button' id="resultBut" class="btn btn-success mr5 mb10" data-toggle='modal'
         data-target='#modelResult'></button>
+<button type='button' id="showDayPlayTable" class="btn btn-success mr5 mb10" data-toggle='modal'
+        data-target='#playDayPlanModal'></button>
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>

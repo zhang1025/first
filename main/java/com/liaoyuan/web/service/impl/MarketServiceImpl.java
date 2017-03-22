@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,5 +82,40 @@ public class MarketServiceImpl implements MarketService{
     @Override
     public int deleteMonthPlan(int id) {
         return iMarkerDao.deleteMonthPlan(id);
+    }
+    //外运日计划
+    public int countDayPlanData(PlanBean bean){
+        return iMarkerDao.countDayPlanData(bean);
+    }
+    public List<PlanBean> getTableDayPlanData(PlanBean bean){
+        List<PlanBean> list = iMarkerDao.getTableDayPlanData(bean);
+        int dayPlanCar=0,dayActualCar=0,dayPlanTonnage=0,dayActualTonnage=0;
+        if(null!=list && !list.isEmpty()){
+            for (PlanBean pb : list) {
+                dayPlanCar += pb.getPlanCarNum();
+                dayActualCar += pb.getActualCarNum();
+                dayPlanTonnage += pb.getPlanTonnage();
+                dayActualTonnage += pb.getActualSendedTonnage();
+            }
+            PlanBean planBean = new PlanBean();
+            planBean.setName("合计");
+            planBean.setPlanCarNum(dayPlanCar);
+            planBean.setActualCarNum(dayActualCar);
+            planBean.setPlanTonnage(dayPlanTonnage);
+            planBean.setActualSendedTonnage(dayActualTonnage);
+            planBean.setUnsendedCarNum(dayPlanCar-dayActualCar);
+            planBean.setUnsendedTonnage(dayPlanTonnage - dayActualTonnage);
+            list.add(planBean);
+        }
+        return list;
+    }
+    public int addDayPlan(PlanBean bean){
+        return iMarkerDao.addDayPlan(bean);
+    }
+    public int editDayPlan(PlanBean bean){
+        return iMarkerDao.editDayPlan(bean);
+    }
+    public int deleteDayPlan(int id){
+        return  iMarkerDao.deleteDayPlan(id);
     }
 }

@@ -4,7 +4,7 @@
 var path = "/market/";
 var subType = 1;
 $(document).ready(function () {
-    $("body").ledo();
+    // $("body").ledo();
     //初始化时间
     initDateRangePicker();
     // $(".form_datetime").datepicker({
@@ -16,7 +16,7 @@ $(document).ready(function () {
     // });
     $(".select").select2();
     initButtonClick();
-    initFormValid();
+    // initFormValid();
     queryData();
 });
 function queryData() {
@@ -74,7 +74,7 @@ function dealTableTitle() {
         }
         },
         {
-            "sTitle": "操作", "mData": "id", "sWidth": "10%", "mRender": function (data, type, row) {
+            "sTitle": "操作", "mData": "id", "sWidth": "15%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
         }
         });
@@ -92,6 +92,7 @@ function operateType(cellvalue, options, rowObject) {
 }
 
 function operateButton(cellvalue, options, rowObject) {
+    var type=2; 
     var id = rowObject['id'];
     var status = rowObject['status'];
     var rid = rowObject['rid'];
@@ -113,7 +114,16 @@ function operateButton(cellvalue, options, rowObject) {
     var method = rowObject['method'];
     var createtime = rowObject['createtime'];
     var payId = rowObject['payId'];
-    return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editMonthPlan('"
+        + id + "','" + rid + "','"
+        + name + "','" + status + "','" + settlement + "','" + planCarNum + "','"
+        + actualCarNum + "','" + inputPerson + "','" + usePerson + "','"
+        + planTonnage + "','" + ast + "','" + payId + "','"
+        + actualUnitPrice + "','" + wellsName + "','"
+        + coalName + "','" + siteName + "','" + privateLine + "','" + method + "','"+ type + "','"
+        + createtime
+        + "')\">编辑</button>";
+    var newDayPlanBtn = "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"newDayPlan('"
         + id + "','" + rid + "','"
         + name + "','" + status + "','" + settlement + "','" + planCarNum + "','"
         + actualCarNum + "','" + inputPerson + "','" + usePerson + "','"
@@ -121,19 +131,19 @@ function operateButton(cellvalue, options, rowObject) {
         + actualUnitPrice + "','" + wellsName + "','"
         + coalName + "','" + siteName + "','" + privateLine + "','" + method + "','"
         + createtime
-        + "')\">编辑</button>";
+        + "')\">新建日计划</button>";
+        return editBtn+""+newDayPlanBtn
 }
 //编辑
-function editSettlement(id, rid, name, status, st, planCarNum, actualCarNum, ip, up, pt, ast,
-                        payId, aup, wellsName, coalName, siteName, pline, method, time) {
-    subType = 2;
+function editMonthPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, up, pt, ast,
+                        payId, aup, wellsName, coalName, siteName, pline, method, type,time) {
+    subType = type;
     $("#planCarNum").val(planCarNum);
     $("#hideId").val(id);
 
     $("#settlement").val(st).select2();
     $("#name").val(rid).select2();
     $("#createtime").val(time);
-    $("#planCarNum").val(planCarNum);
     $("#ast").val(ast);
     $("#actualCarNum").val(actualCarNum);
     $("#planTonnage").val(pt);
@@ -147,23 +157,30 @@ function editSettlement(id, rid, name, status, st, planCarNum, actualCarNum, ip,
     $("#method").val(method).select2();
     $("#payId").val(payId);
 }
-function dealLock(id, type) {
-    $("#deleteBut").on("click", function () {
-        if (checkBtn() == "") {
-            $('#modalDelete').trigger('click');
-            showResultInfo("请至少选中一行！", false);
-            return;
-        }
-        $.post(path + "lockInfo", {id: id, type: type}, function (data) {
-            $('#modalDelete').trigger('click');
-            if (data > 0) {
-                showResultInfo("操作成功！", true);
-            } else {
-                showResultInfo("操作失败！", false);
-            }
-        });
-    });
+//新建日计划
+function newDayPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, up, pt, ast,
+                        payId, aup, wellsName, coalName, siteName, pline, method, time) {
+    subType = 3;
+    // $("#planCarNum").val(planCarNum);
+    $("#hideId").val(id);
+
+    $("#settlement").val(st).select2();
+    $("#name").val(rid).select2();
+    $("#createtime").val(time);
+    // $("#ast").val(ast);
+    // $("#actualCarNum").val(actualCarNum);
+    // $("#planTonnage").val(pt);
+    $("#inputPerson").val(ip);
+    $("#usePerson").val(up);
+    $("#actualUnitPrice").val(aup);
+    $("#wellsName").val(wellsName).select2();
+    $("#coalName").val(coalName).select2();
+    $("#siteName").val(siteName).select2();
+    $("#privateLine").val(pline);
+    $("#method").val(method).select2();
+    $("#payId").val(payId);
 }
+
 function initButtonClick() {
     $("#searBtn").on("click", function () {
         queryData();
@@ -178,20 +195,33 @@ function initButtonClick() {
         if (!$form.valid()) {
             return false;
         }
-        var url = path + (subType == 1 ? "addMonthPlan" : "editMonthPlan");
+        var url = path ;
+        var editId = 0,monthId = 0;
+        if(subType==1){
+            url = url+"addMonthPlan";
+        }
+        if(subType==2){
+            editId = $("#hideId").val();
+            url = url+"editMonthPlan";
+        }
+        if(subType==3){
+            monthId = $("#hideId").val();
+            url = url+"addDayPlan";
+        }
+          if(subType==4){
+            url = url+"editDayPlan";
+        }
+        alert($("#inputPerson").val());
         $.post(url, {
-                planCarNum: $("#planCarNum").val(), settlement: $("#settlement").val(),
+                planCarNum: $.trim($("#planCarNum").val()), settlement: $("#settlement").val(),
                 rid: $("#name").val(), name: $("#name option:selected").text(),
                 actualSendedTonnage: $("#ast").val(), actualCarNum: $("#actualCarNum").val(),
-                planTonnage: $("#planTonnoage").val(),
+                planTonnage: $("#planTonnage").val(),wellsName: $("#wellsName").val(),
                 usePerson: $("#usePerson").val(), actualUnitPrice: $("#actualUnitPrice").val(),
-                wellsName: $("#wellsName").val(),
-                coalName: $("#coalName").val(),
-                siteName: $("#siteName").val(),
-                inputPerson: $("#inputPerson").val(),
-                privateLine: $("#privateLine").val(),
-                method: $("#method").val(),
-                payId: $("#payId").val(), id: subType == 1 ? 0 : $("#hideId").val()
+                coalName: $("#coalName").val(), siteName: $("#siteName").val(),
+                inputPerson: $("#inputPerson").val(), privateLine: $("#privateLine").val(),
+                method: $("#method").val(), payId: $.trim($("#payId").val()),
+                id:editId,monthId:monthId
             },
             function (result) {
                 $('#myModal').trigger('click');
@@ -215,7 +245,23 @@ function initButtonClick() {
         stopMonthPlan(checkBtn());
     });
     $("#delete").on("click", function () {
-        deletePlan(checkBtn());
+        deleteMonthPlan(checkBtn());
+    });
+    //查看对应月计划的日计划列表信息
+    $("#searchDayPlan").on("click",function () {
+        var id = checkBtn();
+        if (id == "") {
+            $('#modalDelete').trigger('click');
+            showResultInfo("请选中一行进行查看！", false);
+            return false;
+        }
+        if(id.indexOf(",")>-1){
+            $('#modalDelete').trigger('click');
+            showResultInfo("只能选中一行月计划查看对应日计划！", false);
+            return false;
+        }
+        // $('#showDayPlayTable').trigger('click');
+        queryDayPlanData(id);
     });
 }
 function stopMonthPlan(id) {
@@ -226,6 +272,7 @@ function stopMonthPlan(id) {
             return;
         }
         $.post(path + 'stopMonthPlan', {id: id}, function (data) {
+            $('#modalDelete').trigger('click');
             if (data == 1) {
                 showResultInfo("操作成功！", true);
             } else {
@@ -235,14 +282,14 @@ function stopMonthPlan(id) {
     })
 }
 //移除
-function deletePlan(id) {
+function deleteMonthPlan(id) {
     $("#deleteBut").on("click", function () {
         if (id == "") {
             $('#modalDelete').trigger('click');
             showResultInfo("请至少选中一行！", false);
             return;
         }
-        $.post(path + "deleteContractInfo", {id: id}, function (data) {
+        $.post(path + "deleteMonthPlan", {id: id}, function (data) {
             $('#modalDelete').trigger('click');
             if (data == 1) {
                 showResultInfo("操作成功！", true);
@@ -275,42 +322,159 @@ function checkBtn() {
     });
     return checkTemp;
 }
-//form表单提交 格式规则校验
-function initFormValid() {
-    //添加ip验证规则
-    jQuery.validator.addMethod("dataNumber", function (value, element) {
-        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
-    }, "请输入数字");
-    $("#validate").validate({
-        errorPlacement: function (error, element) {
-            var place = element.closest('.input-group');
-            if (!place.get(0)) {
-                place = element;
-            }
-            if (place.get(0).type === 'checkbox') {
-                place = element.parent();
-            }
-            if (error.text() !== '') {
-                place.after(error);
-            }
+//获取对应日计划信息
+//日计划公共title
+function dealTableDayPlanTitle() {
+    var aoColumns = new Array();
+    aoColumns.push(
+        {
+            "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
+            var id = rowObject['id'];
+            return "<input type='checkbox' name='check' value='" + id + "'/>";
+        }, "sWidth": "5%"
         },
-        errorClass: 'help-block',
-        rules: {
-            dataNumber: {
-                required: true,
-                dataNumber: true
-            },
-            number: {
-                required: true,
-                number: true
-            }
-        },
-        highlight: function (label) {
-            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (label) {
-            $(label).closest('.form-group').removeClass('has-error');
-            label.remove();
+        {"sTitle": "计划号", "mData": "rid", "sWidth": "5%"},
+        {"sTitle": "收货单位", "mData": "name", "sWidth": "10%"},
+        {"sTitle": "计划车数", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "累计实发车", "mData": "actualCarNum", "sWidth": "5%"},
+        {"sTitle": "计划吨数", "mData": "planTonnage", "sWidth": "5%"},
+        {"sTitle": "累计实发吨", "mData": "actualSendedTonnage", "sWidth": "5%"},
+        {"sTitle": "未发车数", "mData": "unsendedCarNum", "sWidth": "5%"},
+        {"sTitle": "未发吨数", "mData": "unsendedTonnage", "sWidth": "5%"},
+        {"sTitle": "单价", "mData": "actualUnitPrice", "sWidth": "6%"},
+        {"sTitle": "煤种", "mData": "coalName", "sWidth": "6%"},
+        {"sTitle": "井别", "mData": "wellsName", "sWidth": "5%"},
+        {"sTitle": "到站", "mData": "siteName", "sWidth": "5%"},
+        {"sTitle": "专用线", "mData": "privateLine", "sWidth": "5%"},
+        {"sTitle": "结算单位", "mData": "settlement", "sWidth": "5%"},
+        {"sTitle": "资金方式", "mData": "method", "sWidth": "8%"},
+        {"sTitle": "经办人", "mData": "usePerson", "sWidth": "8%"},
+        {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
+        {"sTitle": "日期", "mData": "createtime", "sWidth": "10%"},
+        {"sTitle": "交易单号", "mData": "payId", "sWidth": "10%"},
+        {
+            "sTitle": "操作", "mData": "id", "sWidth": "10%", "mRender": function (data, type, row) {
+            return operateButtonDay(data, type, row);
         }
-    });
+        });
+    return aoColumns;
 }
+//日计划操作
+function operateButtonDay(cellvalue, options, rowObject) {
+    var type = 4;
+    var id = rowObject['id'];
+    var status = rowObject['status'];
+    var rid = rowObject['rid'];
+    var name = rowObject['name'];
+    var settlement = rowObject['settlement'];
+    var planCarNum = rowObject['planCarNum'];
+    var actualCarNum = rowObject['actualCarNum'];
+    var planTonnage = rowObject['planTonnage'];
+    var ast = rowObject['actualSendedTonnage'];
+
+    var inputPerson = rowObject['inputPerson'];
+    var usePerson = rowObject['usePerson'];
+
+    var actualUnitPrice = rowObject['actualUnitPrice'];
+    var wellsName = rowObject['wellsName'];
+    var coalName = rowObject['coalName'];
+    var siteName = rowObject['siteName'];
+    var privateLine = rowObject['privateLine'];
+    var method = rowObject['method'];
+    var createtime = rowObject['createtime'];
+    var payId = rowObject['payId'];
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editMonthPlan('"
+        + id + "','" + rid + "','"
+        + name + "','" + status + "','" + settlement + "','" + planCarNum + "','"
+        + actualCarNum + "','" + inputPerson + "','" + usePerson + "','"
+        + planTonnage + "','" + ast + "','" + payId + "','"
+        + actualUnitPrice + "','" + wellsName + "','"
+        + coalName + "','" + siteName + "','" + privateLine + "','" + method + "','"+ type + "','"
+        + createtime
+        + "')\">编辑</button>";
+    var newDayPlanBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#modalDelete' onclick=\"delDayPlan('"+ id + "')\">删除</button>";
+        return editBtn+""+newDayPlanBtn
+}
+
+function queryDayPlanData(id) {
+    var aoColumns = dealTableDayPlanTitle();
+    var params = [
+        {name: 'monthId', value: id},
+        {name: 'searchType', value: "day"}//查询日计划
+    ];
+    var url = path + 'get_plans_table';
+    commonDataTables("playDayPlanTables", url, aoColumns, params, "playDayPlanDiv");
+}
+
+//移除
+function delDayPlan(id) {
+    $("#deleteBut").on("click", function () {
+        $.post(path + "deleteDayPlan", {id: id}, function (data) {
+            $('#modalDelete').trigger('click');
+            if (data == 1) {
+                showResultInfo("操作成功！", false);
+                $("#"+id).parent().hide();
+            } else {
+                showResultInfo("操作失败！", false);
+            }
+        });
+    })
+}
+//form表单提交 格式规则校验
+// function initFormValid() {
+//     //添加ip验证规则
+//     jQuery.validator.addMethod("dataNumber",function (value,element) {
+//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+//     },"请输入数字");
+//     jQuery.validator.addMethod("dataNumber1",function (value,element) {
+//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+//     },"请输入数字");
+//     jQuery.validator.addMethod("number1",function (value,element) {
+//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+//     },"请输入数字");
+//     jQuery.validator.addMethod("number2",function (value,element) {
+//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+//     },"请输入数字");
+//     $("#validate").validate({
+//         errorPlacement: function( error, element ) {
+//             var place = element.closest('.input-group');
+//             if (!place.get(0)) {
+//                 place = element;
+//             }
+//             if (place.get(0).type === 'checkbox') {
+//                 place = element.parent();
+//             }
+//             if (error.text() !== '') {
+//                 place.after(error);
+//             }
+//         },
+//         errorClass: 'help-block',
+//         rules: {
+//             dataNumber: {
+//                 dataNumber: true
+//             },
+//             dataNumber1: {
+//                 required: true,
+//                 dataNumber1: true
+//             },
+//             number1: {
+//                 number1: true
+//             },
+//             number2: {
+//                 required: true,
+//                 number2: true
+//             },
+//             number: {
+//                 required: true,
+//                 number: true
+//             }
+//         },
+//         highlight: function( label ) {
+//             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+//         },
+//         success: function( label ) {
+//             $(label).closest('.form-group').removeClass('has-error');
+//             label.remove();
+//         }
+//     });
+// }

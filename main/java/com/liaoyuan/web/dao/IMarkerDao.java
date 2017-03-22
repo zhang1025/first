@@ -30,4 +30,11 @@ public interface IMarkerDao {
     int editMonthPlan(PlanBean bean);
     int stopMonthPlan(@Param(value = "id") int id);
     int deleteMonthPlan(@Param(value = "id") int id);
+
+    int countDayPlanData(PlanBean bean);
+    List<PlanBean> getTableDayPlanData(PlanBean bean);
+    int addDayPlan(PlanBean bean);
+    int editDayPlan(PlanBean bean);
+    int deleteDayPlan(@Param(value = "id") int id);
+
 }

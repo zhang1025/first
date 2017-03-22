@@ -11,7 +11,7 @@ import com.liaoyuan.web.utils.DataTableUtils;
 import com.liaoyuan.web.utils.ExcelUtils;
 import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zj on 2017/3/18 0018
@@ -52,7 +51,7 @@ public class MarketController extends BaseController {
         List<DataBean> settlements = commonDataService.getListData("settlement");
         modelMap.put("coals",coals);
         modelMap.put("settlements",settlements);
-        modelMap.put("account",httpSession.getAttribute(SessionUser.SESSION_USER));
+        modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/contractPage");
     }
     @RequestMapping(value = "/get_contract_table", method = RequestMethod.POST)
@@ -106,12 +105,12 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/monthPlan", method = RequestMethod.GET)
     public ModelAndView monthPlan(ModelMap modelMap){
         log.info("=============monthPlan============");
-        modelMap.put("account",httpSession.getAttribute(SessionUser.SESSION_USER));
         modelMap.put("coals",commonDataService.getListData("coal"));
         modelMap.put("sites",commonDataService.getListData("site"));
         modelMap.put("receives",commonDataService.getListData("receive"));
         modelMap.put("wells",commonDataService.getListData("wells"));
         modelMap.put("settlements",commonDataService.getListData("settlement"));
+        modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/monthPlanPage");
     }
 
@@ -132,10 +131,10 @@ public class MarketController extends BaseController {
             count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
             gridData = marketService.getTableMonthPlanData(bean);
         }
-//        if(bean!=null && bean.getSearchType().equals("day")){
-//            count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
-//            gridData = marketService.getTableDayPlanData(bean);
-//        }
+        if(bean!=null && bean.getSearchType().equals("day")){
+            count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+            gridData = marketService.getTableDayPlanData(bean);
+        }
         printDataTables(response, count, gridData);
     }
     @RequestMapping(value = "/addMonthPlan", method = RequestMethod.POST)
@@ -170,6 +169,20 @@ public class MarketController extends BaseController {
         return rtn==args.length?1:-1;
     }
 
+    //添加日计划
+    @RequestMapping(value = "/addDayPlan", method = RequestMethod.POST)
+    public Integer addDayPlan(PlanBean bean) {
+        return marketService.addDayPlan(bean);
+    }
+    @RequestMapping(value = "/editDayPlan", method = RequestMethod.POST)
+    public Integer editDayPlan(PlanBean bean) {
+        return marketService.editDayPlan(bean);
+    }
+    //删除日计划
+    @RequestMapping(value = "/deleteDayPlan", method = RequestMethod.POST)
+    public Integer deleteDayPlan(int id) {
+        return marketService.deleteDayPlan(id);
+    }
 
 
     /**
@@ -178,12 +191,11 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/export_excel_data", method = RequestMethod.GET)
     public void exportData(ContractBean bean,HttpServletResponse response) throws Exception{
         List<String> columnnames ;
-        List<List<Object>> datas ;
         int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
         bean.setIDisplayLength(count);
         List<ContractBean> gridData = marketService.getTableContractData(bean);
         columnnames = DataTableUtils.getExcelHTColumnName();
-        datas = DataTableUtils.getExcelHTDataLists(gridData);
+        List<List<Object>> datas = DataTableUtils.getExcelHTDataLists(gridData);
         String fileName = URLEncoder.encode("合同信息数据", "utf-8")+".xls";
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }
@@ -195,21 +207,23 @@ public class MarketController extends BaseController {
     public void exportPlanData(PlanBean bean,HttpServletResponse response) throws Exception{
         List<String> columnnames ;
         List<List<Object>> datas ;
-        int count=0;List<PlanBean> gridData=new ArrayList<>();
-
+        int count;
+        List<PlanBean> gridData;  String fileName;
         if(bean.getSearchType().equals("month")){
             count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
             bean.setIDisplayLength(count);
             gridData = marketService.getTableMonthPlanData(bean);
+            columnnames = DataTableUtils.getExcelPlanColumnName();
+            datas = DataTableUtils.getExcelPlanDataLists(gridData);
+            fileName = URLEncoder.encode("外运月计划信息数据", "utf-8")+".xls";
         }else{
-//            count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
-//            bean.setIDisplayLength(count);
-//            gridData = marketService.getTableMonthPlanData(bean);
+            count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+            bean.setIDisplayLength(count);
+            gridData = marketService.getTableDayPlanData(bean);
+            columnnames = DataTableUtils.getExcelPlanColumnName();
+            datas = DataTableUtils.getExcelPlanDataLists(gridData);
+            fileName = URLEncoder.encode("外运日计划信息数据", "utf-8")+".xls";
         }
-
-        columnnames = DataTableUtils.getExcelPlanColumnName();
-        datas = DataTableUtils.getExcelPlanDataLists(gridData);
-        String fileName = URLEncoder.encode("外运月计划信息数据", "utf-8")+".xls";
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }
 }
