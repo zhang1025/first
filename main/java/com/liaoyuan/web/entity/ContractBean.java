@@ -31,7 +31,7 @@ public class ContractBean {
 
     private String orderTime;//签订日期
     private String createtime;//录入时间
-    private int status;
+    private String status;
 
     private String billName;
     private String address;

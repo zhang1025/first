@@ -2,12 +2,15 @@ package com.liaoyuan.web.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by zj on 2017/3/19 0019
  * 月计划 日计划bean
  */
 @Data
-public class PlanBean {
+public class PlanBean implements Serializable{
+
     private int id;
     private int rid; //收货单位id
     private String name;//收货单位
@@ -17,9 +20,9 @@ public class PlanBean {
     private double planTonnage;
     private double actualSendedTonnage;
     //未发车数 = 计划车数减实发车数  planCarNum-actualCarNum
-    private double unsendedCarNum;
+    private String unsendedCarNum;
     //未发吨数为计划吨数减累计实发吨数 planTonnoage- actualSendedTonnage
-    private double unsendedTonnage;
+    private String unsendedTonnage;
 
     //实发单价
     private double actualUnitPrice;

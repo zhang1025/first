@@ -63,10 +63,12 @@ public class MarketController extends BaseController {
     }
     @RequestMapping(value = "/addContractInfo", method = RequestMethod.POST)
     public Integer addContractInfo(ContractBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.addContractInfo(bean);
     }
     @RequestMapping(value = "/editContractInfo", method = RequestMethod.POST)
     public Integer editContractInfo(ContractBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.editContractInfo(bean);
     }
     @RequestMapping(value = "/deleteContractInfo", method = RequestMethod.POST)
@@ -139,10 +141,12 @@ public class MarketController extends BaseController {
     }
     @RequestMapping(value = "/addMonthPlan", method = RequestMethod.POST)
     public Integer addMonthPlan(PlanBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.addMonthPlan(bean);
     }
     @RequestMapping(value = "/editMonthPlan", method = RequestMethod.POST)
     public Integer editMonthPlan(PlanBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.editMonthPlan(bean);
     }
 
@@ -172,10 +176,12 @@ public class MarketController extends BaseController {
     //添加日计划
     @RequestMapping(value = "/addDayPlan", method = RequestMethod.POST)
     public Integer addDayPlan(PlanBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.addDayPlan(bean);
     }
     @RequestMapping(value = "/editDayPlan", method = RequestMethod.POST)
     public Integer editDayPlan(PlanBean bean) {
+        bean.setInputPerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
         return marketService.editDayPlan(bean);
     }
     //删除日计划

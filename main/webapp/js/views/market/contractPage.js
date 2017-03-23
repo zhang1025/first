@@ -81,23 +81,23 @@ function dealTableTitle() {
             }
             return "未知";
         }},
-        {"sTitle": "经手人", "mData": "inputPerson", "sWidth": "5%"},
-        {"sTitle": "录入人", "mData": "usePerson", "sWidth": "5%"},
+        {"sTitle": "经手人", "mData": "usePerson", "sWidth": "5%"},
+        {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
         {"sTitle": "录入时间", "mData": "createtime", "sWidth": "8%"},
         {"sTitle": "合同类型", "mData": "contractType", "sWidth": "8%","mRender": function (data, type, row) {
             var type = row['contractType'];
             if(type == "1"){
                 return "公用煤";
-            }
-            if(type == "2"){
+            }else if(type == "2"){
                 return "零销煤";
-            }
-            if(type == "4"){
+            }else if(type == "4"){
                 return "职工煤";
-            }
-            if(type == "3"){
+            }else if(type == "3"){
+                return "其他";
+            }else{
                 return "其他";
             }
+
         }},
         // {"sTitle": "预交欠费", "mData": "unitPrice", "sWidth": "5%"},
         {

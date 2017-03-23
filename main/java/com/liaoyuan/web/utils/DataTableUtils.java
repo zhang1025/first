@@ -52,17 +52,16 @@ public class DataTableUtils {
             row.add(reportData.getLeftCount());
             row.add(reportData.getSendPrice());
             row.add(reportData.getLeftPrice());
-            row.add(reportData.getSettlement());
             switch (reportData.getStatus()){
-                case 1: row.add("解锁");
+                case "1": row.add("解锁");
                     break;
-                case 2: row.add("锁定");
+                case "2": row.add("锁定");
                     break;
-                case 3: row.add("正在发运");
+                case "3": row.add("正在发运");
                     break;
-                case 0: row.add("未审核");
+                case "4": row.add("未审核");
                     break;
-                case -1: row.add("未通过");
+                case "-1": row.add("未通过");
                     break;
             }
             row.add(reportData.getUsePerson());
@@ -75,9 +74,15 @@ public class DataTableUtils {
                     break;
                 case "4": row.add("职工煤");
                     break;
-                default:row.add("其他");
+                default:row.add("");
             }
-            row.add(reportData.getForkliftFee());
+            switch (reportData.getForkliftFee()){
+                case "1": row.add("包含铲车费");
+                    break;
+                case "2": row.add("不包含");
+                    break;
+                default:row.add("");
+            }
             datas.add(row);
         }
         return datas;

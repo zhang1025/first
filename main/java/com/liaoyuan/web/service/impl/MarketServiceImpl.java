@@ -7,6 +7,7 @@ import com.liaoyuan.web.service.MarketService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,8 +104,8 @@ public class MarketServiceImpl implements MarketService{
             planBean.setActualCarNum(dayActualCar);
             planBean.setPlanTonnage(dayPlanTonnage);
             planBean.setActualSendedTonnage(dayActualTonnage);
-            planBean.setUnsendedCarNum(dayPlanCar-dayActualCar);
-            planBean.setUnsendedTonnage(dayPlanTonnage - dayActualTonnage);
+            planBean.setUnsendedCarNum(String.valueOf(dayPlanCar-dayActualCar));
+            planBean.setUnsendedTonnage(String.valueOf(dayPlanTonnage - dayActualTonnage));
             list.add(planBean);
         }
         return list;

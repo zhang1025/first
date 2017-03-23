@@ -66,8 +66,8 @@
 
     <!--外运查询-->
     <sql id="searchMonth">
-        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}
-        ]]>
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+        
     </sql>
     <!--common -->
     <select id="countMonthPlanData" parameterType="PlanBean" resultType="java.lang.Integer">
@@ -83,7 +83,7 @@
         payId,createtime,status from out_month_plan
         where 1=1
         <include refid="searchMonth"/>
-        order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+        order by rid asc,createtime desc limit ${iDisplayStart},${iDisplayLength}
     </select>
     <insert id="addMonthPlan" parameterType="PlanBean">
         insert into out_month_plan (rid,name,planCarNum,actualCarNum,inputPerson,
@@ -108,35 +108,35 @@
         delete from out_month_plan where id=#{id}
     </delete>
 
-    <!--根据月计划id查看相应的日计划-->
+    <!--根据月计划id查看相应的日计划  月计划终止的不显示-->
     <select id="countDayPlanData" parameterType="PlanBean" resultType="java.lang.Integer">
-        select count(*) from out_day_plan where 1=1
+        select count(*) from out_day_plan d   where 1=1
         <choose>
             <when test="monthId!=null and monthId!=''">
-                and month_id=#{monthId}
+                and d.month_id=#{monthId}
             </when>
             <otherwise>
-                and <include refid="searchMonth"/>
+               and d.createtime>=#{beginDate} AND  <![CDATA[d.createtime<=#{endDate}]]>
             </otherwise>
         </choose>
     </select>
     <select id="getTableDayPlanData" parameterType="PlanBean" resultType="PlanBean">
-        select id,rid,settlement,name,planCarNum,actualCarNum,planTonnage,actualSendedTonnage,
-        planCarNum-actualCarNum as unsendedCarNum,
-        planTonnage-actualSendedTonnage as unsendedTonnage,
-        actualUnitPrice,wellsName,coalName,siteName,privateLine,method,usePerson,inputPerson,
-        payId,createtime,month_id as monthId from out_day_plan
+        select d.id,d.rid,d.settlement,d.name,d.planCarNum,d.actualCarNum,d.planTonnage,d.actualSendedTonnage,
+        d.planCarNum-d.actualCarNum as unsendedCarNum,
+        d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
+        d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
+        d.payId,d.createtime,d.month_id as monthId from out_day_plan d
         where 1=1
-        <choose>
+       <choose>
             <when test="monthId!=null and monthId!=''">
-                and month_id=#{monthId}
+                and d.month_id=#{monthId}
             </when>
             <otherwise>
-                and
-                <include refid="searchMonth"/>
+               and d.createtime>=#{beginDate} AND  <![CDATA[d.createtime<=#{endDate}]]>
             </otherwise>
         </choose>
-        order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+        order by d.createtime desc
+        <!--limit ${iDisplayStart},${iDisplayLength}-->
     </select>
 
     <insert id="addDayPlan" parameterType="PlanBean">

@@ -90,9 +90,9 @@
                             </table>
                         </div>
                     </div>
-                    <!-- End .panel -->
+                    <%--<!-- End .panel -->--%>
                 </div>
-                <!-- col-lg-12 end here -->
+                <%--<!-- col-lg-12 end here -->--%>
             </div>
         </div>
         <!-- / .page-content-inner -->
@@ -109,11 +109,10 @@
                 <%--</button>--%>
                 <%--<h4 class="modal-title" id="myHistoryModalLabel3">日计划信息</h4>--%>
             <%--</div>--%>
-            <%--<!-- 添加 -->--%>
             <%--<div class="modal-body">--%>
                 <%--<div class="row" id="playDayPlanDiv">--%>
                     <%--<div class="col-lg-12">--%>
-                        <%--<!-- col-lg-12 start here -->--%>
+                        <%--<!-- col-lg-12 start here--%>
                         <%--<div class="panel panel-default toggle ">--%>
                             <%--<!-- Start .panel -->--%>
                             <%--<div class="panel-body">--%>
@@ -177,7 +176,7 @@
                                            style="padding-right: 1px">累计实发车:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="actualCarNum" class="form-control"
-                                               name="number1" placeholder="累计实发车数" >
+                                               placeholder="累计实发车数" >
                                     </div>
                                 </div>
                             </td>
@@ -196,11 +195,11 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="ast" class="col-lg-4 control-label"
+                                    <label for="actualSendedTonnage" class="col-lg-4 control-label"
                                            style="padding-right: 1px">累计实发吨:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="ast" class="form-control"
-                                               name="dataNumber" placeholder="累计实发吨">
+                                        <input type="text" id="actualSendedTonnage" class="form-control"
+                                               placeholder="累计实发吨">
                                     </div>
                                 </div>
                             </td>

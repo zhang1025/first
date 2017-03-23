@@ -5,7 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * Created by zj on 2017/3/13 0013
+ * Created by zj
+ * 权限 url信息bean
  */
 @Data
 public class Permission implements Serializable {

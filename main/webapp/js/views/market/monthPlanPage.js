@@ -4,7 +4,6 @@
 var path = "/market/";
 var subType = 1;
 $(document).ready(function () {
-    // $("body").ledo();
     //初始化时间
     initDateRangePicker();
     // $(".form_datetime").datepicker({
@@ -16,7 +15,7 @@ $(document).ready(function () {
     // });
     $(".select").select2();
     initButtonClick();
-    // initFormValid();
+    initFormValid();
     queryData();
 });
 function queryData() {
@@ -81,16 +80,6 @@ function dealTableTitle() {
     return aoColumns;
 }
 
-function operateType(cellvalue, options, rowObject) {
-    var type = rowObject['forkliftFee'];
-    if (type == 1) {
-        return "包含铲车费";
-    }
-    if (type == 0) {
-        return "不包含";
-    }
-}
-
 function operateButton(cellvalue, options, rowObject) {
     var type=2; 
     var id = rowObject['id'];
@@ -144,7 +133,7 @@ function editMonthPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, 
     $("#settlement").val(st).select2();
     $("#name").val(rid).select2();
     $("#createtime").val(time);
-    $("#ast").val(ast);
+    $("#actualSendedTonnage").val(ast);
     $("#actualCarNum").val(actualCarNum);
     $("#planTonnage").val(pt);
     $("#inputPerson").val(ip);
@@ -161,15 +150,15 @@ function editMonthPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, 
 function newDayPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, up, pt, ast,
                         payId, aup, wellsName, coalName, siteName, pline, method, time) {
     subType = 3;
-    // $("#planCarNum").val(planCarNum);
+    $("#planCarNum").val("");
+    $("#actualSendedTonnage").val("");
+    $("#actualCarNum").val("");
+    $("#planTonnage").val("");
     $("#hideId").val(id);
 
     $("#settlement").val(st).select2();
     $("#name").val(rid).select2();
     $("#createtime").val(time);
-    // $("#ast").val(ast);
-    // $("#actualCarNum").val(actualCarNum);
-    // $("#planTonnage").val(pt);
     $("#inputPerson").val(ip);
     $("#usePerson").val(up);
     $("#actualUnitPrice").val(aup);
@@ -209,18 +198,18 @@ function initButtonClick() {
             url = url+"addDayPlan";
         }
           if(subType==4){
+              editId = $("#hideId").val();
             url = url+"editDayPlan";
         }
-        alert($("#inputPerson").val());
         $.post(url, {
                 planCarNum: $.trim($("#planCarNum").val()), settlement: $("#settlement").val(),
                 rid: $("#name").val(), name: $("#name option:selected").text(),
-                actualSendedTonnage: $("#ast").val(), actualCarNum: $("#actualCarNum").val(),
+                actualSendedTonnage: $("#actualSendedTonnage").val(), actualCarNum: $("#actualCarNum").val(),
                 planTonnage: $("#planTonnage").val(),wellsName: $("#wellsName").val(),
                 usePerson: $("#usePerson").val(), actualUnitPrice: $("#actualUnitPrice").val(),
                 coalName: $("#coalName").val(), siteName: $("#siteName").val(),
-                inputPerson: $("#inputPerson").val(), privateLine: $("#privateLine").val(),
-                method: $("#method").val(), payId: $.trim($("#payId").val()),
+                 privateLine: $("#privateLine").val(),
+                method: $("#method").val(), payId: $("#payId").val(),
                 id:editId,monthId:monthId
             },
             function (result) {
@@ -231,6 +220,7 @@ function initButtonClick() {
                     showResultInfo("操作失败！", false);
                 }
             });
+
     });
     //导出excle事件
     $('.fa-download').parent().on("click", function () {
@@ -310,6 +300,15 @@ function showResultInfo(message, isFlush) {
         }
     });
 }
+//操作结果
+function showDayPlanResultInfo(message, id) {
+    $("#wordsMessage").html(isFlush ? '<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>' + message + '</strong></i></span>' :
+    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>' + message + '</strong></i></span>');
+    $('#resultBut').trigger('click');
+    $("#myResult").on('click', function () {
+        queryDayPlanData(id);
+    });
+}
 //获取选中的行数据
 function checkBtn() {
     var checkTemp = "";
@@ -383,7 +382,7 @@ function operateButtonDay(cellvalue, options, rowObject) {
     var method = rowObject['method'];
     var createtime = rowObject['createtime'];
     var payId = rowObject['payId'];
-    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editMonthPlan('"
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' onclick=\"editMonthPlan('"
         + id + "','" + rid + "','"
         + name + "','" + status + "','" + settlement + "','" + planCarNum + "','"
         + actualCarNum + "','" + inputPerson + "','" + usePerson + "','"
@@ -392,7 +391,7 @@ function operateButtonDay(cellvalue, options, rowObject) {
         + coalName + "','" + siteName + "','" + privateLine + "','" + method + "','"+ type + "','"
         + createtime
         + "')\">编辑</button>";
-    var newDayPlanBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#modalDelete' onclick=\"delDayPlan('"+ id + "')\">删除</button>";
+    var newDayPlanBtn = "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete' onclick=\"delDayPlan('"+ id + "')\">删除</button>";
         return editBtn+""+newDayPlanBtn
 }
 
@@ -403,7 +402,14 @@ function queryDayPlanData(id) {
         {name: 'searchType', value: "day"}//查询日计划
     ];
     var url = path + 'get_plans_table';
-    commonDataTables("playDayPlanTables", url, aoColumns, params, "playDayPlanDiv");
+    commonDataTablesNoPage("playDayPlanTables", url, aoColumns, params, "playDayPlanDiv");
+    window.setTimeout(function () {
+        var $tableTr = $("#playDayPlanTables>tbody>tr:last");
+        $tableTr.find("td").eq(0).html("");
+        $tableTr.find("td").eq(1).html("");
+        $tableTr.find("td").eq(19).html("");
+        $tableTr.find("td").eq(20).html("");
+    },1000)
 }
 
 //移除
@@ -421,60 +427,60 @@ function delDayPlan(id) {
     })
 }
 //form表单提交 格式规则校验
-// function initFormValid() {
-//     //添加ip验证规则
-//     jQuery.validator.addMethod("dataNumber",function (value,element) {
-//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
-//     },"请输入数字");
-//     jQuery.validator.addMethod("dataNumber1",function (value,element) {
-//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
-//     },"请输入数字");
-//     jQuery.validator.addMethod("number1",function (value,element) {
-//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
-//     },"请输入数字");
-//     jQuery.validator.addMethod("number2",function (value,element) {
-//         return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
-//     },"请输入数字");
-//     $("#validate").validate({
-//         errorPlacement: function( error, element ) {
-//             var place = element.closest('.input-group');
-//             if (!place.get(0)) {
-//                 place = element;
-//             }
-//             if (place.get(0).type === 'checkbox') {
-//                 place = element.parent();
-//             }
-//             if (error.text() !== '') {
-//                 place.after(error);
-//             }
-//         },
-//         errorClass: 'help-block',
-//         rules: {
-//             dataNumber: {
-//                 dataNumber: true
-//             },
-//             dataNumber1: {
-//                 required: true,
-//                 dataNumber1: true
-//             },
-//             number1: {
-//                 number1: true
-//             },
-//             number2: {
-//                 required: true,
-//                 number2: true
-//             },
-//             number: {
-//                 required: true,
-//                 number: true
-//             }
-//         },
-//         highlight: function( label ) {
-//             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-//         },
-//         success: function( label ) {
-//             $(label).closest('.form-group').removeClass('has-error');
-//             label.remove();
-//         }
-//     });
-// }
+function initFormValid() {
+    //添加ip验证规则
+    jQuery.validator.addMethod("dataNumber",function (value,element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+    },"请输入数字");
+    jQuery.validator.addMethod("dataNumber1",function (value,element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+    },"请输入数字");
+    jQuery.validator.addMethod("number1",function (value,element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+    },"请输入数字");
+    jQuery.validator.addMethod("number2",function (value,element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
+    },"请输入数字");
+    $("#validate").validate({
+        errorPlacement: function( error, element ) {
+            var place = element.closest('.input-group');
+            if (!place.get(0)) {
+                place = element;
+            }
+            if (place.get(0).type === 'checkbox') {
+                place = element.parent();
+            }
+            if (error.text() !== '') {
+                place.after(error);
+            }
+        },
+        errorClass: 'help-block',
+        rules: {
+            dataNumber: {
+                dataNumber: true
+            },
+            dataNumber1: {
+                required: true,
+                dataNumber1: true
+            },
+            number1: {
+                number1: true
+            },
+            number2: {
+                required: true,
+                number2: true
+            },
+            number: {
+                required: true,
+                number: true
+            }
+        },
+        highlight: function( label ) {
+            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function( label ) {
+            $(label).closest('.form-group').removeClass('has-error');
+            label.remove();
+        }
+    });
+}
