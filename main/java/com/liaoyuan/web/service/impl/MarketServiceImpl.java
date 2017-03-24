@@ -4,12 +4,9 @@ import com.liaoyuan.web.dao.IMarkerDao;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.service.MarketService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,13 +96,14 @@ public class MarketServiceImpl implements MarketService{
                 dayActualTonnage += pb.getActualSendedTonnage();
             }
             PlanBean planBean = new PlanBean();
-            planBean.setName("合计");
+            //增加最后一行合计统计
+//            planBean.setName("合计");
             planBean.setPlanCarNum(dayPlanCar);
-            planBean.setActualCarNum(dayActualCar);
-            planBean.setPlanTonnage(dayPlanTonnage);
-            planBean.setActualSendedTonnage(dayActualTonnage);
-            planBean.setUnsendedCarNum(String.valueOf(dayPlanCar-dayActualCar));
-            planBean.setUnsendedTonnage(String.valueOf(dayPlanTonnage - dayActualTonnage));
+            planBean.setActualCarNum(String.valueOf(dayActualCar));
+            planBean.setPlanTonnage(String.valueOf(dayPlanTonnage));
+            planBean.setActualSendedTonnage(String.valueOf(dayActualTonnage));
+            planBean.setUnsendedCarNum(dayPlanCar-dayActualCar);
+            planBean.setUnsendedTonnage(dayPlanTonnage - dayActualTonnage);
             list.add(planBean);
         }
         return list;

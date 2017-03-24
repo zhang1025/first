@@ -13,7 +13,7 @@ $(document).ready(function () {
         format: 'yyyy-mm-dd',
         language: 'zh-CN',
         todayBtn: 'linked',//今日按钮
-        todayHighlight:true
+        todayHighlight: true
     });
     $(".select").select2();
     initButtonClick();
@@ -29,8 +29,8 @@ function queryData() {
     var type = $("#s_type").val();
     var time = $("input[name='date-range']").val();
     var dateRange = time.split("to");
-    var beginDate =  $.trim(dateRange[0]);
-    var endDate =  $.trim(dateRange[1]);
+    var beginDate = $.trim(dateRange[0]);
+    var endDate = $.trim(dateRange[1]);
     var params = [
         {name: 'numNo', value: numNo},
         {name: 'settlement', value: settlements},
@@ -47,10 +47,12 @@ function queryData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {"sTitle": "选择", "mData": "id","mRender": function(data, type, rowObject){
+        {
+            "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
             var id = rowObject['id'];
-            return "<input type='checkbox' name='check' value='"+id+"'/>";
-        }, "sWidth": "5%"},
+            return "<input type='checkbox' name='check' value='" + id + "'/>";
+        }, "sWidth": "5%"
+        },
         {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
         {"sTitle": "客户名称", "mData": "settlement", "sWidth": "10%"},
         {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
@@ -62,43 +64,47 @@ function dealTableTitle() {
         {"sTitle": "剩余量", "mData": "leftCount", "sWidth": "6%"},
         {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
         {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
-        {"sTitle": "合同状态", "mData": "status", "sWidth": "5%","mRender": function (data, type, row) {
+        {
+            "sTitle": "合同状态", "mData": "status", "sWidth": "5%", "mRender": function (data, type, row) {
             var status = row['status'];
-            if(status==1){
+            if (status == 1) {
                 return "解锁";
             }
-            if(status==3){
+            if (status == 3) {
                 return "正在发运";
             }
-            if(status==2){
+            if (status == 2) {
                 return "锁定";
             }
-            if(status==0){
+            if (status == 0) {
                 return "未审核";
             }
-            if(status==-1){
+            if (status == -1) {
                 return "未通过";
             }
             return "未知";
-        }},
+        }
+        },
         {"sTitle": "经手人", "mData": "usePerson", "sWidth": "5%"},
         {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
         {"sTitle": "录入时间", "mData": "createtime", "sWidth": "8%"},
-        {"sTitle": "合同类型", "mData": "contractType", "sWidth": "8%","mRender": function (data, type, row) {
+        {
+            "sTitle": "合同类型", "mData": "contractType", "sWidth": "8%", "mRender": function (data, type, row) {
             var type = row['contractType'];
-            if(type == "1"){
+            if (type == "1") {
                 return "公用煤";
-            }else if(type == "2"){
+            } else if (type == "2") {
                 return "零销煤";
-            }else if(type == "4"){
+            } else if (type == "4") {
                 return "职工煤";
-            }else if(type == "3"){
+            } else if (type == "3") {
                 return "其他";
-            }else{
+            } else {
                 return "其他";
             }
 
-        }},
+        }
+        },
         // {"sTitle": "预交欠费", "mData": "unitPrice", "sWidth": "5%"},
         {
             "sTitle": "铲车费", "mData": "forkliftFee", "sWidth": "10%", "mRender": function (data, type, row) {
@@ -150,18 +156,19 @@ function operateButton(cellvalue, options, rowObject) {
     var bankNo = rowObject['bankNo'];
     return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
         + id + "','"
-        + name + "','"+ numNo + "','"+ settlement + "','"+ orderCount + "','"
-        + unitPrice + "','"+ inputPerson + "','"+ usePerson + "','"
-        + contractType + "','"+ orderTime + "','"
-        + billName + "','"+ address + "','"
-        + billNo + "','"+ tel + "','"  + bankName + "','"+ bankNo + "','"
+        + name + "','" + numNo + "','" + settlement + "','" + orderCount + "','"
+        + unitPrice + "','" + inputPerson + "','" + usePerson + "','"
+        + contractType + "','" + orderTime + "','"
+        + billName + "','" + address + "','"
+        + billNo + "','" + tel + "','" + bankName + "','" + bankNo + "','"
         + forkliftFee
         + "')\">编辑</button>";
 }
 //编辑
-function editSettlement(id,name,numNo,st,orderCount,unitPrice,ip,up,ct,orderTime,
-                        billName,address,billNo,tel,bankName,bankNo,ff) {
+function editSettlement(id, name, numNo, st, orderCount, unitPrice, ip, up, ct, orderTime,
+                        billName, address, billNo, tel, bankName, bankNo, ff) {
     subType = 2;
+    $("#myModalLabel2").html("编辑合同信息");
     $("#numNo").val(numNo);
     $("#hideId").val(id);
 
@@ -181,22 +188,31 @@ function editSettlement(id,name,numNo,st,orderCount,unitPrice,ip,up,ct,orderTime
     $("#bankName").val(bankName);
     $("#bankNo").val(bankNo);
 }
-function dealLock(id,type) {
-    $("#deleteBut").on("click", function () {
-        if(id == ""){
-            $('#modalDelete').trigger('click');
-            showResultInfo("请至少选中一行！", false);
-            return;
-        }
+function dealLock(id, type) {
+    if (id == "") {
+        swal("", "请至少选中一行！", "warning");
+        return;
+    }
+    swal({
+        title: "提示",
+        text: "是否执行操作？",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "取消",
+        confirmButtonClass: "btn-info",
+        confirmButtonText: "确定",
+        closeOnConfirm: false//不设置这个，直接关闭提示框，没法显示后面成功的提示
+    }, function () {
         $.post(path + "lockInfo", {id: id, type: type}, function (data) {
-            $('#modalDelete').trigger('click');
             if (data > 0) {
-                showResultInfo("操作成功！", true);
-            }else{
-                showResultInfo("操作失败！", false);
+                swal("成功", "操作成功！", "success");
+                queryData();
+            } else {
+                swal("失败", "操作失败", "error");
             }
         });
     });
+
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
@@ -204,6 +220,7 @@ function initButtonClick() {
     });
     $("#addBtn").on("click", function () {
         subType = 1;
+        $("#myModalLabel2").html("新增合同信息");
         $("#validate input[type='text']").val("");
     });
     //新增user
@@ -235,16 +252,17 @@ function initButtonClick() {
             function (result) {
                 $('#myModal').trigger('click');
                 if (result > 0) {
-                    showResultInfo("操作成功！", true);
+                    swal("成功","操作成功！","success");
+                    queryData();
                 } else if (result == -1) {
-                    showResultInfo("合同编号=" + numNo + "已经存在！", false);
+                    swal("失败","合同编号=" + numNo + "已经存在！","error");
                 } else {
-                    showResultInfo("操作失败！", false);
+                    swal("失败","操作失败","error");
                 }
             });
     });
     //导出excle事件
-    $('.fa-download').parent().on("click",function () {
+    $('.fa-download').parent().on("click", function () {
         var numNo = $("#s_numNo").val();
         var settlements = $("#s_settlements").val();
         var coal = $("#s_coal").val();
@@ -252,51 +270,37 @@ function initButtonClick() {
         var type = $("#s_type").val();
         var time = $("input[name='date-range']").val();
         var dateRange = time.split("to");
-        var beginDate =  $.trim(dateRange[0]);
-        var endDate =  $.trim(dateRange[1]);
-        var param = 'numNo='+numNo+'&settlement='+settlements+'&beginDate='+beginDate+'&endDate='+endDate+'&name='+coal+'&status='+status+'&contractType='+type;
-        location.href=path + 'export_excel_data?'+param;
+        var beginDate = $.trim(dateRange[0]);
+        var endDate = $.trim(dateRange[1]);
+        var param = 'numNo=' + numNo + '&settlement=' + settlements + '&beginDate=' + beginDate + '&endDate=' + endDate + '&name=' + coal + '&status=' + status + '&contractType=' + type;
+        location.href = path + 'export_excel_data?' + param;
     });
-    $("#lock").on("click",function () {
-        dealLock(checkBtn(),1);
+    $("#lock").on("click", function () {
+        dealLock(checkBtn(), 1);
     });
-    $("#unlock").on("click",function () {
-        dealLock(checkBtn(),2);
+    $("#unlock").on("click", function () {
+        dealLock(checkBtn(), 2);
     });
-    $("#delete").on("click",function () {
+    $("#delete").on("click", function () {
         deleteSettlement(checkBtn());
     });
     //打印合同
-    $("#print").on("click",function () {
+    $("#print").on("click", function () {
         // deleteSettlement(checkBtn());
     });
 }
 //移除
 function deleteSettlement(id) {
-    $("#deleteBut").on("click", function () {
-        if(id == ""){
-            $('#modalDelete').trigger('click');
-            showResultInfo("请至少选中一行！", false);
-            return;
-        }
-        $.post(path + "deleteContractInfo", {id: id}, function (data) {
-            $('#modalDelete').trigger('click');
-            if (data == 1) {
-                showResultInfo("操作成功！", true);
-            } else {
-                showResultInfo("操作失败！", false);
-            }
-        });
-    })
-}
-//操作结果
-function showResultInfo(message, isFlush) {
-    $("#wordsMessage").html(isFlush ? '<span style="font-size:20px"><i class="fa fa-check">&nbsp;<strong>' + message + '</strong></i></span>' :
-    '<span style="font-size:20px"><i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>' + message + '</strong></i></span>');
-    $('#resultBut').trigger('click');
-    $("#myResult").on('click', function () {
-        if (isFlush) {
+    if (id == "") {
+        swal("", "请至少选中一行！", "warning");
+        return;
+    }
+    $.post(path + "deleteContractInfo", {id: id}, function (data) {
+        if (data == 1) {
+            swal("成功", "删除成功！", "success");
             queryData();
+        } else {
+            swal("失败", "删除失败", "error");
         }
     });
 }
@@ -304,10 +308,10 @@ function showResultInfo(message, isFlush) {
 function checkBtn() {
     var checkTemp = "";
     $('input:checkbox[name="check"]:checked').each(function (i) {
-        if(0==i){
+        if (0 == i) {
             checkTemp = $(this).val();
-        }else{
-            checkTemp += (","+$(this).val());
+        } else {
+            checkTemp += ("," + $(this).val());
         }
     });
     return checkTemp;
@@ -315,11 +319,11 @@ function checkBtn() {
 //form表单提交 格式规则校验
 function initFormValid() {
     //添加ip验证规则
-    jQuery.validator.addMethod("dataNumber",function (value,element) {
-        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test( value );
-    },"请输入数字");
+    jQuery.validator.addMethod("dataNumber", function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
+    }, "请输入数字");
     $("#validate").validate({
-        errorPlacement: function( error, element ) {
+        errorPlacement: function (error, element) {
             var place = element.closest('.input-group');
             if (!place.get(0)) {
                 place = element;
@@ -342,10 +346,10 @@ function initFormValid() {
                 number: true
             }
         },
-        highlight: function( label ) {
+        highlight: function (label) {
             $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         },
-        success: function( label ) {
+        success: function (label) {
             $(label).closest('.form-group').removeClass('has-error');
             label.remove();
         }

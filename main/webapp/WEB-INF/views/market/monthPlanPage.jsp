@@ -36,12 +36,12 @@
                                 </div>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
-                                        <button id="stopMonthPlan" data-toggle="modal" data-target="#modalDelete" class="btn btn-primary mr5 mb10" type="button">终止月计划</button>
+                                        <button id="stopMonthPlan"  class="btn btn-primary mr5 mb10" type="button">终止月计划</button>
                                     </div>
                                 </div>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
-                                        <button id="delete" data-toggle="modal" data-target="#modalDelete" class="btn btn-danger mr5 mb10" type="button">删除</button>
+                                        <button id="delete" class="btn btn-danger mr5 mb10" type="button">删除</button>
                                     </div>
                                 </div>
                                 <%--<!-- 查询按钮-->--%>
@@ -61,7 +61,7 @@
                     <div class="panel panel-default downLoad toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">外运计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;外运月计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
@@ -75,13 +75,13 @@
                 <!-- col-lg-12 end here -->
             </div>
 
-            <div class="row" id="playDayPlanDiv">
+            <div class="row" id="playDayPlanDiv" style="display: none">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default downLoad toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">日计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;日计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
@@ -92,7 +92,6 @@
                     </div>
                     <%--<!-- End .panel -->--%>
                 </div>
-                <%--<!-- col-lg-12 end here -->--%>
             </div>
         </div>
         <!-- / .page-content-inner -->
@@ -127,7 +126,6 @@
             <%--</div>--%>
         <%--</div>--%>
     <%--</div>--%>
-<%--</div>--%>
 <!--新增信息-->
 <input type="hidden" id="hideId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -176,6 +174,7 @@
                                            style="padding-right: 1px">累计实发车:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="actualCarNum" class="form-control"
+                                                name="number1"
                                                placeholder="累计实发车数" >
                                     </div>
                                 </div>
@@ -198,7 +197,8 @@
                                     <label for="actualSendedTonnage" class="col-lg-4 control-label"
                                            style="padding-right: 1px">累计实发吨:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="actualSendedTonnage" class="form-control"
+                                        <input type="text" id="actualSendedTonnage" class="form-control" 
+                                        name="dataNumber"
                                                placeholder="累计实发吨">
                                     </div>
                                 </div>
@@ -342,45 +342,6 @@
     </div>
 </div>
 
-<!--删除提示modal-style6-->
-<div class="modal fade" id="modalDelete" tabindex="-1" style="padding-top: 100px" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
-            </div>
-            <div class="modal-body" style="font-size: 20px">
-                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;&nbsp;您确认要进行此操作吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="deleteBut" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--操作结果展示-->
-<div class="modal fade" id="modelResult" style="padding-top: 100px" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">操作结果</h4>
-            </div>
-            <div class="modal-body" id="wordsMessage">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="myResult" data-dismiss="modal">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-<button type='button' id="resultBut" class="btn btn-success mr5 mb10" data-toggle='modal'
-        data-target='#modelResult'></button>
 <button type='button' id="showDayPlayTable" class="btn btn-success mr5 mb10" data-toggle='modal'
         data-target='#playDayPlanModal'></button>
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>

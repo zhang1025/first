@@ -396,18 +396,15 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params,lodingId) {
     var dt = $('#' + tableId).dataTable(
         {
             "bSort": false,
-            "bProcessing": false, //不用自带的loading,使用系统插件waitMe
+            "bProcessing": true,
             "bFilter": false,
             "bPaginate": false,//是否启用分页
-            "bServerSide": true,
-            "bLengthChange": false, //隐藏每页显示n条记录框
+            "bServerSide": true,//排序开启 此处必须设置为false
+            "bLengthChange": false,
             "bAutoWidth": true,
-            "iDisplayLength": initLength,
             "sAjaxSource": url,
-            "bDeferRender":true,
             "bDestroy": true,
             "bScrollCollapse": true,
-            "scrollX": true,
             "sServerMethod": "POST",
             "aoColumns": aoColumns,
             "fnServerParams": function (aoData) {

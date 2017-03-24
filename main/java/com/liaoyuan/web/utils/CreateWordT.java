@@ -2,6 +2,8 @@ package com.liaoyuan.web.utils;
 
 /**
  * Created by zj on 2017/3/21 0021
+ * 具体参考一下地址
+ * http://blog.csdn.net/u012246342/article/details/51698187
  */
 import java.io.BufferedWriter;
 import java.io.File;

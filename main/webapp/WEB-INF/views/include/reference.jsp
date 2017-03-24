@@ -133,3 +133,5 @@
 <!-- bootstrap switch -->
 <link rel="stylesheet" type="text/css" href="<c:url value="/js/bootstrap-switch/bootstrap-switch.css"/>">
 <script src="<c:url value="/js/bootstrap-switch/bootstrap-switch.js"/>"></script>
+
+<script src="<c:url value="/plugins/ui/sweet-alert.js"/>"></script>
