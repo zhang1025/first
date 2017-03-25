@@ -7,7 +7,6 @@ $(document).ready(function() {
     $("body").ledo();
     queryUserData();
     initButtonClick();
-    //initFormValid();
 });
 function queryUserData() {
     var aoColumns = dealTableTitle();
@@ -19,17 +18,17 @@ function queryUserData() {
     ];
     var url = path+ 'get_users_table';
     playLoading("userData");
-    commonDataTables("userDataTables", url, aoColumns, params,"userData");
+    commonDataTablesWW("userDataTables", url, aoColumns, params,"userData");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "用户名", "mData": "account"},
-        {"sTitle": "密码", "mData": "pw"},
-        {"sTitle": "所属角色", "mData": "roleName"},
-        {"sTitle": "所属部门", "mData": "department"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "用户名", "mData": "account", "sWidth": "10%"},
+        {"sTitle": "密码", "mData": "pw", "sWidth": "10%"},
+        {"sTitle": "所属角色", "mData": "roleName", "sWidth": "20%"},
+        {"sTitle": "所属部门", "mData": "department", "sWidth": "20%"},
+        {"sTitle": "操作", "mData": "id",  "sWidth": "10%","mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {
@@ -76,27 +75,36 @@ function initButtonClick() {
             function(result){
                 $('#myModal').trigger('click');
                 if (result > 0) {
-                    showResultInfo("操作成功！",true);
+                    swal("成功","操作成功！","success");
+                    queryUserData();
                 }else if (result == -1){
-                    showResultInfo("该用户已经存在！",false);
+                    swal("失败","该用户已经存在","error");
                 }else{
-                    showResultInfo("操作失败！",false);
+                    swal("失败","删除失败","error");
                 }
             });
     });
 }
 //移除
 function deleteUser(id) {
-    $("#deleteBut").on("click",function () {
+    swal({title:"提示",
+        text:"是否删除？",
+        type:"warning",
+        showCancelButton:true,
+        cancelButtonText:"取消",
+        confirmButtonClass:"btn-info",
+        confirmButtonText:"确定",
+        closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
+    },function(){
         $.post(path+"deleteUser",{id:id},function (data) {
-            $('#modalDelete').trigger('click');
             if(data==1){
-                showResultInfo("操作成功！",true);
+                swal("成功","删除成功！","success");
+                queryUserData();
             }else{
-                showResultInfo("操作失败！",false);
+                swal("失败","删除失败","error");
             }
         });
-    })
+    });
 }
 //操作结果
 function showResultInfo(message,isFlush) {

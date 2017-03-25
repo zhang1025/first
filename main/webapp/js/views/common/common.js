@@ -465,7 +465,9 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params,lodingId) {
     $('.sorting_disabled').css("text-align","center");
     return dt;
 }
-
+/**
+ * 没有滚动条
+ */
 function commonDataTablesWW(tableId, url, aoColumns, params,lodingId) {
     //初始化每页显示数量为10，可以指定，参数里面指定initLength即可
     var initLength = 10;

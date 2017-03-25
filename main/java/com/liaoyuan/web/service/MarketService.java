@@ -34,5 +34,6 @@ public interface MarketService {
     int addDayPlan(PlanBean bean);
     int editDayPlan(PlanBean bean);
     int deleteDayPlan(int id);
+    int stopDayPlan(int id);
 
 }

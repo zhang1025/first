@@ -85,6 +85,9 @@
                             </h4>
                         </div>
                         <div class="panel-body">
+                            <div class="input-group">
+                                <button id="stopDayPlan"  class="btn btn-primary mr5 mb10" type="button">中止昨日计划</button>
+                            </div>
                             <table id="playDayPlanTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>

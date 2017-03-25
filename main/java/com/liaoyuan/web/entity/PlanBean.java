@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by zj on 2017/3/19 0019
  * 月计划 日计划bean
- * 添加对应的set方法是因为ajax传递后天bean的时候如果为空无法映射400错误的问题
+ * 添加对应的set方法是因为ajax传递后台bean的时候如果为空无法映射400错误的问题
  */
 @Data
 public class PlanBean implements Serializable{
@@ -118,6 +118,7 @@ public class PlanBean implements Serializable{
 
     private String searchType;
 
+    private String excelType;
     //分页用
     private int iDisplayStart;
     private int iDisplayLength;

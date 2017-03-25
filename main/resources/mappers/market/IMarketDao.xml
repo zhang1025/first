@@ -67,7 +67,12 @@
     <!--外运查询-->
     <sql id="searchMonth">
         and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
-        
+        <if test="wellsName!=null and wellsName!=''">
+            and wellsName=#{wellsName}
+        </if>
+        <if test="coalName!=null and coalName!=''">
+            and coalName=#{coalName}
+        </if>
     </sql>
     <!--common -->
     <select id="countMonthPlanData" parameterType="PlanBean" resultType="java.lang.Integer">
@@ -119,13 +124,19 @@
                and d.createtime>=#{beginDate} AND  <![CDATA[d.createtime<=#{endDate}]]>
             </otherwise>
         </choose>
+        <if test="wellsName!=null and wellsName!=''">
+            and d.wellsName=#{wellsName}
+        </if>
+        <if test="coalName!=null and coalName!=''">
+            and d.coalName=#{coalName}
+        </if>
     </select>
     <select id="getTableDayPlanData" parameterType="PlanBean" resultType="PlanBean">
         select d.id,d.rid,d.settlement,d.name,d.planCarNum,d.actualCarNum,d.planTonnage,d.actualSendedTonnage,
         d.planCarNum-d.actualCarNum as unsendedCarNum,
         d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
         d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
-        d.payId,d.createtime,d.month_id as monthId from out_day_plan d
+        d.payId,d.createtime,d.status,d.month_id as monthId from out_day_plan d
         where 1=1
        <choose>
             <when test="monthId!=null and monthId!=''">
@@ -135,6 +146,12 @@
                and d.createtime>=#{beginDate} AND  <![CDATA[d.createtime<=#{endDate}]]>
             </otherwise>
         </choose>
+        <if test="wellsName!=null and wellsName!=''">
+            and d.wellsName=#{wellsName}
+        </if>
+        <if test="coalName!=null and coalName!=''">
+            and d.coalName=#{coalName}
+        </if>
         order by d.createtime desc
         <!--limit ${iDisplayStart},${iDisplayLength}-->
     </select>
@@ -159,4 +176,8 @@
     <delete id="deleteDayPlan">
         delete from out_day_plan where id=#{id}
     </delete>
+    <update id="stopDayPlan">
+        update out_day_plan set status=-1 where month_id=#{monthId}
+        and left(createtime,10)=date_sub(curdate(),interval 1 day)
+    </update>
 </mapper>

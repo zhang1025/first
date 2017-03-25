@@ -115,9 +115,14 @@ public class MarketController extends BaseController {
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/monthPlanPage");
     }
-
+    /**
+     * 日计划页面
+     * @return
+     */
     @RequestMapping(value = "/dayPlan", method = RequestMethod.GET)
-    public ModelAndView dayPlan(){
+    public ModelAndView dayPlan(ModelMap modelMap){
+        modelMap.put("wells",commonDataService.getListData("wells"));
+        modelMap.put("coals",commonDataService.getListData("coal"));
         return new ModelAndView("/market/dayPlanPage");
     }
     /**
@@ -190,6 +195,21 @@ public class MarketController extends BaseController {
         return marketService.deleteDayPlan(id);
     }
 
+    //中止对应月计划的昨日计划
+    @RequestMapping(value = "/stopDayPlan", method = RequestMethod.POST)
+    public Integer stopDayPlan(int monthId) {
+        return marketService.deleteDayPlan(monthId);
+    }
+
+    /**
+     * 日计划页面
+     */
+    @RequestMapping(value = "/contrastInfo", method = RequestMethod.GET)
+    public ModelAndView contrastInfo(ModelMap modelMap){
+        modelMap.put("wells",commonDataService.getListData("wells"));
+        modelMap.put("coals",commonDataService.getListData("coal"));
+        return new ModelAndView("/market/contrastPage");
+    }
 
     /**
      *导出 合同 excel数据
@@ -213,22 +233,30 @@ public class MarketController extends BaseController {
     public void exportPlanData(PlanBean bean,HttpServletResponse response) throws Exception{
         List<String> columnnames ;
         List<List<Object>> datas ;
+        String excelName = "";
         int count;
         List<PlanBean> gridData;  String fileName;
         if(bean.getSearchType().equals("month")){
+            excelName = "外运月计划信息数据";
             count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
             bean.setIDisplayLength(count);
             gridData = marketService.getTableMonthPlanData(bean);
-            columnnames = DataTableUtils.getExcelPlanColumnName();
-            datas = DataTableUtils.getExcelPlanDataLists(gridData);
-            fileName = URLEncoder.encode("外运月计划信息数据", "utf-8")+".xls";
+            if("contrast".equals(bean.getExcelType())){
+                excelName = "计划与发出对比信息";
+                columnnames = DataTableUtils.getExcelPlanDBColumnName();
+                datas = DataTableUtils.getExcelPlanDBDataLists(gridData);
+            }else{
+                columnnames = DataTableUtils.getExcelPlanColumnName();
+                datas = DataTableUtils.getExcelPlanDataLists(gridData);
+            }
+            fileName = URLEncoder.encode(excelName, "utf-8")+".xls";
         }else{
             count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
             bean.setIDisplayLength(count);
             gridData = marketService.getTableDayPlanData(bean);
             columnnames = DataTableUtils.getExcelPlanColumnName();
             datas = DataTableUtils.getExcelPlanDataLists(gridData);
-            fileName = URLEncoder.encode("外运日计划信息数据", "utf-8")+".xls";
+            fileName = URLEncoder.encode("外运销售日计划信息数据", "utf-8")+".xls";
         }
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }

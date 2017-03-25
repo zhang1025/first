@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top:5px;padding-left:40px">
                                     <div class="input-group">
-                                        <span class="input-group-addon">煤种</span>
+                                        <span class="input-group-addon">井别</span>
                                         <select id="s_coals" class="select fancy-select form-control"
                                                 style="width: 150px">
                                             <option value="">请选择</option>
@@ -46,7 +46,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
@@ -58,17 +58,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="dayPlanData">
+            <div class="row" id="contrastData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default downLoad toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">销售日计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;计划与发出对比信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="dayPlanDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="contrastDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -77,8 +77,6 @@
                 </div>
                 <!-- col-lg-12 end here -->
             </div>
-
-           
         </div>
         <!-- / .page-content-inner -->
     </div>
@@ -86,6 +84,5 @@
 </div>
 
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
-<script src="<c:url value="/js/views/market/datePlanPage.js"/> "></script>
-
+<script src="<c:url value="/js/views/market/contrastPage.js"/> "></script>
 <!-- / page-content -->

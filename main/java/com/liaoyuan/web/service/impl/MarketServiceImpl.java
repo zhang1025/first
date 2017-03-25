@@ -117,4 +117,7 @@ public class MarketServiceImpl implements MarketService{
     public int deleteDayPlan(int id){
         return  iMarkerDao.deleteDayPlan(id);
     }
+    public int stopDayPlan(int monthId){
+        return  iMarkerDao.stopDayPlan(monthId);
+    }
 }

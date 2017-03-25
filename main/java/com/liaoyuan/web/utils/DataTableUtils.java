@@ -148,4 +148,43 @@ public class DataTableUtils {
         }
         return datas;
     }
+
+    //外运计划 实际与发出对比
+    public static List<String> getExcelPlanDBColumnName() {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("计划号");
+        columnnames.add("收货单位");
+        columnnames.add("到站");
+        columnnames.add("井别");
+        columnnames.add("煤种");
+        columnnames.add("计划车数");
+        columnnames.add("计划吨数");
+        columnnames.add("单价");
+        columnnames.add("实发车数");
+        columnnames.add("实发吨");
+        columnnames.add("计划比实发(车)");
+        columnnames.add("计划比实发(吨)");
+        return columnnames;
+    }
+    public static List<List<Object>> getExcelPlanDBDataLists(List<PlanBean> gridData) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(PlanBean pb:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(pb.getRid());
+            row.add(pb.getName());
+            row.add(pb.getSiteName());
+            row.add(pb.getWellsName());
+            row.add(pb.getCoalName());
+            row.add(pb.getPlanCarNum());
+            row.add(pb.getPlanTonnage());
+            row.add(pb.getActualUnitPrice());
+            row.add(pb.getActualCarNum());
+            row.add(pb.getActualSendedTonnage());
+            row.add(pb.getPlanCarNum()-pb.getActualCarNum());
+            row.add(pb.getPlanTonnage()-pb.getActualSendedTonnage());
+            datas.add(row);
+        }
+        return datas;
+    }
 }

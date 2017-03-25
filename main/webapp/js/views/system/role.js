@@ -25,27 +25,27 @@ function queryRoleData() {
     ];
     var url = path+'get_roles_table';
     playLoading("roleData");
-    commonDataTables("roleDataTables", url, aoColumns, params,"roleData");
+    commonDataTablesWW("roleDataTables", url, aoColumns, params,"roleData");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns .push(
-        {"sTitle": "角色名称", "mData": "roleName"},
-        {"sTitle": "角色描述", "mData": "described"},
-        {"sTitle": "操作", "mData": "id", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
+        {"sTitle": "角色名称", "mData": "roleName", "sWidth": "20%"},
+        {"sTitle": "角色描述", "mData": "described", "sWidth": "30%"},
+        {"sTitle": "操作", "mData": "id", "sWidth": "40%", "mRender": function(data, type, row) {return operateButton(data, type, row);}});
     return	aoColumns;
 }
 function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['roleId'];
     var desc = rowObject['described'];
     var roleName = rowObject['roleName'];
-    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editRole('"
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' onclick=\"editRole('"
         + desc + "','"
         + roleName
         + "')\">编辑</button>";
-    var delBtn = "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteRole("+id+")'>移除</button>"
-    var bindBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModalBind' id='editorServer' onclick=\"bindRole('"
+    var delBtn = "<button type='button' class='btn btn-danger btn-small'  onclick='deleteRole("+id+")'>移除</button>";
+    var bindBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModalBind'  onclick=\"bindRole('"
         + roleName + "','"
         + id
         + "')\">绑定权限</button>";
@@ -98,43 +98,42 @@ function initButtonClick() {
             function(result){
                 $('#myModal').trigger('click');
                 if (result > 0) {
-                    showResultInfo("操作成功！",true);
+                    swal("成功","操作成功！","success");
+                    queryRoleData();
                 }else if (result == -1){
-                    showResultInfo("该用户已经存在！",false);
+                    swal("失败","该角色已经存在","error");
                 }else{
-                    showResultInfo("操作失败！",false);
+                    swal("失败","删除失败","error");
                 }
             });
     });
 }
 //移除
 function deleteRole(id) {
-    $("#deleteBut").on("click",function () {
+    swal({title:"提示",
+        text:"是否删除？",
+        type:"warning",
+        showCancelButton:true,
+        cancelButtonText:"取消",
+        confirmButtonClass:"btn-info",
+        confirmButtonText:"确定",
+        closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
+    },function(){
         $.post(path+"deleteRole",{id:id},function (data) {
-            $('#modalDelete').trigger('click');
             if(data==1){
-                showResultInfo("操作成功！",true);
+                swal("成功","删除成功！","success");
+                queryRoleData();
             }else{
-                showResultInfo("操作失败！",false);
+                swal("失败","删除失败","error");
             }
         });
-    })
-}
-//操作结果
-function showResultInfo(message,isFlush) {
-    $("#wordsMessage").html(isFlush?'<i class="fa fa-check">&nbsp;<strong>'+message+'</strong></i>':
-    '<i class="glyphicon glyphicon-warning-sign">&nbsp;<strong>'+message+'</strong></i>');
-    $('#resultBut').trigger('click');
-    $("#myResult").on('click',function () {
-        if(isFlush){
-            queryRoleData();
-        }
     });
 }
 
+
 function bindPermissionUpdate(_permissionIds) {
     if (_permissionIds == null || _permissionIds.length == 0) {
-        alert("请选择权限！");
+        swal("失败","请选择权限","error");
         return;
     }
 
@@ -150,13 +149,13 @@ function bindPermissionUpdate(_permissionIds) {
         success : function(response) {
             if (response > 0) {
                 $("#myModalBind").trigger("click");
-                showResultInfo("操作成功！",false);
+                swal("成功","操作成功","success");
             } else {
-                showResultInfo("操作失败！",false);
+                swal("失败","操作失败","error");
             }
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
-            showResultInfo("操作失败，请稍后重试！",false);
+            swal("失败","操作失败,请稍后重试","error");
             return false;
         }
     });
@@ -164,7 +163,7 @@ function bindPermissionUpdate(_permissionIds) {
 
 function unbindPermissionUpdate(_permissionIds) {
     if (_permissionIds == null || _permissionIds.length == 0) {
-        alert("请选择权限！");
+        swal("失败","请选择权限","error");
         return;
     }
 
@@ -180,13 +179,13 @@ function unbindPermissionUpdate(_permissionIds) {
         success : function(response) {
             if (response > 0) {
                 $("#myModalBind").trigger("click");
-                showResultInfo("操作成功！",false);
+                swal("成功","操作成功","success");
             } else {
-                showResultInfo("操作失败！",false);
+                swal("失败","操作失败","error");
             }
         },
         error : function(XMLHttpRequest, textStatus, errorThrown) {
-            showResultInfo("操作失败！",false);
+            swal("失败","操作失败,请稍后重试","error");
             return false;
         }
     });

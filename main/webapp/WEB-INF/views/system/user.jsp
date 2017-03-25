@@ -121,42 +121,6 @@
     </div>
 </div>
 
-<!--删除提示modal-style6-->
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title" id="mySmallModalLabel">提示</h4>
-            </div>
-            <div class="modal-body">
-                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;&nbsp;您确认要进行此操作吗？
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="deleteBut" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--操作结果展示-->
-<div class="modal fade" id="modelResult" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">操作结果</h4>
-            </div>
-            <div class="modal-body" id="wordsMessage">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="myResult" data-dismiss="modal">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-<button type='button' id="resultBut" class="btn btn-success mr5 mb10" data-toggle='modal' data-target='#modelResult'></button>
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>

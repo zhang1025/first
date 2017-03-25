@@ -4,6 +4,7 @@
 var path = "/market/";
 var subType = 1;
 $(document).ready(function () {
+    $("body").ledo();
     //初始化时间
     initDateRangePicker();
     $(".select").select2();
@@ -256,6 +257,19 @@ function initButtonClick() {
         // $('#showDayPlayTable').trigger('click');
         queryDayPlanData(id);
     });
+    //终止昨日计划
+    $("#stopDayPlan").on("click",function () {
+        var id = checkBtn();
+        if (id == "") {
+            swal("","请选中一行进行操作！","warning");
+            return;
+        }
+        if (id.indexOf(",") > -1) {
+            swal("","只能选中一行月计划！","warning");
+            return;
+        }
+        stopYesterDayDayPlan(id);
+    });
 }
 function stopMonthPlan(id) {
         if (id == "") {
@@ -272,7 +286,6 @@ function stopMonthPlan(id) {
             closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
         },function(){
             $.post(path + 'stopMonthPlan', {id: id}, function (data) {
-                $('#modalDelete').trigger('click');
                 if (data == 1) {
                     swal("成功","操作成功！","success");
                     queryData();
@@ -298,7 +311,6 @@ function deleteMonthPlan(id) {
             closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
         },function(){
             $.post(path + "deleteMonthPlan", {id: id}, function (data) {
-                $('#modalDelete').trigger('click');
                 if (data == 1) {
                     swal("成功","删除成功！","success");
                     queryData();
@@ -308,7 +320,27 @@ function deleteMonthPlan(id) {
             });
         });
 }
-
+//终止昨日计划
+function stopYesterDayDayPlan(id) {
+    swal({title:"提示",
+        text:"确定中止昨日计划？",
+        type:"warning",
+        showCancelButton:true,
+        cancelButtonText:"取消",
+        confirmButtonClass:"btn-info",
+        confirmButtonText:"确定",
+        closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
+    },function(){
+        $.post(path + "stopDayPlan", {monthId: id}, function (data) {
+            if (data == 1) {
+                swal("成功","操作成功！","success");
+                queryData();
+            } else {
+                swal("失败","操作失败","error");
+            }
+        });
+    });
+}
 //获取选中的行数据
 function checkBtn() {
     var checkTemp = "";
