@@ -118,9 +118,6 @@
 <!-- common -->
 <script type="text/javascript" src="<c:url value="/js/views/common/common.js"/> "></script>
 
-<!-- common search conditions -->
-<script type="text/javascript" src="<c:url value="/js/views/common/searchCondition.js"/> "></script>
-
 <!-- select2 -->
 <script type="text/javascript" src="<c:url value="/plugins/forms/select2/select2.js"/> "></script>
 <script type="text/javascript" src="<c:url value="/plugins/forms/select2/_locale/select2_locale_zh-CN.js"/> "></script>

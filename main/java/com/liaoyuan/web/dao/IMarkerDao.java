@@ -36,6 +36,8 @@ public interface IMarkerDao {
     int addDayPlan(PlanBean bean);
     int editDayPlan(PlanBean bean);
     int deleteDayPlan(@Param(value = "id") int id);
+    int deleteDayPlanOfMonth(@Param(value = "monthId") int id);
+    int stopDayPlanOfMonth(@Param(value = "monthId")int id);
     int stopDayPlan(@Param(value = "monthId")int id);
 
 }

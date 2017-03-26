@@ -105,14 +105,11 @@ public class PlanBean implements Serializable{
         }
     }
 
-    private int monthId;
-    public void setMonthId(String monthId) {
-        if(StringUtils.isBlank(monthId)){
-            this.monthId = 0;
-        }else{
-            this.monthId =  Integer.parseInt(monthId);
-        }
-    }
+    private String monthId;
+
+    //车皮号
+    private String wagonNo;
+
     private String beginDate;
     private String endDate;
 

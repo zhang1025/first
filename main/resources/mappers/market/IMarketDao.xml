@@ -136,7 +136,7 @@
         d.planCarNum-d.actualCarNum as unsendedCarNum,
         d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
         d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
-        d.payId,d.createtime,d.status,d.month_id as monthId from out_day_plan d
+        d.payId,d.createtime,d.status,d.month_id as monthId,d.wagonNo from out_day_plan d
         where 1=1
        <choose>
             <when test="monthId!=null and monthId!=''">
@@ -152,8 +152,8 @@
         <if test="coalName!=null and coalName!=''">
             and d.coalName=#{coalName}
         </if>
-        order by d.createtime desc
-        <!--limit ${iDisplayStart},${iDisplayLength}-->
+        order by d.rid asc,d.createtime desc
+        limit ${iDisplayStart},${iDisplayLength}
     </select>
 
     <insert id="addDayPlan" parameterType="PlanBean">
@@ -176,8 +176,17 @@
     <delete id="deleteDayPlan">
         delete from out_day_plan where id=#{id}
     </delete>
+    <!--删除对应月计划的日计划信息-->
+    <delete id="deleteDayPlanOfMonth">
+        delete from out_day_plan where month_id=#{monthId}
+    </delete>
+    <!--停止昨日计划-->
     <update id="stopDayPlan">
         update out_day_plan set status=-1 where month_id=#{monthId}
         and left(createtime,10)=date_sub(curdate(),interval 1 day)
+    </update>
+    <!--中止对应月计划的日计划-->
+    <update id="stopDayPlanOfMonth">
+        update out_day_plan set status=-1 where month_id=#{monthId}
     </update>
 </mapper>

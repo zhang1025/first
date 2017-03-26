@@ -46,7 +46,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
@@ -61,10 +61,10 @@
             <div class="row" id="dayPlanData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-default downLoad toggle ">
+                    <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;销售日计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">销售日计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
@@ -78,7 +78,7 @@
                 <!-- col-lg-12 end here -->
             </div>
 
-           
+
         </div>
         <!-- / .page-content-inner -->
     </div>
@@ -86,6 +86,6 @@
 </div>
 
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
-<script src="<c:url value="/js/views/market/dayPlanPage.js"/> "></script>
+<script src="<c:url value="/js/views/transport/showDayPlans.js"/> "></script>
 
 <!-- / page-content -->

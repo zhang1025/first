@@ -75,10 +75,14 @@ public class MarketServiceImpl implements MarketService{
     }
 
     public int stopMonthPlan(int id){
+        //中止对应的日计划
+        iMarkerDao.stopDayPlanOfMonth(id);
         return iMarkerDao.stopMonthPlan(id);
     }
     @Override
     public int deleteMonthPlan(int id) {
+        //删除对应月计划的日计划
+        iMarkerDao.deleteDayPlanOfMonth(id);
         return iMarkerDao.deleteMonthPlan(id);
     }
     //外运日计划
@@ -87,24 +91,27 @@ public class MarketServiceImpl implements MarketService{
     }
     public List<PlanBean> getTableDayPlanData(PlanBean bean){
         List<PlanBean> list = iMarkerDao.getTableDayPlanData(bean);
-        int dayPlanCar=0,dayActualCar=0,dayPlanTonnage=0,dayActualTonnage=0;
-        if(null!=list && !list.isEmpty()){
-            for (PlanBean pb : list) {
-                dayPlanCar += pb.getPlanCarNum();
-                dayActualCar += pb.getActualCarNum();
-                dayPlanTonnage += pb.getPlanTonnage();
-                dayActualTonnage += pb.getActualSendedTonnage();
-            }
-            PlanBean planBean = new PlanBean();
-            //增加最后一行合计统计
+        //查询某一个月计划对应的日计划  不分页  最后一行显示合并
+        if(bean.getSearchType().equals("dayNoPage")){
+            int dayPlanCar=0,dayActualCar=0,dayPlanTonnage=0,dayActualTonnage=0;
+            if(null!=list && !list.isEmpty()){
+                for (PlanBean pb : list) {
+                    dayPlanCar += pb.getPlanCarNum();
+                    dayActualCar += pb.getActualCarNum();
+                    dayPlanTonnage += pb.getPlanTonnage();
+                    dayActualTonnage += pb.getActualSendedTonnage();
+                }
+                PlanBean planBean = new PlanBean();
+                //增加最后一行合计统计
 //            planBean.setName("合计");
-            planBean.setPlanCarNum(dayPlanCar);
-            planBean.setActualCarNum(String.valueOf(dayActualCar));
-            planBean.setPlanTonnage(String.valueOf(dayPlanTonnage));
-            planBean.setActualSendedTonnage(String.valueOf(dayActualTonnage));
-            planBean.setUnsendedCarNum(dayPlanCar-dayActualCar);
-            planBean.setUnsendedTonnage(dayPlanTonnage - dayActualTonnage);
-            list.add(planBean);
+                planBean.setPlanCarNum(dayPlanCar);
+                planBean.setActualCarNum(String.valueOf(dayActualCar));
+                planBean.setPlanTonnage(String.valueOf(dayPlanTonnage));
+                planBean.setActualSendedTonnage(String.valueOf(dayActualTonnage));
+                planBean.setUnsendedCarNum(dayPlanCar-dayActualCar);
+                planBean.setUnsendedTonnage(dayPlanTonnage - dayActualTonnage);
+                list.add(planBean);
+            }
         }
         return list;
     }

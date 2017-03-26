@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoyuan.web.dao.ITransportDao">
+
+    <!--编辑车皮号 调运-->
+    <update id="dealDayPlan" parameterType="PlanBean">
+        update out_day_plan set rid=#{rid},name=#{name},
+        actualSendedTonnage=#{actualSendedTonnage},
+        actualUnitPrice=#{actualUnitPrice},wellsName=#{wellsName},
+        coalName=#{coalName},siteName=#{siteName},
+        wagonNo=#{wagonNo} where id=#{id}
+    </update>
+</mapper>

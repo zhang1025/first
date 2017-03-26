@@ -7,6 +7,7 @@ import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
+import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.DataTableUtils;
 import com.liaoyuan.web.utils.ExcelUtils;
 import com.liaoyuan.web.utils.WebCommonDataUtils;
@@ -28,6 +29,7 @@ import java.util.List;
 
 /**
  * Created by zj on 2017/3/18 0018
+ * 销售管理
  */
 @RestController
 @RequestMapping(value = "/market")
@@ -47,8 +49,8 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/contract", method = RequestMethod.GET)
     public ModelAndView contract(ModelMap modelMap){
         log.info("=============合同管理============");
-        List<DataBean> coals = commonDataService.getListData("coal");
-        List<DataBean> settlements = commonDataService.getListData("settlement");
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+        List<DataBean> settlements = commonDataService.getListData(Constant.SETTLEMENT);
         modelMap.put("coals",coals);
         modelMap.put("settlements",settlements);
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
@@ -107,11 +109,11 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/monthPlan", method = RequestMethod.GET)
     public ModelAndView monthPlan(ModelMap modelMap){
         log.info("=============monthPlan============");
-        modelMap.put("coals",commonDataService.getListData("coal"));
-        modelMap.put("sites",commonDataService.getListData("site"));
-        modelMap.put("receives",commonDataService.getListData("receive"));
-        modelMap.put("wells",commonDataService.getListData("wells"));
-        modelMap.put("settlements",commonDataService.getListData("settlement"));
+        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
+        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
+        modelMap.put("receives",commonDataService.getListData(Constant.RECEIVE));
+        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+        modelMap.put("settlements",commonDataService.getListData(Constant.SETTLEMENT));
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/monthPlanPage");
     }
@@ -121,8 +123,8 @@ public class MarketController extends BaseController {
      */
     @RequestMapping(value = "/dayPlan", method = RequestMethod.GET)
     public ModelAndView dayPlan(ModelMap modelMap){
-        modelMap.put("wells",commonDataService.getListData("wells"));
-        modelMap.put("coals",commonDataService.getListData("coal"));
+        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
         return new ModelAndView("/market/dayPlanPage");
     }
     /**
@@ -140,6 +142,12 @@ public class MarketController extends BaseController {
         }
         if(bean!=null && bean.getSearchType().equals("day")){
             count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+            gridData = marketService.getTableDayPlanData(bean);
+        }
+        //展示某一个月计划对应的日计划信息  不分页 最后一行显示合并信息
+        if(bean!=null && bean.getSearchType().equals("dayNoPage")){
+            count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+            bean.setIDisplayLength(count);//不分页  显示全部
             gridData = marketService.getTableDayPlanData(bean);
         }
         printDataTables(response, count, gridData);
@@ -206,8 +214,8 @@ public class MarketController extends BaseController {
      */
     @RequestMapping(value = "/contrastInfo", method = RequestMethod.GET)
     public ModelAndView contrastInfo(ModelMap modelMap){
-        modelMap.put("wells",commonDataService.getListData("wells"));
-        modelMap.put("coals",commonDataService.getListData("coal"));
+        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
         return new ModelAndView("/market/contrastPage");
     }
 
