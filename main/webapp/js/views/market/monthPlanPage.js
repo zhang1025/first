@@ -255,6 +255,7 @@ function initButtonClick() {
             return;
         }
         // $('#showDayPlayTable').trigger('click');
+
         queryDayPlanData(id);
     });
     //终止昨日计划
@@ -426,6 +427,8 @@ function operateButtonDay(cellvalue, options, rowObject) {
 }
 
 function queryDayPlanData(id) {
+    //页面跳转到日计划div
+    location.hash = "playDayPlanDiv";
     $("#playDayPlanDiv").show();
     var aoColumns = dealTableDayPlanTitle();
     var params = [

@@ -75,7 +75,7 @@
                 <!-- col-lg-12 end here -->
             </div>
 
-            <div class="row" id="playDayPlanDiv" style="display: none">
+            <div class="row" name="playDayPlanDiv" id="playDayPlanDiv" style="display: none">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default downLoad toggle ">
