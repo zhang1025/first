@@ -206,7 +206,7 @@ public class MarketController extends BaseController {
     //中止对应月计划的昨日计划
     @RequestMapping(value = "/stopDayPlan", method = RequestMethod.POST)
     public Integer stopDayPlan(int monthId) {
-        return marketService.deleteDayPlan(monthId);
+        return marketService.stopDayPlan(monthId);
     }
 
     /**

@@ -113,7 +113,7 @@
         delete from out_month_plan where id=#{id}
     </delete>
 
-    <!--根据月计划id查看相应的日计划  月计划终止的不显示-->
+    <!--根据月计划id查看相应的日计划 -->
     <select id="countDayPlanData" parameterType="PlanBean" resultType="java.lang.Integer">
         select count(*) from out_day_plan d   where 1=1
         <choose>
@@ -129,6 +129,9 @@
         </if>
         <if test="coalName!=null and coalName!=''">
             and d.coalName=#{coalName}
+        </if>
+        <if test="siteName!=null and siteName!=''">
+            and d.siteName=#{siteName}
         </if>
     </select>
     <select id="getTableDayPlanData" parameterType="PlanBean" resultType="PlanBean">
@@ -151,6 +154,9 @@
         </if>
         <if test="coalName!=null and coalName!=''">
             and d.coalName=#{coalName}
+        </if>
+        <if test="siteName!=null and siteName!=''">
+            and d.siteName=#{siteName}
         </if>
         order by d.rid asc,d.createtime desc
         limit ${iDisplayStart},${iDisplayLength}

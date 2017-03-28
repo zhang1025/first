@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-03-26 21:47:51
+Date: 2017-03-28 23:17:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,6 +70,30 @@ CREATE TABLE `coal_card` (
 
 -- ----------------------------
 -- Records of coal_card
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `diaoyun`
+-- ----------------------------
+DROP TABLE IF EXISTS `diaoyun`;
+CREATE TABLE `diaoyun` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wagonNo` varchar(100) DEFAULT NULL COMMENT '车皮号',
+  `tonnage` double DEFAULT '0' COMMENT '吨数',
+  `wellsName` varchar(255) DEFAULT NULL COMMENT '对应wells中的w_id井别',
+  `coalName` varchar(255) DEFAULT NULL COMMENT '煤炭种类，对应dm_coal中的煤炭表',
+  `siteName` varchar(255) DEFAULT NULL COMMENT '到站',
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) DEFAULT '0' COMMENT '是否已传 0 没有  1已传',
+  `rid` int(11) DEFAULT NULL COMMENT '收货单位编号 计划号',
+  `dayId` int(11) DEFAULT NULL COMMENT '对应日计划id',
+  PRIMARY KEY (`id`),
+  KEY `dayId` (`dayId`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of diaoyun
 -- ----------------------------
 
 -- ----------------------------
@@ -314,14 +338,15 @@ CREATE TABLE `out_day_plan` (
   PRIMARY KEY (`id`),
   KEY `mpd_id` (`month_id`),
   KEY `createtime` (`createtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of out_day_plan
 -- ----------------------------
-INSERT INTO `out_day_plan` VALUES ('2', '2', '中国石油天然气股份有限', '7', '3', '13', '7', '58', '六区', '低质煤', '东辽阳', '公司专', '中国石油天然气股份有限公司', '支票', '二房东', 'admin', '2017-03-24 22:25:52', '5223', '1', null, '3');
-INSERT INTO `out_day_plan` VALUES ('4', '1', '吉林亚泰水泥有限公司', '1', '0', '12', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-26 21:20:03', '1490', '1', null, '2');
-INSERT INTO `out_day_plan` VALUES ('5', '1', '吉林亚泰水泥有限公司', '2', '0', '12', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-26 21:20:12', '1490', '1', null, '2');
+INSERT INTO `out_day_plan` VALUES ('6', '3', '白山市大业物贸有限公司', '12', '0', '12', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-28 22:01:35', '5151', '1', null, '4');
+INSERT INTO `out_day_plan` VALUES ('7', '3', '白山市大业物贸有限公司', '4', '0', '80', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-28 22:01:48', '5151', '1', null, '4');
+INSERT INTO `out_day_plan` VALUES ('8', '2', '中国石油天然气股份有限', '2', '0', '1', '0', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-28 22:02:02', '8768', '1', null, '5');
+INSERT INTO `out_day_plan` VALUES ('9', '1', '吉林亚泰水泥有限公司', '1', '0', '2', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-28 22:02:15', '1490', '1', null, '2');
 
 -- ----------------------------
 -- Table structure for `out_month_plan`
@@ -354,11 +379,11 @@ CREATE TABLE `out_month_plan` (
 -- ----------------------------
 -- Records of out_month_plan
 -- ----------------------------
-INSERT INTO `out_month_plan` VALUES ('2', '1', '吉林亚泰水泥有限公司', '50', '12', '120', '12', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-23 23:31:49', '1490', '1');
-INSERT INTO `out_month_plan` VALUES ('3', '2', '中国石油天然气股份有限', '50', '2', '120', '30', '58', '六区', '低质煤', '东辽阳', '公司专', '中国石油天然气股份有限公司', '支票', '二房东', 'admin', '2017-03-23 23:31:50', '5223', '1');
-INSERT INTO `out_month_plan` VALUES ('4', '3', '白山市大业物贸有限公司', '123', '12', '231', '12', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-23 23:31:51', '5151', '1');
-INSERT INTO `out_month_plan` VALUES ('5', '2', '中国石油天然气股份有限', '123', '12', '123', '12', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-23 23:56:57', '8768', '1');
-INSERT INTO `out_month_plan` VALUES ('6', '1', '吉林亚泰水泥有限公司', '123', '12', '123', '12', '12', '太平井', '低质煤', '鞍山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '热污染', 'admin', '2017-03-24 23:37:34', '1255', '-1');
+INSERT INTO `out_month_plan` VALUES ('2', '1', '吉林亚泰水泥有限公司', '50', '0', '120', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-23 23:31:49', '1490', '1');
+INSERT INTO `out_month_plan` VALUES ('3', '2', '中国石油天然气股份有限', '50', '0', '120', '0', '58', '六区', '低质煤', '东辽阳', '公司专', '中国石油天然气股份有限公司', '支票', '二房东', 'admin', '2017-03-23 23:31:50', '5223', '1');
+INSERT INTO `out_month_plan` VALUES ('4', '3', '白山市大业物贸有限公司', '123', '0', '231', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-23 23:31:51', '5151', '1');
+INSERT INTO `out_month_plan` VALUES ('5', '2', '中国石油天然气股份有限', '123', '0', '123', '0', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-23 23:56:57', '8768', '1');
+INSERT INTO `out_month_plan` VALUES ('6', '1', '吉林亚泰水泥有限公司', '123', '0', '123', '0', '12', '太平井', '低质煤', '鞍山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '热污染', 'admin', '2017-03-24 23:37:34', '1255', '-1');
 
 -- ----------------------------
 -- Table structure for `t_permission`

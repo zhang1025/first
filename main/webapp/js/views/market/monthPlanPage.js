@@ -335,7 +335,9 @@ function stopYesterDayDayPlan(id) {
             if (data == 1) {
                 swal("成功","操作成功！","success");
                 queryData();
-            } else {
+            } else if(data == 0 ) {
+                swal("失败","该月计划没有对应的昨日计划","error");
+            }else{
                 swal("失败","操作失败","error");
             }
         });
@@ -437,6 +439,27 @@ function queryDayPlanData(id) {
     var url = path + 'get_plans_table';
     commonDataTablesNoPage("playDayPlanTables", url, aoColumns, params, "playDayPlanDiv");
 }
+//移除日计划
+function delDayPlan(id) {
+    swal({title:"提示",
+        text:"是否删除？",
+        type:"warning",
+        showCancelButton:true,
+        cancelButtonText:"取消",
+        confirmButtonClass:"btn-info",
+        confirmButtonText:"确定",
+        closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
+    },function(){
+        $.post(path + "deleteDayPlan", {id: id}, function (data) {
+            if (data == 1) {
+                swal("成功","删除成功！","success");
+                queryDayPlanData(id);
+            } else {
+                swal("失败","删除失败","error");
+            }
+        });
+    });
+}
 function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
     //初始化每页显示数量为10，可以指定，参数里面指定initLength即可
     var initLength = 10;
@@ -526,27 +549,7 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
     $('.sorting_disabled').css("text-align", "center");
     return dt;
 }
-//移除
-function delDayPlan(id) {
-        swal({title:"提示",
-            text:"是否删除？",
-            type:"warning",
-            showCancelButton:true,
-            cancelButtonText:"取消",
-            confirmButtonClass:"btn-info",
-            confirmButtonText:"确定",
-            closeOnConfirm:false//不设置这个，直接关闭提示框，没法显示后面成功的提示
-        },function(){
-            $.post(path + "deleteDayPlan", {id: id}, function (data) {
-                if (data == 1) {
-                    swal("成功","删除成功！","success");
-                    $("#" + id).parent().hide();
-                } else {
-                    swal("失败","删除失败","error");
-                }
-            });
-        });
-}
+
 //form表单提交 格式规则校验
 function initFormValid() {
     //添加ip验证规则

@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../include/taglib.jsp" %>
 
@@ -18,7 +17,8 @@
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 250px">
                                     <div class="input-group">
                                         <span class="input-group-addon">时间</span>
-                                        <input type="text" id="date-range" name='date-range' class="form-control white-bg text-center"
+                                        <input type="text" id="date-range" name='date-range'
+                                               class="form-control white-bg text-center"
                                                style="cursor: pointer;font-size: 13px" readonly="readonly"/>
                                     </div>
                                 </div>
@@ -46,11 +46,28 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top:5px;padding-left:60px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">到站</span>
+                                        <select id="s_sites" class="select fancy-select form-control"
+                                                style="width: 150px">
+                                            <option value="">请选择</option>
+                                            <c:forEach var="site" items="${sites}" varStatus="s">
+                                                <option value="${site.name}">${site.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="searchDealDays" class="btn btn-primary mr5 mb10" type="button">查看调运计划</button>
                                     </div>
                                 </div>
                             </div>
@@ -64,11 +81,31 @@
                     <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">销售日计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;调运日计划信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
                             <table id="dayPlanDataTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 12px" cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
+
+            <div class="row" id="dealPlanData" style="display: none;">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;发车调运</i>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="dealPlanDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -82,6 +119,36 @@
     </div>
     <!-- / page-content-wrapper -->
 </div>
+<!-- 日计划对应的发车调运展示 -->
+<%--<div class="modal fade" id="dealDayPlanModal" tabindex="-1" role="dialog" aria-labelledby="myDayPlanModal"--%>
+     <%--aria-hidden="true">--%>
+    <%--<div class="modal-dialog" style="width: 1000px;">--%>
+        <%--<div class="modal-content">--%>
+            <%--<div class="modal-header">--%>
+                <%--<button type="button" class="close" data-dismiss="modal">--%>
+                    <%--<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>--%>
+                <%--</button>--%>
+                <%--<h4 class="modal-title" id="myHistoryModalLabel3">调运信息</h4>--%>
+            <%--</div>--%>
+            <%--<div class="modal-body">--%>
+                <%--<div class="row" id="dealDayPlanDiv">--%>
+                    <%--<div class="col-lg-12">--%>
+                        <%--<!-- col-lg-12 start here--%>
+                        <%--<div class="panel panel-default toggle ">--%>
+                        <%--<!-- Start .panel -->--%>
+                        <%--<div class="panel-body">--%>
+                            <%--<table id="dealDayPlanTables" class="table table-striped table-bordered table-hover"--%>
+                                   <%--cellspacing="0" style="font-size: 12px;" width="100%">--%>
+                            <%--</table>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<!-- End .panel -->--%>
+                <%--</div>--%>
+                <%--<!-- col-lg-12 end here -->--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 <input type="hidden" id="hideId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
@@ -117,7 +184,8 @@
                                     <label for="wagonNo" class="col-lg-4 control-label"
                                            style="padding-right: 1px">车皮号:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="wagonNo" class="form-control required" aria-required="true"
+                                        <input type="text" id="wagonNo" class="form-control required"
+                                               aria-required="true"
                                                placeholder="车皮号">
                                     </div>
                                 </div>
@@ -139,7 +207,8 @@
                                     <label for="actualUnitPrice" class="col-lg-4 control-label"
                                            style="padding-right: 1px">单价:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="actualUnitPrice" class="form-control required" aria-required="true"
+                                        <input type="text" id="actualUnitPrice" class="form-control required"
+                                               aria-required="true"
                                                name="dataNumber1" placeholder="单价">
                                     </div>
                                 </div>
