@@ -107,8 +107,6 @@ public class PlanBean implements Serializable{
 
     private String monthId;
 
-    //车皮号
-    private String wagonNo;
 
     private String beginDate;
     private String endDate;

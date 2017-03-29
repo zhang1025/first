@@ -3,12 +3,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liaoyuan.web.dao.ITransportDao">
 
-    <!--编辑车皮号 调运-->
-    <update id="dealDayPlan" parameterType="PlanBean">
-        update out_day_plan set rid=#{rid},name=#{name},
-        actualSendedTonnage=#{actualSendedTonnage},
-        actualUnitPrice=#{actualUnitPrice},wellsName=#{wellsName},
-        coalName=#{coalName},siteName=#{siteName},
-        wagonNo=#{wagonNo} where id=#{id}
+
+    <select id="countDealPlanData"  resultType="java.lang.Integer">
+        select count(*) from diaoyun  where dayId=#{dayId}
+    </select>
+    <select id="getTableDealPlanData" parameterType="DiaoyunBean" resultType="DiaoyunBean">
+        select * from diaoyun where dayId=#{dayId}
+        order by createtime desc
+        limit ${iDisplayStart},${iDisplayLength}
+    </select>
+
+    <!--插入调运计划-->
+    <insert id="addDealDayPlan" parameterType="DiaoyunBean">
+        INSERT INTO diaoyun (wagonNo,tonnage,wellsName,coalName,siteName,dayId,monthId) VALUES
+        (#{wagonNo},#{tonnage},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
+    </insert>
+
+    <!--更改调运信息-->
+    <update id="editDealDayPlan" parameterType="DiaoyunBean">
+        update diaoyun set wagonNo=#{wagonNo},tonnage=#{tonnage},wellsName=#{wellsName},
+        coalName=#{coalName},siteName=#{siteName} where id=#{id}
+    </update>
+
+    <!--更改调运状态 已传-->
+    <update id="dealStatusDayPlan">
+        update diaoyun set status=1 where id=#{id}
+    </update>
+
+    <!--更改调运状态 已传的同时更新对应日计划和月计划的实发车以及实发吨-->
+    <update id="updateDayInfo" parameterType="DiaoyunBean">
+        update out_day_plan set actualCarNum=actualCarNum+1,
+        actualSendedTonnage=actualSendedTonnage+${tonnage} where id=#{dayId}
+    </update>
+    <update id="updateMonthInfo" parameterType="DiaoyunBean">
+        update out_month_plan set actualCarNum=actualCarNum+1,
+        actualSendedTonnage=actualSendedTonnage+${tonnage} where id=#{monthId}
     </update>
 </mapper>

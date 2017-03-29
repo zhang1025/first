@@ -139,7 +139,7 @@
         d.planCarNum-d.actualCarNum as unsendedCarNum,
         d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
         d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
-        d.payId,d.createtime,d.status,d.month_id as monthId,d.wagonNo from out_day_plan d
+        d.payId,d.createtime,d.status,d.month_id as monthId from out_day_plan d
         where 1=1
        <choose>
             <when test="monthId!=null and monthId!=''">

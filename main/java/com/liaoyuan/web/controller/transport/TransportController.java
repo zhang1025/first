@@ -1,6 +1,7 @@
 package com.liaoyuan.web.controller.transport;
 
 import com.liaoyuan.web.controller.base.BaseController;
+import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.service.CommonDataService;
@@ -76,10 +77,36 @@ public class TransportController extends BaseController {
     }
 
     /**
-     * 调运 修改日计划车皮信息
+     * 根据日计划id获取对应的调运信息table
      */
-    @RequestMapping(value = "/dealDayPlan", method = RequestMethod.POST)
-    public Integer dealDayPlan(PlanBean bean) {
-        return transportService.dealDayPlan(bean);
+    @RequestMapping(value = "/get_diaoyunInfo_table", method = RequestMethod.POST)
+    public void getDiaoyunInfo_table(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
+        DiaoyunBean bean = WebCommonDataUtils.getDiaoyunBean(jsonString);
+        int count = bean.getIRecordsTotal() == 0 ? transportService.countDealPlanData(bean.getDayId()) : bean.getIRecordsTotal();
+        bean.setIDisplayLength(count);
+        List<DiaoyunBean> gridData = transportService.getTableDealPlanData(bean);
+        printDataTables(response, count, gridData);
+    }
+
+    /**
+     * 调运 安排发车
+     */
+    @RequestMapping(value = "/addDealDayPlan", method = RequestMethod.POST)
+    public Integer addDealDayPlan(DiaoyunBean bean) {
+        return transportService.addDealDayPlan(bean);
+    }
+    /**
+     * 编辑调运信息
+     */
+    @RequestMapping(value = "/editDealDayPlan", method = RequestMethod.POST)
+    public Integer editDealDayPlan(DiaoyunBean bean) {
+        return transportService.editDealDayPlan(bean);
+    }
+    /**
+     * 发送调运计划  更改状态 已传
+     */
+    @RequestMapping(value = "/dealStatusDayPlan", method = RequestMethod.POST)
+    public Integer dealStatusDayPlan(DiaoyunBean bean) {
+        return transportService.dealStatusDayPlan(bean);
     }
 }

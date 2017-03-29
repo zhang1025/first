@@ -95,17 +95,17 @@
                 <!-- col-lg-12 end here -->
             </div>
 
-            <div class="row" id="dealPlanData" style="display: none;">
+            <div class="row" id="dealDayPlanData" style="display: none;">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;发车调运</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;发车调运信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="dealPlanDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="dealDayPlanTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -120,7 +120,7 @@
     <!-- / page-content-wrapper -->
 </div>
 <!-- 日计划对应的发车调运展示 -->
-<%--<div class="modal fade" id="dealDayPlanModal" tabindex="-1" role="dialog" aria-labelledby="myDayPlanModal"--%>
+<%--<div class="modal fade" style="padding-top: 150px;" id="dealDayPlanModal" tabindex="-1" role="dialog" aria-labelledby="myDayPlanModal"--%>
      <%--aria-hidden="true">--%>
     <%--<div class="modal-dialog" style="width: 1000px;">--%>
         <%--<div class="modal-content">--%>
@@ -131,7 +131,7 @@
                 <%--<h4 class="modal-title" id="myHistoryModalLabel3">调运信息</h4>--%>
             <%--</div>--%>
             <%--<div class="modal-body">--%>
-                <%--<div class="row" id="dealDayPlanDiv">--%>
+                <%--<div class="row" id="dealDayPlanData">--%>
                     <%--<div class="col-lg-12">--%>
                         <%--<!-- col-lg-12 start here--%>
                         <%--<div class="panel panel-default toggle ">--%>
@@ -149,7 +149,13 @@
         <%--</div>--%>
     <%--</div>--%>
 <%--</div>--%>
+<%--<button type='button' id="dealDayModel" class='btn btn-primary btn-small' data-toggle='modal' data-target='#dealDayPlanModal'></button>--%>
+
 <input type="hidden" id="hideId">
+<input type="hidden" id="hideDealId">
+<input type="hidden" id="hideMonId">
+
+<input type="hidden" id="searchDayId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 570px">
@@ -158,26 +164,12 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">安排发车信息</h4>
+                <h4 class="modal-title" id="myModalLabel2">发车信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
-                        <tr>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <label for="name" class="col-lg-4 control-label"
-                                           style="padding: 1px;width: 17%">收货单位:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <select id="name" class="select fancy-select form-control">
-                                            <c:forEach var="re" items="${receives}" varStatus="s">
-                                                <option value="${re.id}">${re.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                
                         <tr>
                             <td>
                                 <div class="form-group">
@@ -196,23 +188,13 @@
                                            style="padding-right: 1px">实发吨数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="ast" class="form-control required" aria-required="true"
+                                            name="number"
                                                placeholder="实发吨数">
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="actualUnitPrice" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">单价:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="actualUnitPrice" class="form-control required"
-                                               aria-required="true"
-                                               name="dataNumber1" placeholder="单价">
-                                    </div>
-                                </div>
-                            </td>
                             <td>
                                 <div class="form-group">
                                     <label for="wellsName" class="col-lg-4 control-label"

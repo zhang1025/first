@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 @Data
 public class DiaoyunBean implements Serializable {
+
     private int id;
     public void setId(String id) {
         if(StringUtils.isBlank(id)){
@@ -19,14 +20,6 @@ public class DiaoyunBean implements Serializable {
         }
     }
 
-    private int rid; //收货单位id
-    public void setRid(String rid) {
-        if(StringUtils.isBlank(rid)){
-            this.rid = 0;
-        }else{
-            this.rid =  Integer.parseInt(rid);
-        }
-    }
     private String wagonNo;
 
     private double tonnage;
@@ -55,6 +48,7 @@ public class DiaoyunBean implements Serializable {
         }
     }
 
+    //对应的日计划id
     private int dayId;
     public void setDayId(String dayId) {
         if(StringUtils.isBlank(dayId)){
@@ -63,5 +57,22 @@ public class DiaoyunBean implements Serializable {
             this.dayId =  Integer.parseInt(dayId);
         }
     }
+    //对应的月计划id
+    private int monthId;
+    public void setMonthId(String monthId) {
+        if(StringUtils.isBlank(monthId)){
+            this.monthId = 0;
+        }else{
+            this.monthId =  Integer.parseInt(monthId);
+        }
+    }
+
+    private String beginDate;
+    private String endDate;
+
+    //分页用
+    private int iDisplayStart;
+    private int iDisplayLength;
+    private int iRecordsTotal;
 
 }
