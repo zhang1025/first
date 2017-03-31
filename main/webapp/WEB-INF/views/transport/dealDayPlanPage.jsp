@@ -65,11 +65,6 @@
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="searchDealDays" class="btn btn-primary mr5 mb10" type="button">查看调运计划</button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

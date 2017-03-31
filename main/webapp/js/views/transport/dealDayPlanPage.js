@@ -36,14 +36,7 @@ function queryData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {
-            "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
-            var id = rowObject['id'];
-            var monthId = rowObject['monthId'];
-            return "<input type='checkbox' name='check' monthId='"+monthId+"' value='" + id + "'/>";
-        }, "sWidth": "5%"
-        },
-        {"sTitle": "月", "mData": "monthId", "bVisible":false},
+        {"sTitle": "序号", "mData": "id", "sWidth": "7%"},
         {"sTitle": "计划号", "mData": "rid", "sWidth": "7%"},
         {"sTitle": "收货单位", "mData": "name", "sWidth": "9"},
         {"sTitle": "到站", "mData": "siteName", "sWidth": "6%"},
@@ -111,7 +104,6 @@ function initButtonClick() {
             return false;
         }
         var url = path + (subType == 1?"addDealDayPlan":"editDealDayPlan");
-        alert(url);
         $.post(url, {
                 tonnage: $("#ast").val(),
                 wellsName: $("#wellsName").val(),
@@ -123,14 +115,9 @@ function initButtonClick() {
                 $('#myModal').trigger('click');
                 if (result > 0) {
                     swal("成功","操作成功！","success");
-                    if(subType==1){
-                       queryData(); 
-                   }else{
-                    queryDealDayPlanData($("#hideDealId").val());
-                   }
-                    
+                    queryDealDayPlanData($("#hideId").val());
                 } else {
-                    swal("失败","删除失败","error");
+                    swal("失败","操作失败","error");
                 }
             });
     });
@@ -146,30 +133,17 @@ function initButtonClick() {
             + '&searchType=day' + '&wellsName=' + well + '&coalName=' + coal;
         location.href = path + 'export_plan_excel_data?' + param;
     });
-    //查看dy信息
-    $("#searchDealDays").on("click",function () {
-        queryDealDayPlanData(checkBtn());
-    });
-    // $("#dayPlanDataTables tbody").on("click","tr",function () {
-    //     $(this).siblings().css("background-color","").removeClass("selected");
-    //     $(this).css("background-color","#00B0E8").addClass("selected");
-    //     //alert($(this).context._DT_RowIndex);
-    //     var id = $(this).find("td").eq(0).html();
-    //     queryDealDayPlanData("8");
-    // })
+
+    $("#dayPlanDataTables tbody").on("click","tr",function () {
+        $(this).siblings().css("background-color","").removeClass("selected");
+        $(this).css("background-color","#00B0E8").addClass("selected");
+        var id = $(this).find("td").eq(0).html();
+        queryDealDayPlanData(id);
+    })
 }
 
 //根据日计划id查询调运详细信息
 function queryDealDayPlanData(id) {
-    // $("#dealDayModel").trigger("click");
-    if (id == "") {
-        swal("","请选中一行查看！","warning");
-        return;
-    }
-    if (id.indexOf(",") > -1) {
-        swal("","只能选中一行查看！","warning");
-        return;
-    }
     $("#searchDayId").val(id); //记录查看对应日计划的id
     $("#dealDayPlanData").show();
     var aoColumns = dealDayTableTitle();
@@ -186,12 +160,10 @@ function dealDayTableTitle() {
     aoColumns.push(
         {"sTitle": "调运id", "mData": "id", "bVisible":false},
         {"sTitle": "车皮号", "mData": "wagonNo", "sWidth": "167px"},
-        {"sTitle": "实发吨", "mData": "tonnage", "sWidth": "129px"},
+        {"sTitle": "实发吨", "mData": "tonnage", "sWidth": "110px"},
         {"sTitle": "井别", "mData": "wellsName", "sWidth": "130px"},
-        {"sTitle": "煤种", "mData": "coalName", "sWidth": "130px"},
+        {"sTitle": "煤种", "mData": "coalName", "sWidth": "120px"},
         {"sTitle": "到站", "mData": "siteName", "sWidth": "130px"},
-        {"sTitle": "日计划", "mData": "dayId", "bVisible":false},
-        {"sTitle": "月计划", "mData": "monthId", "bVisible":false},
         {
             "sTitle": "状况", "mData": "status", "sWidth": "120px", "mRender": function (data, type, row) {
             var status = row['status'];
@@ -211,8 +183,8 @@ function dealDayTableTitle() {
 }
 function operateDealDayButton(cellvalue, options, rowObject) {
     var id = rowObject['id']; //调运的id
-    var dayId = rowObject['dayId']; //对应的日计划id
-    var monthId = rowObject['monthId']; //对应的月计划id
+    var dayId = rowObject['id']; //日计划id
+    var monthId = rowObject['id']; //月计划id
     var status = rowObject['status'];
     var ast = rowObject['tonnage'];
     var wellsName = rowObject['wellsName'];
@@ -222,7 +194,7 @@ function operateDealDayButton(cellvalue, options, rowObject) {
     var tonnage = rowObject['tonnage'];
     var edit =  "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealEditDayPlan('"
         + id + "','" 
-        + ast + "','" + status + "','"+ dayId + "','"+ monthId + "','"
+        + ast + "','" + status + "','"
          + wellsName + "','"
         + coalName + "','" + siteName+ "','"+wagonNo
         + "')\">编辑</button>";
@@ -231,13 +203,14 @@ function operateDealDayButton(cellvalue, options, rowObject) {
     if(status == 1){
         return "<button type='button' disabled='disabled' class='btn btn-primary btn-small'>已发送</button>";
     }else{
-        dealStatus = "<button type='button' class='btn btn-primary btn-small' onclick=\"dealStatusDayPlan('" + id + "','" + dayId + "','" + monthId + "','" + tonnage + "')\">发送</button>";
+        dealStatus = "<button type='button' class='btn btn-primary btn-small' " +
+            "onclick=\"dealStatusDayPlan('" + id + "','" + dayId + "','" + monthId + "','" + tonnage + "')\">发送</button>";
         return edit + "&nbsp;"+dealStatus;
     }
 
 }
 //编辑调运计划
-function dealEditDayPlan(id,ast,status,dayId,monthId,wellsName,coalName,siteName,wagonNo) {
+function dealEditDayPlan(id,ast,status,wellsName,coalName,siteName,wagonNo) {
     $("#hideDealId").val(id);
     subType =2;
     $("#ast").val(ast);
@@ -269,17 +242,7 @@ function dealStatusDayPlan(id,dayId,monthId,tonnage) {
         });
     });
 }
-function checkBtn() {
-    var checkTemp = "";
-    $('input:checkbox[name="check"]:checked').each(function (i) {
-        if (0 == i) {
-            checkTemp = $(this).val();
-        } else {
-            checkTemp += ("," + $(this).val());
-        }
-    });
-    return checkTemp;
-}
+//调运信息table  显示最后一行合并信息
 function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
     //初始化每页显示数量为10，可以指定，参数里面指定initLength即可
     var initLength = 10;
@@ -300,7 +263,7 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
             "sAjaxSource": url,
             "bDestroy": true,
             "bScrollCollapse": true,
-            "scrollX": false,
+            "scrollX": true,
             "sServerMethod": "POST",
             "aoColumns": aoColumns,
             "fnServerParams": function (aoData) {
@@ -320,8 +283,8 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
                     "success": function (records) {
                         fnCallback(records);
                         hideLoading(lodingId);
-                        //操作dayPlan最后一行合计显示
-                        var $tableTr = $("#"+tableId+">tbody>tr:last");
+                        //操作dealDayPlanTables最后一行合计显示
+                        var $tableTr = $("#dealDayPlanTables>tbody>tr:last");
                         $tableTr.find("td").eq(0).html("<b>合计</b>");
                         $tableTr.find("td").eq(5).html("");
                         $tableTr.find("td").eq(6).html("");
