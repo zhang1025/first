@@ -71,6 +71,8 @@ function dealTableTitle() {
 function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['id'];
     var monthId = rowObject['monthId'];
+    var planCarNum = rowObject['planCarNum'];
+    var planTonnage = rowObject['planTonnage'];
     var status = rowObject['status'];
     var ast = rowObject['actualSendedTonnage'];
     var wellsName = rowObject['wellsName'];
@@ -78,16 +80,17 @@ function operateButton(cellvalue, options, rowObject) {
     var siteName = rowObject['siteName'];
     return "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
         + id + "','"
-       + status + "','"  + monthId + "','"
+       + status + "','"  + monthId + "','"+ planCarNum + "','"+ planTonnage + "','"
         + ast + "','"
          + wellsName + "','"
         + coalName + "','" + siteName
         + "')\">安排发车</button>";
 }
 //新建调运计划
-function dealDayPlan(id,status,monthId,ast,wellsName,coalName,siteName) {
+function dealDayPlan(id,status,monthId,planCarNum,planTonnage,ast,wellsName,coalName,siteName) {
     $("#hideId").val(id); //日计划的id
     $("#hideMonId").val(monthId); //对应月计划的id
+    $("#planTonnages").val(planTonnage);
     $("#ast").val(ast);
     $("#wellsName").val(wellsName).select2();
     $("#coalName").val(coalName).select2();
@@ -101,6 +104,10 @@ function initButtonClick() {
     $("#submitBut").on("click", function () {
         var $form = $('#validate');
         if (!$form.valid()) {
+            return false;
+        }
+        if($("#planTonnages").val() > $("#ast").val()){
+            swal("失败","实发吨数不能大于计划吨数","error");
             return false;
         }
         var url = path + (subType == 1?"addDealDayPlan":"editDealDayPlan");

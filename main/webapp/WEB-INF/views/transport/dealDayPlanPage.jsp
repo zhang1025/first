@@ -151,6 +151,7 @@
 <input type="hidden" id="hideMonId">
 
 <input type="hidden" id="searchDayId">
+<input type="hidden" id="planTonnages">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 570px">
