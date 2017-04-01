@@ -30,13 +30,13 @@ function queryData() {
         {name: 'searchType', value: "day"}//查询日计划
     ];
     var url = path + 'get_plans_table';
-    commonDataTables("dayPlanDataTables", url, aoColumns, params, "dayPlanData");
+    commonDataTablesHideFirstId("dayPlanDataTables", url, aoColumns, params, "dayPlanData");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {"sTitle": "序号", "mData": "id", "sWidth": "7%"},
+        {"sTitle": "序号", "mData": "id"},
         {"sTitle": "计划号", "mData": "rid", "sWidth": "7%"},
         {"sTitle": "收货单位", "mData": "name", "sWidth": "9"},
         {"sTitle": "到站", "mData": "siteName", "sWidth": "6%"},
@@ -51,7 +51,7 @@ function dealTableTitle() {
         {"sTitle": "单价", "mData": "actualUnitPrice", "sWidth": "8%"},
         {"sTitle": "日期", "mData": "createtime", "sWidth": "9%"},
         {
-            "sTitle": "计划状态", "mData": "status", "sWidth": "8%", "mRender": function (data, type, row) {
+            "sTitle": "状态", "mData": "status", "sWidth": "8%", "mRender": function (data, type, row) {
             var status = row['status'];
             if (status == -1) {
                 return "计划中止";
@@ -78,7 +78,7 @@ function operateButton(cellvalue, options, rowObject) {
     var wellsName = rowObject['wellsName'];
     var coalName = rowObject['coalName'];
     var siteName = rowObject['siteName'];
-    return "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
+    return "<button type='button' class='btn btn-success btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
         + id + "','"
        + status + "','"  + monthId + "','"+ planCarNum + "','"+ planTonnage + "','"
         + ast + "','"
@@ -90,8 +90,8 @@ function operateButton(cellvalue, options, rowObject) {
 function dealDayPlan(id,status,monthId,planCarNum,planTonnage,ast,wellsName,coalName,siteName) {
     $("#hideId").val(id); //日计划的id
     $("#hideMonId").val(monthId); //对应月计划的id
-    $("#planTonnages").val(planTonnage);
-    $("#ast").val(ast);
+    $("#hidePlanTonnages").val(planTonnage);
+    // $("#ast").val(ast);
     $("#wellsName").val(wellsName).select2();
     $("#coalName").val(coalName).select2();
     $("#siteName").val(siteName).select2();
@@ -106,7 +106,7 @@ function initButtonClick() {
         if (!$form.valid()) {
             return false;
         }
-        if($("#planTonnages").val() > $("#ast").val()){
+        if(parseInt($("#hidePlanTonnages").val()) < parseInt($("#ast").val())){
             swal("失败","实发吨数不能大于计划吨数","error");
             return false;
         }
@@ -123,7 +123,9 @@ function initButtonClick() {
                 if (result > 0) {
                     swal("成功","操作成功！","success");
                     queryDealDayPlanData($("#hideId").val());
-                } else {
+                } else if(result==-1) {
+                    swal("失败","实发吨数不能大于计划吨数","error");
+                }else{
                     swal("失败","操作失败","error");
                 }
             });
@@ -141,9 +143,12 @@ function initButtonClick() {
         location.href = path + 'export_plan_excel_data?' + param;
     });
 
+    //定义行点击事件
     $("#dayPlanDataTables tbody").on("click","tr",function () {
         $(this).siblings().css("background-color","").removeClass("selected");
         $(this).css("background-color","#00B0E8").addClass("selected");
+        //记录点击行的计划吨数
+        $("#hidePlanTonnages").val($(this).find("td").eq(10).html());
         var id = $(this).find("td").eq(0).html();
         queryDealDayPlanData(id);
     })
@@ -190,8 +195,8 @@ function dealDayTableTitle() {
 }
 function operateDealDayButton(cellvalue, options, rowObject) {
     var id = rowObject['id']; //调运的id
-    var dayId = rowObject['id']; //日计划id
-    var monthId = rowObject['id']; //月计划id
+    var dayId = rowObject['dayId']; //日计划id
+    var monthId = rowObject['monthId']; //月计划id
     var status = rowObject['status'];
     var ast = rowObject['tonnage'];
     var wellsName = rowObject['wellsName'];
@@ -201,7 +206,7 @@ function operateDealDayButton(cellvalue, options, rowObject) {
     var tonnage = rowObject['tonnage'];
     var edit =  "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealEditDayPlan('"
         + id + "','" 
-        + ast + "','" + status + "','"
+        + ast + "','" + status + "','"+ dayId + "','"
          + wellsName + "','"
         + coalName + "','" + siteName+ "','"+wagonNo
         + "')\">编辑</button>";
@@ -217,8 +222,9 @@ function operateDealDayButton(cellvalue, options, rowObject) {
 
 }
 //编辑调运计划
-function dealEditDayPlan(id,ast,status,wellsName,coalName,siteName,wagonNo) {
-    $("#hideDealId").val(id);
+function dealEditDayPlan(id,ast,status,dayId,wellsName,coalName,siteName,wagonNo) {
+    $("#hideDealId").val(id);//调运id
+    $("#hideId").val(dayId);
     subType =2;
     $("#ast").val(ast);
     $("#wellsName").val(wellsName).select2();
@@ -242,7 +248,7 @@ function dealStatusDayPlan(id,dayId,monthId,tonnage) {
             {id: id,dayId:dayId,monthId:monthId,tonnage:tonnage}, function (data) {
             if (data == 1) {
                 swal("成功","操作成功！","success");
-                queryDayPlanData($("#searchDayId").val());
+                queryDealDayPlanData(dayId);
             } else {
                 swal("失败","操作失败","error");
             }
@@ -251,13 +257,6 @@ function dealStatusDayPlan(id,dayId,monthId,tonnage) {
 }
 //调运信息table  显示最后一行合并信息
 function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
-    //初始化每页显示数量为10，可以指定，参数里面指定initLength即可
-    var initLength = 10;
-    for (var i = 0; i < params.length; i++) {
-        if (params[i].name == "initLength") {
-            initLength = params[i].value;
-        }
-    }
     var dt = $('#' + tableId).dataTable(
         {
             "bSort": false,
@@ -291,7 +290,7 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
                         fnCallback(records);
                         hideLoading(lodingId);
                         //操作dealDayPlanTables最后一行合计显示
-                        var $tableTr = $("#dealDayPlanTables>tbody>tr:last");
+                        var $tableTr = $("#"+tableId+">tbody>tr:last");
                         $tableTr.find("td").eq(0).html("<b>合计</b>");
                         $tableTr.find("td").eq(5).html("");
                         $tableTr.find("td").eq(6).html("");

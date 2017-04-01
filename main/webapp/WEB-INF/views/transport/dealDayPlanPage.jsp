@@ -151,7 +151,7 @@
 <input type="hidden" id="hideMonId">
 
 <input type="hidden" id="searchDayId">
-<input type="hidden" id="planTonnages">
+<input type="hidden" id="hidePlanTonnages">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 570px">
@@ -247,6 +247,7 @@
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
+<script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
 <script src="<c:url value="/js/views/transport/dealDayPlanPage.js"/> "></script>
 
 <!-- / page-content -->
