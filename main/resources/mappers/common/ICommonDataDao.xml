@@ -114,6 +114,11 @@
     </delete>
 
 
+    <!--根据name获取对应的信息 -->
+    <select id="getInfoFromName"  resultType="DataBean">
+        select * from ${table} where name=#{name}
+    </select>
+
     <!--获取list数据 方便select填充-->
     <select id="getListData" parameterType="DataBean"  resultType="DataBean">
         select * from ${table} 

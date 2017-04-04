@@ -77,4 +77,7 @@ public interface ICommonDataDao {
      int deleteCommon(@Param("id") int id, @Param("table") String model);
 
      List<DataBean> getListData(@Param("table") String model);
+
+     // 根据name获取对应的信息
+     DataBean getInfoFromName(@Param("table") String model,@Param("name") String name);
 }
