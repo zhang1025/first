@@ -4,6 +4,9 @@ import com.liaoyuan.web.dao.IMarkerDao;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.service.MarketService;
+import com.liaoyuan.web.utils.Constant;
+import com.liaoyuan.web.utils.CreateWordT;
+import com.liaoyuan.web.utils.DocPrint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +44,20 @@ public class MarketServiceImpl implements MarketService{
     @Override
     public int deleteContractInfo(int id) {
         return iMarkerDao.deleteContractInfo(id);
+    }
+
+    //打印合同信息
+    public void printContractInfo( int id){
+        ContractBean bean =  iMarkerDao.getContractInfoFromId(id);
+        //生成word信息
+        CreateWordT.printInfo(bean, Constant.FILEPTH);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //打印
+        DocPrint.printFile(Constant.FILEPTH);
     }
 
     @Override

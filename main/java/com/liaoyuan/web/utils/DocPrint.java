@@ -21,10 +21,10 @@ public class DocPrint {
 
         dp.printFileAction();
     }
-    public void printFile(){
+    public static void printFile(String filePath){
         FileInputStream textStream = null;
         try {
-            textStream = new FileInputStream(new File("E:\\test.doc"));
+            textStream = new FileInputStream(new File(filePath+"\\hetong.doc"));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

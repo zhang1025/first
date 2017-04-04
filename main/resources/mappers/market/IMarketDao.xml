@@ -37,6 +37,10 @@
         order by createtime desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
+    <select id="getContractInfoFromId" resultType="ContractBean">
+        select * from car_contract where id = #{id}
+    </select>
+    <!--添加合同信息-->
     <insert id="addContractInfo" parameterType="ContractBean">
         insert into car_contract(numNo,settlement,name,orderCount,unitPrice,inputPerson,
         usePerson,contractType,forkliftFee,orderTime,status,billName,address,billNo,tel,bankName,bankNo) values (#{numNo},#{settlement},#{name},

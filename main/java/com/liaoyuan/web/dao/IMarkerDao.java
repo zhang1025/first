@@ -19,6 +19,7 @@ public interface IMarkerDao {
     int addContractInfo(ContractBean bean);
     int editContractInfo(ContractBean bean);
     int deleteContractInfo(@Param(value = "id") int id);
+    ContractBean getContractInfoFromId(@Param(value = "id") int id);
 
     int lockInfo(@Param(value = "id") int id);
     int unlockInfo(@Param(value = "id") int id);

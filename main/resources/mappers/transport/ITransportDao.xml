@@ -15,14 +15,13 @@
 
     <!--插入调运计划-->
     <insert id="addDealDayPlan" parameterType="DiaoyunBean">
-        INSERT INTO diaoyun (wagonNo,tonnage,wellsName,coalName,siteName,dayId,monthId) VALUES
-        (#{wagonNo},#{tonnage},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
+        INSERT INTO diaoyun (rid,name,wagonNo,tonnage,wellsName,coalName,siteName,dayId,monthId) VALUES
+        (#{rid},#{name},#{wagonNo},#{tonnage},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
     </insert>
 
     <!--更改调运信息-->
     <update id="editDealDayPlan" parameterType="DiaoyunBean">
-        update diaoyun set wagonNo=#{wagonNo},tonnage=#{tonnage},wellsName=#{wellsName},
-        coalName=#{coalName},siteName=#{siteName} where id=#{id}
+        update diaoyun set wagonNo=#{wagonNo},tonnage=#{tonnage} where id=#{id}
     </update>
 
     <!--更改调运状态 已传-->

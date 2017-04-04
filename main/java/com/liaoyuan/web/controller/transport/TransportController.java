@@ -3,7 +3,6 @@ package com.liaoyuan.web.controller.transport;
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PlanBean;
-import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.service.TransportService;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,9 +57,9 @@ public class TransportController extends BaseController {
      */
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public ModelAndView cars(ModelMap modelMap){
-        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
-        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
-        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
+//        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+//        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
+//        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
         modelMap.put("receives",commonDataService.getListData(Constant.RECEIVE));
         return new ModelAndView("/transport/dealDayPlanPage");
     }

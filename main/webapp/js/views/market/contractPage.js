@@ -286,7 +286,20 @@ function initButtonClick() {
     });
     //打印合同
     $("#print").on("click", function () {
-        // deleteSettlement(checkBtn());
+         printInfo(checkBtn());
+    });
+}
+//打印合同信息
+function printInfo(id) {
+    if (id == "") {
+        swal("", "请选中一行！", "warning");
+        return;
+    }
+    if (id.indexOf(",") > -1) {
+        swal("","只能选中一行进行打印！","warning");
+        return;
+    }
+    $.post(path + "printInfo", {id: id}, function (data) {
     });
 }
 //移除

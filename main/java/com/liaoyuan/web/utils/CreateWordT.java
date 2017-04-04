@@ -13,12 +13,51 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liaoyuan.web.entity.ContractBean;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 public class CreateWordT {
+
+    //打印合同信息
+    public static void printInfo(ContractBean bean,String filePath){
+        if(null == bean){
+            return;
+        }
+        Map<String, Object> cont = new HashMap<>();// 存储数据
+        cont.put("settlement", bean.getSettlement());
+        cont.put("numNo", bean.getNumNo());
+        cont.put("orderCount", bean.getOrderCount());
+        cont.put("name", bean.getName());
+        cont.put("price", bean.getUnitPrice());
+        cont.put("count", bean.getUnitPrice()*bean.getOrderCount());
+        cont.put("forkliftFee", Integer.parseInt(bean.getForkliftFee())==1?"包括":"不包括");
+        cont.put("usePerson", bean.getUsePerson());
+            try {
+            //模板的路径 不包含文件名称
+            File fir = new File(filePath);
+            String tempName = "hetong.xml";
+
+            //生成文件的路径及文件名。
+            File outFile = new File(filePath+"\\hetong.doc");
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
+            // 使用FileTemplateLoader 指定模板路径
+            TemplateLoader templateLoader  = new FileTemplateLoader(fir);
+            Configuration cfg = new Configuration();
+            cfg.setTemplateLoader(templateLoader);
+            Template t = cfg.getTemplate(tempName, "UTF-8");
+
+            t.process(cont, out);
+            out.flush();
+            out.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) {
         Map<String, Object> cont = new HashMap<>();// 存储数据

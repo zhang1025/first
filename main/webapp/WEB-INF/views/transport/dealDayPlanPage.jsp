@@ -173,8 +173,7 @@
                                            style="padding-right: 1px">车皮号:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="wagonNo" class="form-control required"
-                                               aria-required="true"
-                                               placeholder="车皮号">
+                                               aria-required="true" placeholder="车皮号">
                                     </div>
                                 </div>
                             </td>
@@ -184,8 +183,7 @@
                                            style="padding-right: 1px">实发吨数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="ast" class="form-control required" aria-required="true"
-                                            name="number"
-                                               placeholder="实发吨数">
+                                            name="number" placeholder="实发吨数">
                                     </div>
                                 </div>
                             </td>
@@ -196,11 +194,16 @@
                                     <label for="wellsName" class="col-lg-4 control-label"
                                            style="padding-right: 1px">井别:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="wellsName" class="select fancy-select form-control">
-                                            <c:forEach var="we" items="${wells}" varStatus="s">
-                                                <option value="${we.name}">${we.name}</option>
-                                            </c:forEach>
-                                        </select>
+                                        <input type="text" id="wellsName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="coalName" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">煤炭种类:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="coalName" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -208,25 +211,23 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="coalName" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">煤炭种类:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="coalName" class="select fancy-select form-control">
-                                            <c:forEach var="ca" items="${coals}" varStatus="s">
-                                                <option value="${ca.name}">${ca.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
                                     <label for="siteName" class="col-lg-4 control-label"
                                            style="padding-right: 1px">到站:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <select id="siteName" class="select fancy-select form-control">
-                                            <c:forEach var="st" items="${sites}" varStatus="s">
-                                                <option value="${st.name}">${st.name}</option>
+                                        <input type="text" id="siteName" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <label for="name" class="col-lg-4 control-label"
+                                           style="padding: 1px;width: 17%">收货单位:</label>
+                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                                        <select id="name" class="select fancy-select form-control">
+                                            <c:forEach var="re" items="${receives}" varStatus="s">
+                                                <option value="${re.id}">${re.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

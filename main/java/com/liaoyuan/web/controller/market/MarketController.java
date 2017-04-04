@@ -106,6 +106,13 @@ public class MarketController extends BaseController {
         return -1;
     }
 
+    /**
+     * 打印合同信息
+     */
+    @RequestMapping(value = "/printInfo", method = RequestMethod.POST)
+    public void printInfo(int id) {
+        marketService.printContractInfo(id);
+    }
     @RequestMapping(value = "/monthPlan", method = RequestMethod.GET)
     public ModelAndView monthPlan(ModelMap modelMap){
         log.info("=============monthPlan============");

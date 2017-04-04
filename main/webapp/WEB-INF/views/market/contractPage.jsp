@@ -84,7 +84,7 @@
                                 </div>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
-                                        <button id="print" data-toggle="modal" data-target="#modalDelete" class="btn btn-warning mr5 mb10" type="button">打印</button>
+                                        <button id="print" class="btn btn-warning mr5 mb10" type="button">打印</button>
                                     </div>
                                 </div>
                                 <div style="padding: 15px;float: right">

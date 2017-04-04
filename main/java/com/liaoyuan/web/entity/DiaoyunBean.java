@@ -20,6 +20,17 @@ public class DiaoyunBean implements Serializable {
         }
     }
 
+    private int rid;
+    public void setRid(String rid) {
+        if(StringUtils.isBlank(rid)){
+            this.rid = 0;
+        }else{
+            this.rid =  Integer.parseInt(rid);
+        }
+    }
+
+    private String name;
+
     private String wagonNo;
 
     private double tonnage;

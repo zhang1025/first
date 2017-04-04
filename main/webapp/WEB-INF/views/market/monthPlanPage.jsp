@@ -176,8 +176,7 @@
                                     <label for="actualCarNum" class="col-lg-4 control-label"
                                            style="padding-right: 1px">累计实发车:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="actualCarNum" class="form-control"
-                                                name="number1"
+                                        <input type="text" id="actualCarNum" class="form-control" readonly="readonly"
                                                placeholder="累计实发车数" >
                                     </div>
                                 </div>
@@ -200,8 +199,8 @@
                                     <label for="actualSendedTonnage" class="col-lg-4 control-label"
                                            style="padding-right: 1px">累计实发吨:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="actualSendedTonnage" class="form-control" 
-                                        name="dataNumber"
+                                        <input type="text" id="actualSendedTonnage" class="form-control"
+                                               readonly="readonly"
                                                placeholder="累计实发吨">
                                     </div>
                                 </div>

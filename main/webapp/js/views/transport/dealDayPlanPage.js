@@ -74,27 +74,28 @@ function operateButton(cellvalue, options, rowObject) {
     var planCarNum = rowObject['planCarNum'];
     var planTonnage = rowObject['planTonnage'];
     var status = rowObject['status'];
+    var rid = rowObject['rid'];
     var ast = rowObject['actualSendedTonnage'];
     var wellsName = rowObject['wellsName'];
     var coalName = rowObject['coalName'];
     var siteName = rowObject['siteName'];
     return "<button type='button' class='btn btn-success btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
         + id + "','"
-       + status + "','"  + monthId + "','"+ planCarNum + "','"+ planTonnage + "','"
+       + status + "','"  + monthId + "','"+ rid + "','"+ planTonnage + "','"
         + ast + "','"
          + wellsName + "','"
         + coalName + "','" + siteName
         + "')\">安排发车</button>";
 }
 //新建调运计划
-function dealDayPlan(id,status,monthId,planCarNum,planTonnage,ast,wellsName,coalName,siteName) {
+function dealDayPlan(id,status,monthId,rid,planTonnage,ast,wellsName,coalName,siteName) {
     $("#hideId").val(id); //日计划的id
     $("#hideMonId").val(monthId); //对应月计划的id
     $("#hidePlanTonnages").val(planTonnage);
-    // $("#ast").val(ast);
-    $("#wellsName").val(wellsName).select2();
-    $("#coalName").val(coalName).select2();
-    $("#siteName").val(siteName).select2();
+    $("#name").val(rid).select2();
+    $("#wellsName").val(wellsName);
+    $("#coalName").val(coalName);
+    $("#siteName").val(siteName);
     $("#status").val(status);
 }
 function initButtonClick() {
@@ -112,7 +113,8 @@ function initButtonClick() {
         }
         var url = path + (subType == 1?"addDealDayPlan":"editDealDayPlan");
         $.post(url, {
-                tonnage: $("#ast").val(),
+                tonnage: $("#ast").val(),rid: $("#name").val(),
+                name: $("#name option:selected").text(),
                 wellsName: $("#wellsName").val(),
                 coalName: $("#coalName").val(), siteName: $("#siteName").val(),
                 dayId: $("#hideId").val(),wagonNo:$("#wagonNo").val(),
@@ -147,7 +149,7 @@ function initButtonClick() {
     $("#dayPlanDataTables tbody").on("click","tr",function () {
         $(this).siblings().css("background-color","").removeClass("selected");
         $(this).css("background-color","#00B0E8").addClass("selected");
-        //记录点击行的计划吨数
+        //记录点击行的计划吨数 第10列是吨数
         $("#hidePlanTonnages").val($(this).find("td").eq(10).html());
         var id = $(this).find("td").eq(0).html();
         queryDealDayPlanData(id);
@@ -170,7 +172,6 @@ function queryDealDayPlanData(id) {
 function dealDayTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {"sTitle": "调运id", "mData": "id", "bVisible":false},
         {"sTitle": "车皮号", "mData": "wagonNo", "sWidth": "167px"},
         {"sTitle": "实发吨", "mData": "tonnage", "sWidth": "110px"},
         {"sTitle": "井别", "mData": "wellsName", "sWidth": "130px"},
@@ -185,6 +186,7 @@ function dealDayTableTitle() {
             return "未传";
         }
         },
+        {"sTitle": "收货单位", "mData": "name", "sWidth": "167px"},
         {
             "sTitle": "操作", "mData": "id", "sWidth": "175px", "mRender": function (data, type, row) {
             return operateDealDayButton(data, type, row);
@@ -199,6 +201,7 @@ function operateDealDayButton(cellvalue, options, rowObject) {
     var monthId = rowObject['monthId']; //月计划id
     var status = rowObject['status'];
     var ast = rowObject['tonnage'];
+    var name = rowObject['name'];
     var wellsName = rowObject['wellsName'];
     var coalName = rowObject['coalName'];
     var siteName = rowObject['siteName'];
@@ -206,7 +209,7 @@ function operateDealDayButton(cellvalue, options, rowObject) {
     var tonnage = rowObject['tonnage'];
     var edit =  "<button type='button' class='btn btn-warning btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealEditDayPlan('"
         + id + "','" 
-        + ast + "','" + status + "','"+ dayId + "','"
+        + ast + "','" + status + "','"+ dayId + "','"+ name + "','"
          + wellsName + "','"
         + coalName + "','" + siteName+ "','"+wagonNo
         + "')\">编辑</button>";
@@ -222,14 +225,15 @@ function operateDealDayButton(cellvalue, options, rowObject) {
 
 }
 //编辑调运计划
-function dealEditDayPlan(id,ast,status,dayId,wellsName,coalName,siteName,wagonNo) {
+function dealEditDayPlan(id,ast,status,dayId,name,wellsName,coalName,siteName,wagonNo) {
     $("#hideDealId").val(id);//调运id
     $("#hideId").val(dayId);
     subType =2;
     $("#ast").val(ast);
-    $("#wellsName").val(wellsName).select2();
-    $("#coalName").val(coalName).select2();
-    $("#siteName").val(siteName).select2();
+    $("#name").val(name);
+    $("#wellsName").val(wellsName);
+    $("#coalName").val(coalName);
+    $("#siteName").val(siteName);
     $("#status").val(status);
     $("#wagonNo").val(wagonNo);
 }
@@ -293,7 +297,7 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
                         var $tableTr = $("#"+tableId+">tbody>tr:last");
                         $tableTr.find("td").eq(0).html("<b>合计</b>");
                         $tableTr.find("td").eq(5).html("");
-                        $tableTr.find("td").eq(6).html("");
+                        $tableTr.find("td").eq(7).html("");
                     },
                     "complete": function (XMLHttpRequest, status) {
                         if (status == "parsererror") {

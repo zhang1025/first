@@ -32,6 +32,9 @@ public class Constant {
     public static final String SETTLEMENT = "settlement";
 
 
+    //打印 文件存放路径地址
+    public static final String FILEPTH = "C:\\printTest";
+
     //用户密码加密key
     public static final String AES_ENCRYPT_KEY = "liaoyuan@data123";
 
