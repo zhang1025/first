@@ -57,9 +57,9 @@ public class TransportController extends BaseController {
      */
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public ModelAndView cars(ModelMap modelMap){
-//        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
-//        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
-//        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
+        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
+        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
         modelMap.put("receives",commonDataService.getListData(Constant.RECEIVE));
         return new ModelAndView("/transport/dealDayPlanPage");
     }
