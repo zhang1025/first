@@ -273,7 +273,7 @@ function commonDataTablesNoPage(tableId, url, aoColumns, params, lodingId) {
             "sAjaxSource": url,
             "bDestroy": true,
             "bScrollCollapse": true,
-            "scrollX": true,
+            // "scrollX": true,
             "sServerMethod": "POST",
             "aoColumns": aoColumns,
             "fnServerParams": function (aoData) {
