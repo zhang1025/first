@@ -1,6 +1,7 @@
 package com.liaoyuan.web.entity;
 
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by zj on 2017/3/19 0019.
@@ -10,6 +11,7 @@ import lombok.Data;
 public class ContractBean {
     private  int id;
     private String numNo;
+    private String receiveName;
     private String settlement;
     private String name;//煤炭种类
     private double orderCount;
@@ -29,6 +31,18 @@ public class ContractBean {
     private String forkliftFee;
     private int magneticCard;
 
+    private String financePerson;
+    //税金
+    private double taxation;
+    public void setTaxation(String taxation) {
+        if(StringUtils.isBlank(taxation)){
+            this.taxation = 0;
+        }else{
+            this.taxation =  Double.parseDouble(taxation);
+        }
+    }
+
+    private String fund;
     private String orderTime;//签订日期
     private String createtime;//录入时间
     private String status;

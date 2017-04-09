@@ -65,6 +65,12 @@ public class UserServiceImpl implements UserService {
         return iUserDao.editUser(user);
     }
 
+    @Override
+    public int editUserPw(UserBean user) {
+        user.setPw(AESUtil.encrypt(user.getPw(),Constant.AES_ENCRYPT_KEY));
+        return iUserDao.editUserPw(user);
+    }
+
 
     /**
      * 通过account获取用户信息

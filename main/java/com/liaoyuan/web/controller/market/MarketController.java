@@ -51,8 +51,10 @@ public class MarketController extends BaseController {
         log.info("=============合同管理============");
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
         List<DataBean> settlements = commonDataService.getListData(Constant.SETTLEMENT);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
         modelMap.put("coals",coals);
-        modelMap.put("settlements",settlements);
+        modelMap.put("settlements",settlements);//结算单位
+        modelMap.put("receives",receiveName);//收货单位 客户
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/contractPage");
     }
@@ -75,14 +77,11 @@ public class MarketController extends BaseController {
     }
     @RequestMapping(value = "/deleteContractInfo", method = RequestMethod.POST)
     public Integer deleteContractInfo(String id) {
-        int rtn = 0;
-        String[] args = id.split(",");
-        for (String s : args) {
-            if(marketService.deleteContractInfo(Integer.parseInt(s))>0){
-                rtn++;
-            }
-        }
-        return rtn==args.length?1:-1;
+        return  marketService.deleteContractInfo(Integer.parseInt(id));
+    }
+    @RequestMapping(value = "/balanceContractInfo", method = RequestMethod.POST)
+    public Integer balanceContractInfo(String id) {
+        return  marketService.balanceContractInfo(Integer.parseInt(id));
     }
     @RequestMapping(value = "/lockInfo", method = RequestMethod.POST)
     public Integer lockInfo(String id,int type) {
@@ -121,6 +120,7 @@ public class MarketController extends BaseController {
         modelMap.put("receives",commonDataService.getListData(Constant.RECEIVE));
         modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
         modelMap.put("settlements",commonDataService.getListData(Constant.SETTLEMENT));
+        modelMap.put("funds",commonDataService.getListData(Constant.FUND));
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/market/monthPlanPage");
     }

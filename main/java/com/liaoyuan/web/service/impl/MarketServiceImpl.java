@@ -41,9 +41,41 @@ public class MarketServiceImpl implements MarketService{
         return iMarkerDao.editContractInfo(bean);
     }
 
+
+    @Override
+    public int editContractInfoForFinance(ContractBean bean) {
+        return iMarkerDao.editContractInfoForFinance(bean);
+    }
+
+    @Override
+    public int updateStatus(int id,int status) {
+        return iMarkerDao.updateStatus(id,status);
+    }
+
+
     @Override
     public int deleteContractInfo(int id) {
+        ContractBean bean = iMarkerDao.getContractInfoFromId(id);
+        if(bean == null){
+            return -1;
+        }
+        if(Integer.parseInt(bean.getStatus())!=0){
+            return -2;//只有未审核的才能删除
+        }
         return iMarkerDao.deleteContractInfo(id);
+    }
+
+    //结算合同
+    @Override
+    public int balanceContractInfo(int id) {
+        ContractBean bean = iMarkerDao.getContractInfoFromId(id);
+        if(bean == null){
+            return -1;
+        }
+        if(Integer.parseInt(bean.getStatus())==0||Integer.parseInt(bean.getStatus())==2){
+            return -2;//0未审核  2锁定  不能结算合同
+        }
+        return iMarkerDao.balanceContractInfo(id);
     }
 
     //打印合同信息

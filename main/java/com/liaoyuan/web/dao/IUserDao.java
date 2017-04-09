@@ -16,6 +16,7 @@ public interface IUserDao {
     List<UserBean> selectUsers(UserBean user);
     int alreadyUser(UserBean user);
     int insertUser(UserBean user);
+    int editUserPw(UserBean user);
     int deleteUSer(@Param("id") int id);
     int editUser(UserBean user);
     List<Permission> getMenus(@Param("roleId") int roleId);

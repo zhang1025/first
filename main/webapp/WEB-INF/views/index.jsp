@@ -35,7 +35,6 @@
     </div>
     <!-- / page-sidebar -->
     <!-- Start #right-sidebar -->
-
     <!-- .page-content  所有innerPage都需要用<div class="ledo">包最外一层，界面渲染使用 -->
     <div id="innerPage">
     </div>
@@ -50,16 +49,16 @@
 <!-- Back to top -->
 <div id="back-to-top"><a href="#">Back to Top</a>
 </div>
+
 <script type="text/javascript">
     $(function () {
         //加载主界面
         $("#innerPage").load("/general/welcome");
+        $("#updatePw").on("click",function () {
+            $("#innerPage").load("/general/updatePwPage");
+        });
     });
 
-//    function initLoadPage() {
-//        $("#innerPage").load("/general/welcome");
-//        $(".sub li:first a").attr("class", "cli-type active").css("background", "#1c202a");
-//    }
 </script>
 <script src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
 </body>

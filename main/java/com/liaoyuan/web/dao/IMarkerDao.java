@@ -18,11 +18,16 @@ public interface IMarkerDao {
     List<ContractBean> getTableContractData(ContractBean bean);
     int addContractInfo(ContractBean bean);
     int editContractInfo(ContractBean bean);
+    int editContractInfoForFinance(ContractBean bean);
     int deleteContractInfo(@Param(value = "id") int id);
+    int balanceContractInfo(@Param(value = "id") int id);
     ContractBean getContractInfoFromId(@Param(value = "id") int id);
 
     int lockInfo(@Param(value = "id") int id);
     int unlockInfo(@Param(value = "id") int id);
+
+    int updateStatus(@Param(value = "id") int id,@Param(value = "status") int status);
+
 
     //外运与计划
     int countMonthPlanData(PlanBean bean);

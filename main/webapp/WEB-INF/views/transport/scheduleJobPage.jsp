@@ -70,17 +70,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="dayPlanData">
+            <div class="row" id="salesData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;调运日计划信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;管理销售调度</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="dayPlanDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="salesDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -116,33 +116,33 @@
 </div>
 <!-- 日计划对应的发车调运展示 -->
 <%--<div class="modal fade" style="padding-top: 150px;" id="dealDayPlanModal" tabindex="-1" role="dialog" aria-labelledby="myDayPlanModal"--%>
-     <%--aria-hidden="true">--%>
-    <%--<div class="modal-dialog" style="width: 1000px;">--%>
-        <%--<div class="modal-content">--%>
-            <%--<div class="modal-header">--%>
-                <%--<button type="button" class="close" data-dismiss="modal">--%>
-                    <%--<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>--%>
-                <%--</button>--%>
-                <%--<h4 class="modal-title" id="myHistoryModalLabel3">调运信息</h4>--%>
-            <%--</div>--%>
-            <%--<div class="modal-body">--%>
-                <%--<div class="row" id="dealDayPlanData">--%>
-                    <%--<div class="col-lg-12">--%>
-                        <%--<!-- col-lg-12 start here--%>
-                        <%--<div class="panel panel-default toggle ">--%>
-                        <%--<!-- Start .panel -->--%>
-                        <%--<div class="panel-body">--%>
-                            <%--<table id="dealDayPlanTables" class="table table-striped table-bordered table-hover"--%>
-                                   <%--cellspacing="0" style="font-size: 12px;" width="100%">--%>
-                            <%--</table>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<!-- End .panel -->--%>
-                <%--</div>--%>
-                <%--<!-- col-lg-12 end here -->--%>
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
+<%--aria-hidden="true">--%>
+<%--<div class="modal-dialog" style="width: 1000px;">--%>
+<%--<div class="modal-content">--%>
+<%--<div class="modal-header">--%>
+<%--<button type="button" class="close" data-dismiss="modal">--%>
+<%--<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>--%>
+<%--</button>--%>
+<%--<h4 class="modal-title" id="myHistoryModalLabel3">调运信息</h4>--%>
+<%--</div>--%>
+<%--<div class="modal-body">--%>
+<%--<div class="row" id="dealDayPlanData">--%>
+<%--<div class="col-lg-12">--%>
+<%--<!-- col-lg-12 start here--%>
+<%--<div class="panel panel-default toggle ">--%>
+<%--<!-- Start .panel -->--%>
+<%--<div class="panel-body">--%>
+<%--<table id="dealDayPlanTables" class="table table-striped table-bordered table-hover"--%>
+<%--cellspacing="0" style="font-size: 12px;" width="100%">--%>
+<%--</table>--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--<!-- End .panel -->--%>
+<%--</div>--%>
+<%--<!-- col-lg-12 end here -->--%>
+<%--</div>--%>
+<%--</div>--%>
+<%--</div>--%>
 <%--</div>--%>
 <%--<button type='button' id="dealDayModel" class='btn btn-primary btn-small' data-toggle='modal' data-target='#dealDayPlanModal'></button>--%>
 
@@ -165,7 +165,7 @@
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
-                
+
                         <tr>
                             <td>
                                 <div class="form-group">
@@ -183,7 +183,7 @@
                                            style="padding-right: 1px">实发吨数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="ast" class="form-control required" aria-required="true"
-                                            name="number" placeholder="实发吨数">
+                                               name="number" placeholder="实发吨数">
                                     </div>
                                 </div>
                             </td>
@@ -218,15 +218,6 @@
                                     </div>
                                 </div>
                             </td>
-                            <%--<td>--%>
-                                <%--<div class="form-group" id="freightTD">--%>
-                                    <%--<label for="freight" class="col-lg-4 control-label"--%>
-                                           <%--style="padding-right: 1px">运费:</label>--%>
-                                    <%--<div class="col-lg-10" style="width: 150px;padding-left: 5px">--%>
-                                        <%--<input type="text" id="freight" class="form-control" readonly="readonly">--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</td>--%>
                         </tr>
                         <tr>
                             <input type="hidden" id="rid" class="form-control" readonly="readonly">
@@ -255,6 +246,6 @@
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
 <script src="<c:url value="/js/views/common/messages_cn.js"/> "></script>
-<script src="<c:url value="/js/views/transport/dealDayPlanPage.js"/> "></script>
+<script src="<c:url value="/js/views/transport/scheduleJobPage.js"/> "></script>
 
 <!-- / page-content -->

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <!-- .page-navbar -->
+<script src="<c:url value="/css/bootstrap.css"/> "></script>
+<script src="<c:url value="/js/bootstrap/bootstrap.js"/> "></script>
 <div id="header" class="page-navbar">
   <!-- .navbar-brand -->
   <a href="/general/index" class="navbar-brand hidden-xs hidden-sm">
@@ -17,15 +19,17 @@
           <span class="sr-only">Collapse sidebar</span>
         </a>
       </li>
-      <li>
-        <a href="#" class="reset-layout tipB" title="界面布局重置"><i class="fa fa-history"></i></a>
-      </li>
 
     </ul>
     <!-- / top left nav -->
     <!-- top right nav -->
     <ul class="nav navbar-nav navbar-right">
 
+      <li>
+        <a href="javascript:void(0)" id="updatePw" class="tipB" title="修改密码">
+          <span>修改密码</span>
+        </a>
+      </li>
       <li>
         <a href="/general/logout" class="tipB" title="注销">
           <i class="fa fa-power-off"></i>

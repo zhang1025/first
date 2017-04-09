@@ -29,21 +29,6 @@
                                         </button>
                                     </div>
                                 </div>
-                               <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="searchDayPlan"  class="btn btn-primary mr5 mb10" type="button">查看日计划</button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="stopMonthPlan"  class="btn btn-primary mr5 mb10" type="button">终止月计划</button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="delete" class="btn btn-danger mr5 mb10" type="button">删除</button>
-                                    </div>
-                                </div>
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
@@ -65,6 +50,21 @@
                             </h4>
                         </div>
                         <div class="panel-body">
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="searchDayPlan"  class="btn btn-primary mr5 mb10" type="button">查看日计划</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="stopMonthPlan"  class="btn btn-primary mr5 mb10" type="button">终止月计划</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="delete" class="btn btn-danger mr5 mb10" type="button">删除</button>
+                                </div>
+                            </div>
                             <table id="monthPlanDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
@@ -293,8 +293,8 @@
                                            style="padding-right: 1px">结算方式:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <select id="method" class="select fancy-select form-control">
-                                            <c:forEach var="st" items="${settlements}" varStatus="s">
-                                                <option value="${st.method}">${st.method}</option>
+                                            <c:forEach var="st" items="${funds}" varStatus="s">
+                                                <option value="${st.name}">${st.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

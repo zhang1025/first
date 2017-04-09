@@ -26,10 +26,10 @@
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:5px">
                                     <div class="input-group">
                                         <span class="input-group-addon">客户名称</span>
-                                        <select id="s_settlements" class="select fancy-select form-control"
+                                        <select id="s_receives" class="select fancy-select form-control"
                                                 style="width: 150px">
                                             <option value="">请选择</option>
-                                            <c:forEach var="st" items="${settlements}" varStatus="s">
+                                            <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
                                             </c:forEach>
                                         </select>
@@ -55,6 +55,7 @@
                                             <option value="3">正在发运</option>
                                             <option value="2">锁定</option>
                                             <option value="1">解锁</option>
+                                            <option value="4">已结算</option>
                                             <option value="0">未审核</option>
                                             <option value="-1">未通过</option>
                                         </select>
@@ -82,11 +83,6 @@
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="print" class="btn btn-warning mr5 mb10" type="button">打印</button>
-                                    </div>
-                                </div>
                                 <div style="padding: 15px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
@@ -94,21 +90,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="delete"  class="btn btn-danger mr5 mb10" type="button">删除</button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="unlock"  class="btn btn-primary mr5 mb10" type="button">解锁</button>
-                                    </div>
-                                </div>
-                                <div style="padding-top: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="lock"  class="btn btn-primary mr5 mb10" type="button">锁定</button>
-                                    </div>
-                                </div>
+
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">
                                     <div class="input-group">
@@ -130,6 +112,32 @@
                             </h4>
                         </div>
                         <div class="panel-body">
+
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="balance"  class="btn btn-primary mr5 mb10" type="button">结算</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="unlock"  class="btn btn-primary mr5 mb10" type="button">解锁</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="lock"  class="btn btn-primary mr5 mb10" type="button">锁定</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="print" class="btn btn-warning mr5 mb10" type="button">打印</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: left">
+                                <div class="input-group">
+                                    <button id="delete"  class="btn btn-danger mr5 mb10" type="button">删除</button>
+                                </div>
+                            </div>
                             <table id="contractDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 10px" cellspacing="0" width="100%">
                             </table>
@@ -146,6 +154,7 @@
 </div>
 <!--新增信息-->
 <input type="hidden" id="hideId">
+<input type="hidden" id="statusId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -184,11 +193,11 @@
                         <tr>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <label for="settlement" class="col-lg-4 control-label"
+                                    <label for="receiveName" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">客户名称:</label>
                                     <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <select id="settlement" class="select fancy-select form-control required">
-                                            <c:forEach var="st" items="${settlements}" varStatus="s">
+                                        <select id="receiveName" class="select fancy-select form-control required">
+                                            <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
                                             </c:forEach>
                                         </select>

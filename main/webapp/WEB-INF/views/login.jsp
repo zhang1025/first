@@ -38,6 +38,6 @@
 
     </section><!-- /loginBox -->
 </div> <!-- /container -->
-<script  src="/js/views/login.js" type="text/javascript"></script>
+<script  src="<c:url value="/js/views/login.js"/>" type="text/javascript"></script>
 </body>
 </html>

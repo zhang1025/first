@@ -107,4 +107,16 @@ public class TransportController extends BaseController {
     public Integer dealStatusDayPlan(DiaoyunBean bean) {
         return transportService.dealStatusDayPlan(bean);
     }
+
+    /**
+     * 管理销售调动页面
+     */
+    @RequestMapping(value = "/scheduleJob", method = RequestMethod.GET)
+    public ModelAndView scheduleJob(ModelMap modelMap){
+        modelMap.put("wells",commonDataService.getListData(Constant.WELLS));
+        modelMap.put("coals",commonDataService.getListData(Constant.COAL));
+        modelMap.put("sites",commonDataService.getListData(Constant.SITE));
+        modelMap.put("receives",commonDataService.getListData(Constant.RECEIVE));
+        return new ModelAndView("/transport/scheduleJobPage");
+    }
 }

@@ -77,7 +77,7 @@ function operateButton(cellvalue, options, rowObject) {
         + province + "','"
         + type
         + "')\">编辑</button>";
-    return editBtn + "&ensp;<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteSettlement(" + c_id + ")'>移除</button>";
+    return editBtn + "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteSettlement(" + c_id + ")'>移除</button>";
 }
 //编辑
 function editSettlement(c_id, c_name, c_mnc, method, industry, province, type) {

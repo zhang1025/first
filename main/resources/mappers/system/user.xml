@@ -41,6 +41,10 @@
         update t_user set account=#{account},pw=#{pw},role_id=#{roleId},department=#{department} where id=#{id}
     </update>
 
+    <update id="editUserPw" parameterType="UserBean">
+        update t_user set pw=#{pw} where account=#{account}
+    </update>
+
 
     <!--通过account查询用户信息-->
     <select id="checkUser"  resultType="UserBean">

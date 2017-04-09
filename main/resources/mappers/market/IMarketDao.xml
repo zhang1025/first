@@ -28,7 +28,7 @@
 
     </select>
     <select id="getTableContractData" parameterType="ContractBean" resultType="ContractBean">
-        select id,numNo,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
+        select id,numNo,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
         orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
         orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
@@ -42,13 +42,13 @@
     </select>
     <!--添加合同信息-->
     <insert id="addContractInfo" parameterType="ContractBean">
-        insert into car_contract(numNo,settlement,name,orderCount,unitPrice,inputPerson,
+        insert into car_contract(numNo,receiveName,name,orderCount,unitPrice,inputPerson,
         usePerson,contractType,forkliftFee,orderTime,status,billName,address,billNo,tel,bankName,bankNo) values (#{numNo},#{settlement},#{name},
         #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
         #{orderTime},#{status},#{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
     </insert>
     <update id="editContractInfo" parameterType="ContractBean">
-        update car_contract set numNo=#{numNo},settlement=#{settlement},name=#{name},
+        update car_contract set numNo=#{numNo},receiveName=#{receiveName},name=#{name},
         orderCount=#{orderCount},unitPrice=#{unitPrice},inputPerson=#{inputPerson},
         usePerson=#{usePerson},contractType=#{contractType},
         forkliftFee=#{forkliftFee},orderTime=#{orderTime},status=#{status},
@@ -56,11 +56,25 @@
         bankName=#{bankName},bankNo=#{bankNo} where id=#{id}
     </update>
 
-    <update id="lockInfo" parameterType="ContractBean">
+    <!--财务人员更新合同信息-->
+    <update id="editContractInfoForFinance" parameterType="ContractBean">
+         update car_contract set settlement=#{settlement},fund=#{fund},taxation=#{taxation},
+        financePerson=#{financePerson} where id=#{id}
+    </update>
+
+    <update id="lockInfo">
         update car_contract set status=2 where id=#{id}
     </update>
-    <update id="unlockInfo" parameterType="ContractBean">
+    <update id="unlockInfo">
         update car_contract set status=1 where id=#{id}
+    </update>
+    <update id="balanceContractInfo">
+        update car_contract set status=4 where id=#{id}
+    </update>
+
+    <!--财务审核-->
+    <update id="updateStatus">
+        update car_contract set status=#{status} where id=#{id}
     </update>
 
     <delete id="deleteContractInfo">

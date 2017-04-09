@@ -16,9 +16,12 @@ public interface MarketService {
 
     int addContractInfo(ContractBean bean);
     int editContractInfo(ContractBean bean);
+    int editContractInfoForFinance(ContractBean bean);
     int deleteContractInfo(int id);
+    int balanceContractInfo(int id);
     void printContractInfo( int id);
 
+    int updateStatus(int id, int status);
     int lockInfo(int id);
     int unlockInfo(int id);
 

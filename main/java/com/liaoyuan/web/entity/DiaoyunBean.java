@@ -41,6 +41,14 @@ public class DiaoyunBean implements Serializable {
             this.tonnage =  Double.parseDouble(tonnage);
         }
     }
+    private double freight;
+    public void setFreight(String freight) {
+        if(StringUtils.isBlank(freight)){
+            this.freight = 0;
+        }else{
+            this.freight =  Double.parseDouble(freight);
+        }
+    }
 
 
     private String wellsName;

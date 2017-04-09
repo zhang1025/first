@@ -1,6 +1,7 @@
 package com.liaoyuan.web.controller.general;
 
 import com.liaoyuan.web.controller.base.BaseController;
+import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.Permission;
 import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.entity.UserBean;
@@ -9,7 +10,10 @@ import com.liaoyuan.web.utils.AESUtil;
 import com.liaoyuan.web.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -96,11 +100,24 @@ public class GeneralController extends BaseController {
         return new ModelAndView("login_err");
     }
 
-    //测试
-    @RequestMapping(value = "/data", method = RequestMethod.GET)
-    public ModelAndView showData(){
-        log.debug("---------enter function {}  ,visit {}","showData","data");
-        return new ModelAndView("/general/dataReport");
+    @RequestMapping(value = "/updatePw", method = RequestMethod.POST)
+    public Integer updatePw(String oldPw,String newPw1) {
+        String account = (String)httpSession.getAttribute(SessionUser.SESSION_USER);
+        UserBean bean =  userService.getUserFromAccount(account);
+        if(bean == null){
+           return  -1;
+        }
+        if(!oldPw.equals(AESUtil.decrypt(bean.getPw(), Constant.AES_ENCRYPT_KEY))){
+          return -2;
+        }
+        return userService.editUserPw(new UserBean(newPw1,account));
+    }
+
+    //header
+    @RequestMapping(value = "/updatePwPage", method = RequestMethod.GET)
+    public ModelAndView showHeader(){
+        log.debug("---------enter function {}  ,visit {}","showHeader","header");
+        return new ModelAndView("updatePw");
     }
     /**
      * 获取数据报表对应的平台数据
