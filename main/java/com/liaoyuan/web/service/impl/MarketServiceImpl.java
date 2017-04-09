@@ -7,15 +7,18 @@ import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.CreateWordT;
 import com.liaoyuan.web.utils.DocPrint;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
 import java.util.List;
 
 /**
  * Created by zj on 2017/3/19 0019.
  */
 @Service
+@Slf4j
 public class MarketServiceImpl implements MarketService{
 
     @Autowired
@@ -82,14 +85,20 @@ public class MarketServiceImpl implements MarketService{
     public void printContractInfo( int id){
         ContractBean bean =  iMarkerDao.getContractInfoFromId(id);
         //生成word信息
-        CreateWordT.printInfo(bean, Constant.FILEPTH);
+        URL fileURL = CreateWordT.class.getClassLoader().getResource(Constant.FILEPTH);
+        if(fileURL == null){
+            log.error("找不到合同信息模板 路径：/print/hetong");
+            System.out.println("找不到合同信息模板 路径：/print/hetong");
+            return;
+        }
+        CreateWordT.printInfo(bean, fileURL.getPath());
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //打印
-        DocPrint.printFile(Constant.FILEPTH);
+        DocPrint.printFile(fileURL.getPath());
     }
 
     @Override

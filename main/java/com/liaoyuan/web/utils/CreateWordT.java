@@ -5,46 +5,46 @@ package com.liaoyuan.web.utils;
  * 具体参考一下地址
  * http://blog.csdn.net/u012246342/article/details/51698187
  */
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.liaoyuan.web.entity.ContractBean;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.*;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
 public class CreateWordT {
 
     //打印合同信息
-    public static void printInfo(ContractBean bean,String filePath){
-        if(null == bean){
+    public static void printInfo(ContractBean bean, String filePath) {
+        if (null == bean) {
             return;
         }
         Map<String, Object> cont = new HashMap<>();// 存储数据
-        cont.put("settlement", bean.getSettlement());
+        cont.put("receiveName", bean.getReceiveName());
         cont.put("numNo", bean.getNumNo());
         cont.put("orderCount", bean.getOrderCount());
         cont.put("name", bean.getName());
         cont.put("price", bean.getUnitPrice());
-        cont.put("count", bean.getUnitPrice()*bean.getOrderCount());
-        cont.put("forkliftFee", Integer.parseInt(bean.getForkliftFee())==1?"包括":"不包括");
+        cont.put("count", bean.getUnitPrice() * bean.getOrderCount());
+        cont.put("forkliftFee", Integer.parseInt(bean.getForkliftFee()) == 1 ? "包括" : "不包括");
         cont.put("usePerson", bean.getUsePerson());
-            try {
+        try {
             //模板的路径 不包含文件名称
             File fir = new File(filePath);
             String tempName = "hetong.xml";
 
             //生成文件的路径及文件名。
-            File outFile = new File(filePath+"\\hetong.doc");
+            File outFile = new File(filePath + "/hetong.doc");
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
             // 使用FileTemplateLoader 指定模板路径
-            TemplateLoader templateLoader  = new FileTemplateLoader(fir);
+            TemplateLoader templateLoader = new FileTemplateLoader(fir);
             Configuration cfg = new Configuration();
             cfg.setTemplateLoader(templateLoader);
             Template t = cfg.getTemplate(tempName, "UTF-8");
@@ -73,7 +73,7 @@ public class CreateWordT {
             File outFile = new File("E:\\test\\test.doc");
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
             // 使用FileTemplateLoader 指定模板路径
-            TemplateLoader templateLoader  = new FileTemplateLoader(fir);
+            TemplateLoader templateLoader = new FileTemplateLoader(fir);
             Configuration cfg = new Configuration();
             cfg.setTemplateLoader(templateLoader);
             Template t = cfg.getTemplate(tempName, "UTF-8");
