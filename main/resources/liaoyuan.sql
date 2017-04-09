@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-03-31 22:39:39
+Date: 2017-04-09 18:43:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,19 +22,23 @@ DROP TABLE IF EXISTS `car_contract`;
 CREATE TABLE `car_contract` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '合同唯一识别',
   `numNo` varchar(100) DEFAULT '' COMMENT '合同编号',
-  `settlement` varchar(100) DEFAULT '' COMMENT '客户名称',
+  `receiveName` varchar(100) DEFAULT '' COMMENT '客户名称 收货单位',
   `name` varchar(100) DEFAULT NULL COMMENT '煤炭种类，下拉形式',
   `orderCount` double DEFAULT '0' COMMENT '签订总量，也叫订单总量',
   `unitPrice` double DEFAULT '0' COMMENT '单价',
   `sendCount` double DEFAULT '0' COMMENT '已发运量',
   `inputPerson` varchar(100) DEFAULT NULL COMMENT '录入人',
   `usePerson` varchar(100) DEFAULT NULL COMMENT '经办人',
+  `financePerson` varchar(100) DEFAULT NULL COMMENT '财务操作人',
+  `settlement` varchar(100) DEFAULT NULL COMMENT '结算单位',
+  `fund` varchar(100) DEFAULT NULL COMMENT '资金方式',
+  `taxation` double DEFAULT NULL COMMENT '税金',
   `contractType` varchar(100) DEFAULT '3' COMMENT '合同类型，分为1公用煤，2零销煤，3其他，4职工煤',
   `forkliftFee` varchar(50) DEFAULT '0' COMMENT '铲车费，包括1包括铲车费，0不包括',
   `magneticCard` int(11) DEFAULT '0' COMMENT '磁卡编号,默认0表示没有,默认1表示已绑定，在绑定磁卡会更新',
   `orderTime` varchar(50) DEFAULT NULL COMMENT '签订日期',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '录入时间日期',
-  `status` int(11) DEFAULT '0' COMMENT '合同状态,0表示尚未审核 -1未通过 1 解锁 2锁定 3正在发运 ',
+  `status` int(11) DEFAULT '0' COMMENT '合同状态,0表示尚未审核 -1未通过 1 解锁 2锁定 3正在发运 4已经结算',
   `billName` varchar(100) DEFAULT NULL COMMENT '公司名称',
   `address` varchar(100) DEFAULT NULL COMMENT '公司地址i',
   `billNo` varchar(100) DEFAULT NULL COMMENT '税号',
@@ -47,12 +51,12 @@ CREATE TABLE `car_contract` (
 -- ----------------------------
 -- Records of car_contract
 -- ----------------------------
-INSERT INTO `car_contract` VALUES ('1', '20170313', '白山市大业物贸有限公司', '洗粒', '166', '560', '50', '尹延财', '尹延财', '3', '0', '0', '2017-03-18', '2017-03-16 11:12:54', '0', null, null, null, null, null, null);
-INSERT INTO `car_contract` VALUES ('2', '20170318', '中国石油天然气股份有限公司', '大煤矿', '1000', '300', '500', '测试1', '测试1', '2', '0', '0', '2017-03-17', '2017-03-17 19:14:09', '2', null, null, null, null, null, null);
-INSERT INTO `car_contract` VALUES ('4', '20170314', '吉林亚泰集团物资贸易有限公司', '大煤矿', '314321', '2123', '0', '', '发特围', '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
-INSERT INTO `car_contract` VALUES ('6', '20170315', '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', '', '我听人说', '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', '0', '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好', '43213132313', '1532231233', '范德萨发生', '54324241313');
-INSERT INTO `car_contract` VALUES ('7', '20170322', '中国石油天然气股份有限公司', '低质煤', '2123', '222', '0', '', '非师范', '1', '1', '0', '2017-03-22', '2017-03-22 23:54:57', '0', '非师范方式非师范方式', '付是否是否', '13213123', '1231313121', '第三方士', '4123131313');
-INSERT INTO `car_contract` VALUES ('9', '20170322', '白山市大业物贸有限公司', '低质煤', '123', '121', '0', '', '发顺丰', '2', '0', '0', '2017-03-23', '2017-03-23 23:44:46', '1', '防辐射法萨芬方式付方式方式  ', '付方式是否 方式服务而发师范大学', '234231313213', '1341451232123', '发的萨芬', '42413145345353');
+INSERT INTO `car_contract` VALUES ('1', '20170313', '白山市大业物贸有限公司', '洗粒', '166', '560', '50', '尹延财', '尹延财', null, null, null, null, '3', '0', '0', '2017-03-18', '2017-03-16 11:12:54', '0', null, null, null, null, null, null);
+INSERT INTO `car_contract` VALUES ('2', '20170318', '中国石油天然气股份有限公司', '大煤矿', '100', '300', '50', '测试1', '测试1', null, null, null, null, '2', '0', '0', '2017-03-17', '2017-03-17 19:14:09', '2', null, null, null, null, null, null);
+INSERT INTO `car_contract` VALUES ('4', '20170314', '吉林亚泰集团物资贸易有限公司', '大煤矿', '3143', '212', '0', '', '发特围', null, null, null, null, '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
+INSERT INTO `car_contract` VALUES ('6', '20170315', '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', 'admin', '我听人说', null, null, null, null, '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', null, '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好1', '43213132313', '1532231233', '范德萨发生', '54324241313');
+INSERT INTO `car_contract` VALUES ('7', '20170322', '白山市大业物贸有限公司', '低质煤', '212', '22', '0', 'admin', '非师范', null, null, null, null, '1', '1', '0', '2017-03-22', '2017-03-22 23:54:57', null, '非师范方式非师范方式', '付是否是否1', '13213123', '1231313121', '第三方士', '4123131313');
+INSERT INTO `car_contract` VALUES ('9', '20170322', '白山市大业物贸有限公司', '低质煤', '123', '12', '0', 'admin', '发顺丰', 'admin', '白山市大业物贸有限公司', '银行卡', '12.98', '2', '0', '0', '2017-03-23', '2017-03-23 23:44:46', '3', '防辐射法萨芬方式付方式方式  ', '付方式是否 方式服务而发师范大学', '234231313213', '1341451232123', '发的萨芬', '42413145345353');
 
 -- ----------------------------
 -- Table structure for `coal_card`
@@ -78,11 +82,14 @@ CREATE TABLE `coal_card` (
 DROP TABLE IF EXISTS `diaoyun`;
 CREATE TABLE `diaoyun` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL,
   `wagonNo` varchar(100) DEFAULT NULL COMMENT '车皮号',
   `tonnage` double DEFAULT '0' COMMENT '吨数',
   `wellsName` varchar(255) DEFAULT NULL COMMENT '对应wells中的w_id井别',
   `coalName` varchar(255) DEFAULT NULL COMMENT '煤炭种类，对应dm_coal中的煤炭表',
   `siteName` varchar(255) DEFAULT NULL COMMENT '到站',
+  `freight` double DEFAULT '0' COMMENT '运费',
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int(11) DEFAULT '0' COMMENT '是否已传 0 没有  1已传',
   `dayId` int(11) DEFAULT NULL COMMENT '对应日计划id',
@@ -90,14 +97,18 @@ CREATE TABLE `diaoyun` (
   PRIMARY KEY (`id`),
   KEY `dayId` (`dayId`),
   KEY `createtime` (`createtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of diaoyun
 -- ----------------------------
-INSERT INTO `diaoyun` VALUES ('1', '21321313', '2', '斜井', '大煤矿', '沈阳站', '2017-03-29 23:26:37', '1', '8', '5');
-INSERT INTO `diaoyun` VALUES ('2', '76575654', '1', '斜井', '大煤矿', '沈阳站', '2017-03-31 22:05:26', '0', '8', '5');
-INSERT INTO `diaoyun` VALUES ('3', '512312', '2', '太平井', '洗精煤', '烟筒山', '2017-03-31 22:38:17', '0', '9', '2');
+INSERT INTO `diaoyun` VALUES ('1', '2', '中国石油天然气股份有限', '21321313', '2', '斜井', '大煤矿', '沈阳站', '452.15', '2017-03-29 23:26:37', '1', '8', '5');
+INSERT INTO `diaoyun` VALUES ('2', '2', '中国石油天然气股份有限', '76575654', '5', '斜井', '大煤矿', '沈阳站', '452.15', '2017-03-31 22:05:26', '1', '8', '5');
+INSERT INTO `diaoyun` VALUES ('3', '1', '吉林亚泰水泥有限公司', '512312', '2', '太平井', '洗精煤', '烟筒山', '734', '2017-03-31 22:38:17', '0', '9', '2');
+INSERT INTO `diaoyun` VALUES ('4', '2', '中国石油天然气股份有限', '3213131321', '2', '斜井', '大煤矿', '沈阳站', '452.15', '2017-04-01 21:36:24', '1', '8', '5');
+INSERT INTO `diaoyun` VALUES ('5', '3', '白山市大业物贸有限公司', '2312131', '3', '斜井', '大煤矿', '沈阳站', '452.15', '2017-04-01 22:04:51', '0', '7', '4');
+INSERT INTO `diaoyun` VALUES ('6', '1', '吉林亚泰水泥有限公司', '865756', '3', '太平井', '洗精煤', '烟筒山', '734', '2017-04-04 21:26:19', '1', '9', '2');
+INSERT INTO `diaoyun` VALUES ('7', '1', '吉林亚泰水泥有限公司', '3132131', '2', '三区', '低质煤', '沈阳站', '0', '2017-04-09 17:14:37', '1', '10', '6');
 
 -- ----------------------------
 -- Table structure for `dm_city`
@@ -150,13 +161,14 @@ CREATE TABLE `dm_freight` (
   `tonnage` double DEFAULT '0' COMMENT '吨数',
   `cost` double DEFAULT '0' COMMENT '运费',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dm_freight
 -- ----------------------------
-INSERT INTO `dm_freight` VALUES ('2', '沈阳站', 'sy', '324.97', '452113');
-INSERT INTO `dm_freight` VALUES ('3', '鞍山', 'ass', '11111', '22222');
+INSERT INTO `dm_freight` VALUES ('2', '沈阳站', 'sy', '324.97', '452.15');
+INSERT INTO `dm_freight` VALUES ('3', '鞍山', 'ass', '11111', '222');
+INSERT INTO `dm_freight` VALUES ('4', '烟筒山', 'yt', '212', '734');
 
 -- ----------------------------
 -- Table structure for `dm_fund`
@@ -166,7 +178,7 @@ CREATE TABLE `dm_fund` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '资金方式',
   `name` varchar(255) DEFAULT '' COMMENT '资金方式名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dm_fund
@@ -174,6 +186,7 @@ CREATE TABLE `dm_fund` (
 INSERT INTO `dm_fund` VALUES ('1', '现金');
 INSERT INTO `dm_fund` VALUES ('2', '支票');
 INSERT INTO `dm_fund` VALUES ('3', '银行卡');
+INSERT INTO `dm_fund` VALUES ('4', '合同户');
 
 -- ----------------------------
 -- Table structure for `dm_industry`
@@ -340,15 +353,16 @@ CREATE TABLE `out_day_plan` (
   PRIMARY KEY (`id`),
   KEY `mpd_id` (`month_id`),
   KEY `createtime` (`createtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of out_day_plan
 -- ----------------------------
 INSERT INTO `out_day_plan` VALUES ('6', '3', '白山市大业物贸有限公司', '12', '0', '70', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-28 22:01:35', '5151', '1', '4');
 INSERT INTO `out_day_plan` VALUES ('7', '3', '白山市大业物贸有限公司', '10', '0', '80', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-28 22:01:48', '5151', '1', '4');
-INSERT INTO `out_day_plan` VALUES ('8', '2', '中国石油天然气股份有限', '20', '1', '50', '2', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-28 22:02:02', '8768', '1', '5');
-INSERT INTO `out_day_plan` VALUES ('9', '1', '吉林亚泰水泥有限公司', '11', '0', '40', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-28 22:02:15', '1490', '1', '2');
+INSERT INTO `out_day_plan` VALUES ('8', '2', '中国石油天然气股份有限', '20', '3', '50', '9', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-28 22:02:02', '8768', '1', '5');
+INSERT INTO `out_day_plan` VALUES ('9', '1', '吉林亚泰水泥有限公司', '11', '1', '40', '3', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-28 22:02:15', '1490', '1', '2');
+INSERT INTO `out_day_plan` VALUES ('10', '1', '吉林亚泰水泥有限公司', '12', '1', '56', '2', '120', '三区', '低质煤', '沈阳站', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '富商大贾', 'admin', '2017-04-04 21:32:56', '1250', '1', '6');
 
 -- ----------------------------
 -- Table structure for `out_month_plan`
@@ -381,11 +395,11 @@ CREATE TABLE `out_month_plan` (
 -- ----------------------------
 -- Records of out_month_plan
 -- ----------------------------
-INSERT INTO `out_month_plan` VALUES ('2', '1', '吉林亚泰水泥有限公司', '50', '0', '120', '0', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-23 23:31:49', '1490', '1');
+INSERT INTO `out_month_plan` VALUES ('2', '1', '吉林亚泰水泥有限公司', '50', '1', '120', '3', '132', '太平井', '洗精煤', '烟筒山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '看韩剧', 'admin', '2017-03-23 23:31:49', '1490', '1');
 INSERT INTO `out_month_plan` VALUES ('3', '2', '中国石油天然气股份有限', '50', '0', '120', '0', '58', '六区', '低质煤', '东辽阳', '公司专', '中国石油天然气股份有限公司', '支票', '二房东', 'admin', '2017-03-23 23:31:50', '5223', '1');
 INSERT INTO `out_month_plan` VALUES ('4', '3', '白山市大业物贸有限公司', '123', '0', '231', '0', '52', '斜井', '大煤矿', '沈阳站', '公司专', '白山市大业物贸有限公司', '合同户', '都是热饭', 'admin', '2017-03-23 23:31:51', '5151', '1');
-INSERT INTO `out_month_plan` VALUES ('5', '2', '中国石油天然气股份有限', '123', '1', '123', '2', '12', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-23 23:56:57', '8768', '1');
-INSERT INTO `out_month_plan` VALUES ('6', '1', '吉林亚泰水泥有限公司', '123', '0', '123', '0', '12', '太平井', '低质煤', '鞍山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '热污染', 'admin', '2017-03-24 23:37:34', '1255', '-1');
+INSERT INTO `out_month_plan` VALUES ('5', '2', '中国石油天然气股份有限', '123', '3', '123', '9', '120', '斜井', '大煤矿', '沈阳站', '公司专', '中国石油天然气股份有限公司', '合同户', '具体一点', 'admin', '2017-03-23 23:56:57', '8768', '1');
+INSERT INTO `out_month_plan` VALUES ('6', '1', '吉林亚泰水泥有限公司', '123', '1', '123', '2', '12', '太平井', '低质煤', '鞍山', '公司专', '吉林亚泰集团物资贸易有限公司', '合同户', '热污染', 'admin', '2017-03-24 23:37:34', '1255', '-1');
 
 -- ----------------------------
 -- Table structure for `t_permission`
@@ -414,7 +428,6 @@ INSERT INTO `t_permission` VALUES ('14', '/finance/payment', '客户交款', '�
 INSERT INTO `t_permission` VALUES ('15', '/finance/huikuan', '汇款单录入', '汇款单录入', '财务管理', '7');
 INSERT INTO `t_permission` VALUES ('16', '/finance/jiesuan', '结算单录入', '结算单录入', '财务管理', '8');
 INSERT INTO `t_permission` VALUES ('17', '/finance/df', '地付信息', '地付信息', '财务管理', '9');
-INSERT INTO `t_permission` VALUES ('18', '/finance/unit', '结算单位', '结算单位', '财务管理', '10');
 INSERT INTO `t_permission` VALUES ('19', '/transport/dayPlan', '查询日计划', '查询日计划', '调运管理', '15');
 INSERT INTO `t_permission` VALUES ('20', '/transport/cars', '发车调运', '发车调运', '调运管理', '16');
 INSERT INTO `t_permission` VALUES ('21', '/transport/scheduleJob', '管理销售调度', '管理销售调度', '调运管理', '17');
