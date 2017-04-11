@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-04-09 18:43:11
+Date: 2017-04-11 23:53:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -414,7 +414,7 @@ CREATE TABLE `t_permission` (
   `resource_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`permission_id`),
   UNIQUE KEY `uk_resourceUrl` (`resource_url`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_permission
@@ -425,12 +425,12 @@ INSERT INTO `t_permission` VALUES ('11', '/market/monthPlan', '外运-月计划�
 INSERT INTO `t_permission` VALUES ('12', '/market/dayPlan', '外运-日计划管理', '外运-日计划管理', '销售管理', '2');
 INSERT INTO `t_permission` VALUES ('13', '/market/contract', '地付合同管理', '地付合同管理', '销售管理', '3');
 INSERT INTO `t_permission` VALUES ('14', '/finance/payment', '客户交款', '客户交款', '财务管理', '6');
-INSERT INTO `t_permission` VALUES ('15', '/finance/huikuan', '汇款单录入', '汇款单录入', '财务管理', '7');
-INSERT INTO `t_permission` VALUES ('16', '/finance/jiesuan', '结算单录入', '结算单录入', '财务管理', '8');
+INSERT INTO `t_permission` VALUES ('15', '/finance/remit', '汇款单录入', '汇款单录入', '财务管理', '7');
+INSERT INTO `t_permission` VALUES ('16', '/finance/balance', '结算单录入', '结算单录入', '财务管理', '8');
 INSERT INTO `t_permission` VALUES ('17', '/finance/df', '地付信息', '地付信息', '财务管理', '9');
-INSERT INTO `t_permission` VALUES ('19', '/transport/dayPlan', '查询日计划', '查询日计划', '调运管理', '15');
-INSERT INTO `t_permission` VALUES ('20', '/transport/cars', '发车调运', '发车调运', '调运管理', '16');
-INSERT INTO `t_permission` VALUES ('21', '/transport/scheduleJob', '管理销售调度', '管理销售调度', '调运管理', '17');
+INSERT INTO `t_permission` VALUES ('19', '/transport/dayPlan', '查询日计划', '查询日计划', '调运管理', '11');
+INSERT INTO `t_permission` VALUES ('20', '/transport/cars', '发车调运', '发车调运', '调运管理', '12');
+INSERT INTO `t_permission` VALUES ('21', '/transport/scheduleJob', '管理销售调度', '管理销售调度', '调运管理', '13');
 INSERT INTO `t_permission` VALUES ('22', '/coal/waybill ', '货运单操作', '货运单操作', '煤质管理', '20');
 INSERT INTO `t_permission` VALUES ('23', '/coal/card', '煤卡绑定', '煤卡绑定', '煤质管理', '21');
 INSERT INTO `t_permission` VALUES ('24', '/coal/deposit', '煤卡押金', '煤卡押金', '煤质管理', '22');
@@ -446,6 +446,8 @@ INSERT INTO `t_permission` VALUES ('33', '/common/sitePage', '站点信息', '�
 INSERT INTO `t_permission` VALUES ('34', '/common/wellsPage', '井区信息', '井区信息', '数据维护', '31');
 INSERT INTO `t_permission` VALUES ('35', '/common/platePage', '车牌信息', '车牌信息', '数据维护', '41');
 INSERT INTO `t_permission` VALUES ('36', '/market/contrastInfo', '计划与发出对比', '外运-计划与发出对比', '销售管理', '4');
+INSERT INTO `t_permission` VALUES ('37', '/weigh/emptyWeight', '空车称重', '空车称重', '地付过磅管理', '15');
+INSERT INTO `t_permission` VALUES ('38', '/weigh/shippingDetails', '发运明细', '发运明细', '地付过磅管理', '16');
 
 -- ----------------------------
 -- Table structure for `t_permission_mapping`
@@ -456,7 +458,7 @@ CREATE TABLE `t_permission_mapping` (
   `role_id` int(11) DEFAULT NULL,
   `permission_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`mapping_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_permission_mapping
@@ -495,6 +497,8 @@ INSERT INTO `t_permission_mapping` VALUES ('32', '2', '13');
 INSERT INTO `t_permission_mapping` VALUES ('33', '1', '35');
 INSERT INTO `t_permission_mapping` VALUES ('34', '1', '36');
 INSERT INTO `t_permission_mapping` VALUES ('35', '2', '36');
+INSERT INTO `t_permission_mapping` VALUES ('37', '1', '37');
+INSERT INTO `t_permission_mapping` VALUES ('38', '1', '38');
 
 -- ----------------------------
 -- Table structure for `t_role`
