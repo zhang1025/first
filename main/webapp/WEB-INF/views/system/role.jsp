@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-md-1" style="padding: 5px;float: right">
                                     <div class="input-group">
-                                        <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModal"  type="button">新增</button>
+                                        <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal" data-target="#myModalRole"  type="button">新增</button>
                                     </div>
                                 </div>
                             </div>
@@ -65,14 +65,14 @@
     <!-- / page-content-wrapper -->
 </div>
 <!--新增用戶信息-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModalRole" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width: 550px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">新增角色</h4>
+                <h4 class="modal-title" id="myModalLabel2">角色信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">

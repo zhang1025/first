@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <!-- .page-navbar -->
-<script src="<c:url value="/css/bootstrap.css"/> "></script>
-<script src="<c:url value="/js/bootstrap/bootstrap.js"/> "></script>
 <div id="header" class="page-navbar">
   <!-- .navbar-brand -->
   <a href="/general/index" class="navbar-brand hidden-xs hidden-sm">

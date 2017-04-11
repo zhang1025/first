@@ -40,7 +40,7 @@ function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['roleId'];
     var desc = rowObject['described'];
     var roleName = rowObject['roleName'];
-    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' onclick=\"editRole('"
+    var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModalRole' onclick=\"editRole('"
         + desc + "','"
         + roleName
         + "')\">编辑</button>";

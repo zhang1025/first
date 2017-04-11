@@ -77,6 +77,7 @@
                         <!-- Start .panel -->
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="fa fa-table">&nbsp;调运日计划信息</i>
+                                &nbsp;&nbsp;<span style="color: red;font-size: 8px">提示：日计划中止的不能再进行发车调运</span>
                             </h4>
                         </div>
                         <div class="panel-body">

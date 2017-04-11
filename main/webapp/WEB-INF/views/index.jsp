@@ -60,6 +60,6 @@
     });
 
 </script>
-<script src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
+<script type="text/javascript" src="<c:url value="/js/views/common/jquery.data.js"/> "></script>
 </body>
 </html>

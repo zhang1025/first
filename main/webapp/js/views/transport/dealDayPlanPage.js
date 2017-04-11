@@ -54,9 +54,10 @@ function dealTableTitle() {
             "sTitle": "状态", "mData": "status", "sWidth": "8%", "mRender": function (data, type, row) {
             var status = row['status'];
             if (status == -1) {
-                return "计划中止";
+                return "<span class='badge badge-important'>计划中止</span>";
+            }else{
+                return "<span class='badge badge-success'>正常</span>";
             }
-            return "正常";
         }
         },
         {
@@ -80,13 +81,19 @@ function operateButton(cellvalue, options, rowObject) {
     var wellsName = rowObject['wellsName'];
     var coalName = rowObject['coalName'];
     var siteName = rowObject['siteName'];
-    return "<button type='button' class='btn btn-success btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
-        + id + "','"
-       + status + "','"  + monthId + "','"+ name + "','"+ planTonnage + "','"
-        + ast + "','"+ rid + "','"
-         + wellsName + "','"
-        + coalName + "','" + siteName
-        + "')\">安排发车</button>";
+    var dealBut = "";
+    if(status == -1){ //计划中止，不能安排发车调运
+        dealBut =  "<button type='button' class='btn btn-success btn-small' disabled='disabled'>安排发车</button>";
+    }else{
+        dealBut= "<button type='button' class='btn btn-success btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
+            + id + "','"
+            + status + "','"  + monthId + "','"+ name + "','"+ planTonnage + "','"
+            + ast + "','"+ rid + "','"
+            + wellsName + "','"
+            + coalName + "','" + siteName
+            + "')\">安排发车</button>";
+    }
+    return dealBut;
 }
 //新建调运计划
 function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,coalName,siteName) {
