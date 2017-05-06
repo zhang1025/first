@@ -1,43 +1,143 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="include/taglib.jsp" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <title>用户登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Joychao <joy@joychao.cc>">
-<style type="text/css">
-    *{margin:0;padding: 0;}
-    body{background: #444 url(/img/carbon_fibre_big.png);font-family:"宋体";}
-    .loginBox{width:420px;height:230px;padding:0 20px;border:1px solid #fff; color:#000; margin-top:40px; border-radius:8px;background: white;box-shadow:0 0 15px #222; background: -moz-linear-gradient(top, #fff, #efefef 8%);background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), to(#f4f4f4));font:11px/1.5em 'Microsoft YaHei' ;position: absolute;left:50%;top:50%;margin-left:-210px;margin-top:-115px;}
-    .loginBox h2{height:45px;font-size:20px;font-weight:normal;}
-    .loginBox .left{border-right:1px solid #ccc;height:100%;padding-right: 20px; }
-    .regBtn{margin-top:21px;}
-</style>
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-<script type="text/javascript" src="/js/libs/html5.js"></script>
-<![endif]-->
-<link class="bootstrap library" rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-<script class="bootstrap library" src="/js/libs/jquery-2.1.1.min.js" type="text/javascript"></script>
-<script class="bootstrap library" src="/js/bootstrap/bootstrap.js" type="text/javascript"></script>
-</head>
-<body>
-<div class="container">
-    <section class="loginBox row-fluid">
-        <section class="span7" style="padding-left: 100px">
-            <h2>登录</h2>
-            <p><input type="text" id="user" name="username" placeholder="用户名"/></p>
-            <p><input type="password" id="pw" name="password" placeholder="密码"/></p>
-            <section class="row-fluid">
-                <section class="span8 lh30"><label><input type="checkbox" name="rememberme" />记住密码</label></section>
-                <section class="span1"><input type="button" id="submit" value=" 登录 " class="btn btn-primary"></section>
-            </section>
-        </section>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <title>登录界面</title>
 
-    </section><!-- /loginBox -->
-</div> <!-- /container -->
+    <link  rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <script src="/js/libs/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap/bootstrap.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        html,body {
+            height: 100%;
+        }
+        .box {
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6699FF', endColorstr='#6699FF'); /*  IE */
+            background-image:linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-o-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-moz-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-webkit-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+            background-image:-ms-linear-gradient(bottom, #6699FF 0%, #6699FF 100%);
+
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .login-box {
+            width: 100%;
+            max-width:500px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+
+            margin-top: -200px;
+            /*设置负值，为要定位子盒子的一半高度*/
+
+        }
+        @media screen and (min-width:500px){
+            .login-box {
+                left: 50%;
+                /*设置负值，为要定位子盒子的一半宽度*/
+                margin-left: -250px;
+            }
+        }
+
+        .form {
+            width: 100%;
+            max-width:500px;
+            height: 275px;
+            margin: 25px auto 0px auto;
+            padding-top: 25px;
+        }
+        .login-content {
+            height: 300px;
+            width: 100%;
+            max-width:500px;
+            background-color: rgba(255, 250, 2550, .6);
+            float: left;
+        }
+
+
+        .input-group {
+            margin: 0px 0px 30px 0px !important;
+        }
+        .form-control,
+        .input-group {
+            height: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 0px !important;
+        }
+        .login-title {
+            padding: 20px 10px;
+            background-color: rgba(0, 0, 0, .6);
+        }
+        .login-title h1 {
+            margin-top: 10px !important;
+        }
+        .login-title small {
+            color: #fff;
+        }
+
+        .link p {
+            line-height: 20px;
+            margin-top: 30px;
+        }
+        .btn-sm {
+            padding: 8px 24px !important;
+            font-size: 16px !important;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="box">
+    <div class="login-box">
+        <div class="login-title text-center">
+            <h1><small>登录</small></h1>
+        </div>
+        <div class="login-content ">
+            <div class="form">
+                <div class="form-group">
+                    <div class="col-xs-12" style="text-align: center">
+                    <span style="color: red;" id="errorMsg"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12  ">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" id="username" name="username" class="form-control"
+                                   placeholder="用户名">
+                            <%--<span style="color: red;" id="errorMsg"></span>--%>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 ">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                            <input type="password" id="pw" name="password" class="form-control"
+                                   placeholder="密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-actions">
+                    <div class="col-xs-4 col-xs-offset-4 ">
+                        <button id="loginSubmit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span>登录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script  src="<c:url value="/js/views/login.js"/>" type="text/javascript"></script>
 </body>
 </html>
