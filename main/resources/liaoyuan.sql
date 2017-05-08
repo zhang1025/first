@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-04-11 23:53:58
+Date: 2017-05-09 01:03:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `car_contract`;
 CREATE TABLE `car_contract` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '合同唯一识别',
   `numNo` varchar(100) DEFAULT '' COMMENT '合同编号',
+  `coalCard` varchar(50) DEFAULT NULL COMMENT '煤卡',
   `receiveName` varchar(100) DEFAULT '' COMMENT '客户名称 收货单位',
   `name` varchar(100) DEFAULT NULL COMMENT '煤炭种类，下拉形式',
   `orderCount` double DEFAULT '0' COMMENT '签订总量，也叫订单总量',
@@ -51,12 +52,12 @@ CREATE TABLE `car_contract` (
 -- ----------------------------
 -- Records of car_contract
 -- ----------------------------
-INSERT INTO `car_contract` VALUES ('1', '20170313', '白山市大业物贸有限公司', '洗粒', '166', '560', '50', '尹延财', '尹延财', null, null, null, null, '3', '0', '0', '2017-03-18', '2017-03-16 11:12:54', '0', null, null, null, null, null, null);
-INSERT INTO `car_contract` VALUES ('2', '20170318', '中国石油天然气股份有限公司', '大煤矿', '100', '300', '50', '测试1', '测试1', null, null, null, null, '2', '0', '0', '2017-03-17', '2017-03-17 19:14:09', '2', null, null, null, null, null, null);
-INSERT INTO `car_contract` VALUES ('4', '20170314', '吉林亚泰集团物资贸易有限公司', '大煤矿', '3143', '212', '0', '', '发特围', null, null, null, null, '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
-INSERT INTO `car_contract` VALUES ('6', '20170315', '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', 'admin', '我听人说', null, null, null, null, '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', null, '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好1', '43213132313', '1532231233', '范德萨发生', '54324241313');
-INSERT INTO `car_contract` VALUES ('7', '20170322', '白山市大业物贸有限公司', '低质煤', '212', '22', '0', 'admin', '非师范', null, null, null, null, '1', '1', '0', '2017-03-22', '2017-03-22 23:54:57', null, '非师范方式非师范方式', '付是否是否1', '13213123', '1231313121', '第三方士', '4123131313');
-INSERT INTO `car_contract` VALUES ('9', '20170322', '白山市大业物贸有限公司', '低质煤', '123', '12', '0', 'admin', '发顺丰', 'admin', '白山市大业物贸有限公司', '银行卡', '12.98', '2', '0', '0', '2017-03-23', '2017-03-23 23:44:46', '3', '防辐射法萨芬方式付方式方式  ', '付方式是否 方式服务而发师范大学', '234231313213', '1341451232123', '发的萨芬', '42413145345353');
+INSERT INTO `car_contract` VALUES ('1', '20170313', null, '白山市大业物贸有限公司', '洗粒', '166', '560', '50', '尹延财', '尹延财', null, null, null, null, '3', '0', '0', '2017-03-18', '2017-03-16 11:12:54', '0', null, null, null, null, null, null);
+INSERT INTO `car_contract` VALUES ('2', '20170318', null, '中国石油天然气股份有限公司', '大煤矿', '100', '300', '50', '测试1', '测试1', null, null, null, null, '2', '0', '0', '2017-03-17', '2017-03-17 19:14:09', '2', null, null, null, null, null, null);
+INSERT INTO `car_contract` VALUES ('4', '20170314', null, '吉林亚泰集团物资贸易有限公司', '大煤矿', '3143', '212', '0', '', '发特围', null, null, null, null, '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
+INSERT INTO `car_contract` VALUES ('6', '20170315', null, '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', 'admin', '我听人说', null, null, null, null, '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', null, '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好1', '43213132313', '1532231233', '范德萨发生', '54324241313');
+INSERT INTO `car_contract` VALUES ('7', '20170322', '', '白山市大业物贸有限公司', '低质煤', '212', '22', '0', 'admin', '非师范', null, null, null, null, '1', '1', '0', '2017-03-22', '2017-03-22 23:54:57', null, '非师范方式非师范方式', '付是否是否1', '13213123', '1231313121', '第三方士', '4123131313');
+INSERT INTO `car_contract` VALUES ('9', '20170322', '123456', '白山市大业物贸有限公司', '低质煤', '123', '12', '0', 'admin', '发顺丰', 'admin', '白山市大业物贸有限公司', '银行卡', '12.98', '2', '0', '0', '2017-03-23', '2017-03-23 23:44:46', '3', '防辐射法萨芬方式付方式方式  ', '付方式是否 方式服务而发师范大学', '234231313213', '1341451232123', '发的萨芬', '42413145345353');
 
 -- ----------------------------
 -- Table structure for `coal_card`
@@ -68,8 +69,7 @@ CREATE TABLE `coal_card` (
   `contractId` int(11) DEFAULT NULL,
   `orpaid` int(11) DEFAULT '1' COMMENT '1表示已交款，0表示已退款',
   PRIMARY KEY (`id`),
-  KEY `contractId` (`contractId`),
-  CONSTRAINT `contractId` FOREIGN KEY (`contractId`) REFERENCES `car_contract` (`id`)
+  KEY `contractId` (`contractId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -414,7 +414,7 @@ CREATE TABLE `t_permission` (
   `resource_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`permission_id`),
   UNIQUE KEY `uk_resourceUrl` (`resource_url`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_permission
@@ -431,9 +431,9 @@ INSERT INTO `t_permission` VALUES ('17', '/finance/df', '地付信息', '地付�
 INSERT INTO `t_permission` VALUES ('19', '/transport/dayPlan', '查询日计划', '查询日计划', '调运管理', '11');
 INSERT INTO `t_permission` VALUES ('20', '/transport/cars', '发车调运', '发车调运', '调运管理', '12');
 INSERT INTO `t_permission` VALUES ('21', '/transport/scheduleJob', '管理销售调度', '管理销售调度', '调运管理', '13');
-INSERT INTO `t_permission` VALUES ('22', '/coal/waybill ', '货运单操作', '货运单操作', '煤质管理', '20');
-INSERT INTO `t_permission` VALUES ('23', '/coal/card', '煤卡绑定', '煤卡绑定', '煤质管理', '21');
-INSERT INTO `t_permission` VALUES ('24', '/coal/deposit', '煤卡押金', '煤卡押金', '煤质管理', '22');
+INSERT INTO `t_permission` VALUES ('22', '/coal/waybill ', '货运单操作', '货运单操作', '煤卡管理', '20');
+INSERT INTO `t_permission` VALUES ('23', '/coal/card', '煤卡绑定', '煤卡绑定', '煤卡管理', '21');
+INSERT INTO `t_permission` VALUES ('24', '/coal/deposit', '煤卡押金', '煤卡押金', '煤卡管理', '22');
 INSERT INTO `t_permission` VALUES ('25', '/common/cityPage', '城市信息', '城市信息', '数据维护', '34');
 INSERT INTO `t_permission` VALUES ('26', '/common/coalPage', '煤炭品种', '煤炭品种', '数据维护', '39');
 INSERT INTO `t_permission` VALUES ('27', '/common/freightPage', '运费信息', '运费信息', '数据维护', '38');
@@ -509,7 +509,7 @@ CREATE TABLE `t_role` (
   `role_name` varchar(50) NOT NULL,
   `described` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role
