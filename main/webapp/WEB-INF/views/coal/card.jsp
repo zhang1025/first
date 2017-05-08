@@ -83,6 +83,12 @@
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">绑定煤卡：</span>
+                                        <input type="text" id="coalCard" class="form-control" autofocus="autofocus">
+                                    </div>
+                                </div>
                                 <div style="padding: 15px;float: right">
                                     <div class="input-group">
                                         <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
@@ -123,6 +129,11 @@
                                     <button id="unBundling"  class="btn btn-danger mr5 mb10" type="button">注销煤卡</button>
                                 </div>
                             </div>
+                            <%--<div style="padding: 5px;float: left">--%>
+                                <div class="input-group">
+
+                                </div>
+                            <%--</div>--%>
                             <table id="cardDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 10px" cellspacing="0" width="100%">
                             </table>
@@ -139,31 +150,6 @@
 </div>
 <!--新增信息-->
 <input type="hidden" id="coalCardHide">
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 550px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel2">绑定煤卡</h4>
-            </div>
-            <div class="modal-body">
-                    <div class="form-group">
-                        <label for="coalCard" class="col-lg-4 control-label"
-                               style="padding-right: 1px">煤卡:</label>
-                        <div class="col-lg-10" style="width: 320px;">
-                            <input type="text" id="coalCard" class="form-control" autofocus="autofocus">
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="submitBut" onclick="binding()" class="btn btn-primary">提交</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>
