@@ -46,4 +46,6 @@ public interface IMarkerDao {
     int stopDayPlanOfMonth(@Param(value = "monthId")int id);
     int stopDayPlan(@Param(value = "monthId")int id);
 
+    int bindingCard(@Param(value = "id")int id,@Param(value = "cardNo")String cardNo);
+    int unBindingCard(@Param(value = "id")int id);
 }

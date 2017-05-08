@@ -2,6 +2,9 @@ package com.liaoyuan.web.controller;
 
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.service.CoalService;
+import com.liaoyuan.web.service.MarketService;
+import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +26,10 @@ import java.util.List;
 @RequestMapping("/coal")
 @Slf4j
 public class CoalController extends BaseController{
+
     @Autowired
-    HttpSession httpSession;
+    MarketService marketService;
+
 
     /**
      * 货运单操作页面
@@ -48,8 +53,9 @@ public class CoalController extends BaseController{
     }
     @RequestMapping(value = "/get_card_table", method = RequestMethod.POST)
     public void getCardTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
-        int count = 0;
-        List<ContractBean> gridData = new ArrayList<>();
+        ContractBean bean = WebCommonDataUtils.getContractData(jsonString);
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
+        List<ContractBean> gridData = marketService.getTableContractData(bean);
         printDataTables(response, count, gridData);
     }
     /**
@@ -64,5 +70,14 @@ public class CoalController extends BaseController{
         int count = 0;
         List<ContractBean> gridData = new ArrayList<>();
         printDataTables(response, count, gridData);
+    }
+
+    @RequestMapping(value = "/bindingCard", method = RequestMethod.POST)
+    public Integer bindingCard(int id,String coalCard) {
+        return  marketService.bindlingCard(id,coalCard);
+    }
+    @RequestMapping(value = "/unBindingCard", method = RequestMethod.POST)
+    public Integer unBindingCard(int id) {
+        return  marketService.unBindingCard(id);
     }
 }

@@ -28,7 +28,7 @@
 
     </select>
     <select id="getTableContractData" parameterType="ContractBean" resultType="ContractBean">
-        select id,numNo,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
+        select id,numNo,coalCard,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
         orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
         orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
@@ -212,5 +212,16 @@
     <!--中止对应月计划的日计划-->
     <update id="stopDayPlanOfMonth">
         update out_day_plan set status=-1 where month_id=#{monthId}
+    </update>
+
+
+    <!--绑定煤卡信息-->
+    <update id="bindingCard">
+        update car_contract set coalCard=#{cardNo} where id=#{id}
+    </update>
+
+    <!--解绑煤卡信息-->
+    <update id="unBindingCard">
+        update car_contract set coalCard="" where id=#{id}
     </update>
 </mapper>

@@ -185,4 +185,13 @@ public class MarketServiceImpl implements MarketService{
     public int stopDayPlan(int monthId){
         return  iMarkerDao.stopDayPlan(monthId);
     }
+
+
+    public int bindlingCard(int id,String cardNo){
+        return iMarkerDao.bindingCard(id,cardNo);
+    }
+
+    public int unBindingCard(int id){
+        return iMarkerDao.unBindingCard(id);
+    }
 }

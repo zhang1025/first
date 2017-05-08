@@ -9,7 +9,6 @@ $(document).ready(function () {
     initDateRangePicker();
     $(".select").select2();
     initButtonClick();
-    initFormValid();
     queryData();
 });
 function queryData() {
@@ -36,6 +35,7 @@ function dealTableTitle() {
         }, "sWidth": "5%"
         },
         {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "卡号", "mData": "coalCard", "sWidth": "5%"},
         {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
         {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
         {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
@@ -47,56 +47,181 @@ function dealTableTitle() {
         {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
         {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
         {
-            "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
-            return operateButton(data, type, row);
+            "sTitle": "合同状态", "mData": "status", "sWidth": "5%", "mRender": function (data, type, row) {
+            var status = row['status'];
+            if (status == 1) {
+                return "解锁";
+            }
+            if (status == 3) {
+                return "正在发运";
+            }
+            if (status == 2) {
+                return "锁定";
+            }
+            if (status == 0) {
+                return "未审核";
+            }
+            if (status == -1) {
+                return "未通过";
+            }
+            if (status == 4) {
+                return "已结算";
+            }
+            return "未知";
         }
-        });
+        },
+        // {"sTitle": "经手人", "mData": "usePerson", "sWidth": "5%"},
+        {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
+        // {"sTitle": "录入时间", "mData": "createtime", "sWidth": "8%"},
+        {
+            "sTitle": "合同类型", "mData": "contractType", "sWidth": "8%", "mRender": function (data, type, row) {
+            var type = row['contractType'];
+            if (type == "1") {
+                return "公用煤";
+            } else if (type == "2") {
+                return "零销煤";
+            } else if (type == "4") {
+                return "职工煤";
+            } else if (type == "3") {
+                return "其他";
+            } else {
+                return "其他";
+            }
+
+        }
+        },
+        // {"sTitle": "预交欠费", "mData": "unitPrice", "sWidth": "5%"},
+        {
+            "sTitle": "铲车费", "mData": "forkliftFee", "sWidth": "5%", "mRender": function (data, type, row) {
+            var tt = row['forkliftFee'];
+            if (tt == 1) {
+                return "包含铲车费";
+            }
+            if (tt == 0) {
+                return "不包含";
+            }
+        }
+        },
+        {"sTitle": "发票公司名", "mData": "billName", "sWidth": "8%"},
+        {"sTitle": "公司地址", "mData": "address", "sWidth": "8%"},
+        {"sTitle": "税号", "mData": "billNo", "sWidth": "7%"},
+        {"sTitle": "电话", "mData": "tel", "sWidth": "7%"},
+        {"sTitle": "开户银行", "mData": "bankName", "sWidth": "7%"},
+        {"sTitle": "账号", "mData": "bankNo", "sWidth": "7%"},
+        {"sTitle": "结算单位", "mData": "settlement", "sWidth": "8%"},
+        {"sTitle": "资金方式", "mData": "fund", "sWidth": "8%"},
+        {"sTitle": "税金", "mData": "taxation", "sWidth": "7%"});
     return aoColumns;
 }
-
-function operateButton(cellvalue, options, rowObject) {
-    var id = rowObject['id'];
-    var settlement = rowObject['settlement'];
-    var fund = rowObject['fund'];
-    var taxation = rowObject['taxation'];
-
-    return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
-        + id + "','"
-        + settlement + "','" + fund + "','"
-        + taxation
-        + "')\">编辑</button>";
+// 获取光标位置
+function getCursortPosition(ctrl) {
+    var CaretPos = 0;   // IE Support
+    if (document.selection) {
+        ctrl.focus();
+        var Sel = document.selection.createRange();
+        Sel.moveStart ('character', -ctrl.value.length);
+        CaretPos = Sel.text.length;
+    }
+    // Firefox support
+    else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+        CaretPos = ctrl.selectionStart;
+    return (CaretPos);
 }
-//编辑
-function editSettlement(id, settlement, fund, taxation) {
-    subType = 2;
+
+// 设置光标位置
+function setCaretPosition(ctrl, pos){
+    if(ctrl.setSelectionRange)
+    {
+        ctrl.focus();
+        ctrl.setSelectionRange(pos,pos);
+    }
+    else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+    }
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
         queryData();
     });
-    //新增
-    $("#submitBut").on("click", function () {
-        var $form = $('#validate');
-        if (!$form.valid()) {
-            return false;
-        }
-        var url = path + (subType == 1?"addCardInfo":"editCardInfo");
-        $.post(url, {
-                settlement: $.trim($("#settlement").val()), fund: $("#fund").val(),
-                taxation: $("#taxation").val(),
-                id: $("#hideId").val()
-            },
-            function (result) {
-                $('#myModal').trigger('click');
-                if (result > 0) {
-                    swal("成功","操作成功！","success");
-                    queryData();
-                }  else {
-                    swal("失败","操作失败","error");
-                }
-            });
-    });
 
+    $("#bundling").on("click",function () {
+        if(checkSelect()==true){
+            var coalNo = $('input:checkbox[name="check"]:checked').parent().next().next().html();
+            if(!coalNo){
+                $("#myModal").modal("show");
+                $("#coalCard").attr("autofocus","autofocus");
+            }else{
+                swal("警告","已绑定过的合同不能再次绑定","warning");
+                return false;
+            }
+
+        }
+    });
+    $("#unBundling").on("click",function () {
+        checkSelect();
+        swal({
+                title:"是否注销绑定?",
+                type:"warning",
+                showCancelButton:true,
+                confirmButtonClass:"btn-danger",
+                confirmButtonText:"确认",
+                cancelButtonText:"取消",
+                closeOnConfirm:false
+            },
+            function (isConfirm) {
+                if(isConfirm){
+                    $.post(path + "unBindingCard", {id: checkBtn()}, function (data) {
+                        if(data > 0){
+                            swal("ok","注销绑定成功！","success");
+                        }else{
+                            swal("failed","注销失败","error");
+                        }
+                    });
+                }
+            }
+        )
+    });
+}
+function binding() {
+    swal({
+            title:"是否执行绑定操作?",
+            type:"warning",
+            showCancelButton:true,
+            confirmButtonClass:"btn-danger",
+            confirmButtonText:"确认",
+            cancelButtonText:"取消",
+            closeOnConfirm:false
+        },
+        function (isConfirm) {
+            if(isConfirm){
+                $.post(path + "bindingCard", {id: checkBtn(),coalCard:$.trim($("#coalCard").val())}, function (data) {
+                    if(data > 0){
+                        swal("ok","绑定成功！","success");
+                        $("#myModal").modal("hide");
+                        queryData();
+                    }else{
+                        swal("failed","绑定失败","error");
+                    }
+                });
+            }
+        }
+    )
+}
+function checkSelect() {
+    var id = checkBtn();
+    if (id == "") {
+        swal("", "请选中一行！", "warning");
+        return false;
+    }else if (id.indexOf(",") > -1) {
+        swal("","只能选中一行进行操作！","warning");
+        return false;
+    }else{
+        return true;
+    }
 }
 //获取选中的行数据
 function checkBtn() {
@@ -109,39 +234,4 @@ function checkBtn() {
         }
     });
     return checkTemp;
-}
-//form表单提交 格式规则校验
-function initFormValid() {
-    $("#validate").validate({
-        errorPlacement: function (error, element) {
-            var place = element.closest('.input-group');
-            if (!place.get(0)) {
-                place = element;
-            }
-            if (place.get(0).type === 'checkbox') {
-                place = element.parent();
-            }
-            if (error.text() !== '') {
-                place.after(error);
-            }
-        },
-        errorClass: 'help-block',
-        rules: {
-            dataNumber: {
-                required: true,
-                dataNumber: true
-            },
-            number: {
-                required: true,
-                number: true
-            }
-        },
-        highlight: function (label) {
-            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (label) {
-            $(label).closest('.form-group').removeClass('has-error');
-            label.remove();
-        }
-    });
 }

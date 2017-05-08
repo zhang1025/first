@@ -40,4 +40,7 @@ public interface MarketService {
     int deleteDayPlan(int id);
     int stopDayPlan(int id);
 
+    //给合同绑定煤卡
+    int bindlingCard(int id,String cardNo);
+    int unBindingCard(int id);
 }

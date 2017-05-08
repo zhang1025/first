@@ -58,6 +58,8 @@ public class ContractBean {
     private String endDate;
 
 
+    //合同卡号
+    private String coalCard;
 
     //分页用
     private int iDisplayStart;
