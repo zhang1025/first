@@ -136,28 +136,29 @@ function initButtonClick() {
         }
     });
     $("#unBundling").on("click",function () {
-        checkSelect();
-        swal({
-                title:"是否注销绑定?",
-                type:"warning",
-                showCancelButton:true,
-                confirmButtonClass:"btn-danger",
-                confirmButtonText:"确认",
-                cancelButtonText:"取消",
-                closeOnConfirm:false
-            },
-            function (isConfirm) {
-                if(isConfirm){
-                    $.post(path + "unBindingCard", {id: checkBtn()}, function (data) {
-                        if(data > 0){
-                            swal("ok","注销绑定成功！","success");
-                        }else{
-                            swal("failed","注销失败","error");
-                        }
-                    });
+        if(checkSelect()){
+            swal({
+                    title:"是否注销绑定?",
+                    type:"warning",
+                    showCancelButton:true,
+                    confirmButtonClass:"btn-danger",
+                    confirmButtonText:"确认",
+                    cancelButtonText:"取消",
+                    closeOnConfirm:false
+                },
+                function (isConfirm) {
+                    if(isConfirm){
+                        $.post(path + "unBindingCard", {id: checkBtn()}, function (data) {
+                            if(data > 0){
+                                swal("ok","注销绑定成功！","success");
+                            }else{
+                                swal("failed","注销失败","error");
+                            }
+                        });
+                    }
                 }
-            }
-        )
+            )
+        }
     });
 }
 function binding() {

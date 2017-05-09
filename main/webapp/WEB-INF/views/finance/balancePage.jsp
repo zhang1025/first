@@ -37,7 +37,7 @@
             <div class="row" id="balanceData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-default downLoad toggle ">
+                    <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="fa fa-table">&nbsp;结算单信息</i>
@@ -47,6 +47,25 @@
                             <div style="padding-top: 7px;float: left">
                             </div>
                             <table id="balanceDataTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 12px" cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
+            <div class="row" id="balanceListData" style="display: none;">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;结算列表</i>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="balanceListTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>

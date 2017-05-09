@@ -29,6 +29,30 @@
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>
                                 </div>
+                                <div style="padding: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="delBtn" class="btn btn-danger mr5 mb10" type="button">删除
+                                        </button>
+                                    </div>
+                                </div>
+                                <div style="padding: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="payBtn" class="btn btn-success mr5 mb10" type="button">交款
+                                        </button>
+                                    </div>
+                                </div>
+                                <div style="padding: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="addPayBtn" class="btn btn-success mr5 mb10" type="button">追加</button>
+                                    </div>
+                                </div>
+                                <div style="padding: 15px;float: right">
+                                    <div class="input-group">
+                                        <button id="addNewBtn" class="btn btn-success mr5 mb10"
+                                                data-toggle="modal" data-target="#myModal" type="button">添加
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -37,15 +61,14 @@
             <div class="row" id="paymentData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-default downLoad toggle ">
+                    <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
                             <h4 class="panel-title"><i class="fa fa-table">&nbsp;客户交款信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <div style="padding-top: 7px;float: left">
-                            </div>
+
                             <table id="paymentDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>

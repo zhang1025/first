@@ -9,9 +9,9 @@ $(document).ready(function () {
     initDateRangePicker();
     $(".select").select2();
     initButtonClick();
-    queryData();
+    queryRemitData();
 });
-function queryData() {
+function queryRemitData() {
     var aoColumns = dealTableTitle();
     var time = $("input[name='date-range']").val();
     var dateRange = time.split("to");
@@ -22,29 +22,32 @@ function queryData() {
         {name: 'endDate', value: endDate}
     ];
     var url = path+'/get_remit_table';
-    commonDataTables("remitDataTables", url, aoColumns, params, "remitData");
+    commonDataTablesHideFirstId("remitDataTables", url, aoColumns, params, "remitData");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {
-            "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
-            var id = rowObject['id'];
-            return "<input type='checkbox' name='check' value='" + id + "'/>";
-        }, "sWidth": "5%"
-        },
-        {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
-        {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
-        {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
-        {"sTitle": "预交金额", "mData": "prepaidAmount", "sWidth": "5%"},
-        {"sTitle": "订单日期", "mData": "orderTime", "sWidth": "6%"},
-        {"sTitle": "已发送量", "mData": "sendCount", "sWidth": "5%"},
-        {"sTitle": "剩余量", "mData": "leftCount", "sWidth": "6%"},
-        {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
-        {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
+        {"sTitle": "序号", "mData": "id"},
+        {"sTitle": "日期", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "结算单位", "mData": "numNo", "sWidth": "8%"},
+        {"sTitle": "井别", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "品种", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "实发吨数", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "车数", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "实发单价", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "实发合计", "mData": "numNo", "sWidth": "7%"},
+        {"sTitle": "实发煤款", "mData": "numNo", "sWidth": "7%"},
+        {"sTitle": "实发税金", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "实发运费", "mData": "numNo", "sWidth": "7%"},
+        {"sTitle": "实发调车费", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "实发装车费", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "回款吨数", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "回款合计", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "已回款", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "回款税金", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "回款调车费", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "回款装车费", "mData": "numNo", "sWidth": "7%"},
         {
             "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
@@ -54,7 +57,7 @@ function dealTableTitle() {
 }
 
 function operateButton(cellvalue, options, rowObject) {
-   
+
 }
 //编辑
 function editSettlement(id, settlement, fund, taxation) {
@@ -62,7 +65,7 @@ function editSettlement(id, settlement, fund, taxation) {
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
-        queryData();
+        queryRemitData();
     });
     //新增
     $("#submitBut").on("click", function () {
@@ -70,7 +73,7 @@ function initButtonClick() {
         if (!$form.valid()) {
             return false;
         }
-        var url = path + (subType == 1?"addRemitInfo":"editRemitInfo");
+        var url = path + (subType == 1?"addBalanceInfo":"editBalanceInfo");
         $.post(url, {
                 settlement: $.trim($("#settlement").val()), fund: $("#fund").val(),
                 taxation: $("#taxation").val(),
@@ -80,12 +83,32 @@ function initButtonClick() {
                 $('#myModal').trigger('click');
                 if (result > 0) {
                     swal("成功","操作成功！","success");
-                    queryData();
+                    queryRemitData();
                 }  else {
                     swal("失败","操作失败","error");
                 }
             });
     });
+
+    //定义行点击事件
+    $("#remitDataTables tbody").on("click","tr",function () {
+        $(this).siblings().css("background-color","").removeClass("selected");
+        $(this).css("background-color","#00B0E8").addClass("selected");
+        var id = $(this).find("td").eq(0).html();
+        queryRemitDataList(id);
+    })
+
+}
+//根据id查询结算详细信息
+function queryRemitDataList(id) {
+    $("#searchDayId").val(id); //记录查看对应日计划的id
+    $("#remitListData").show();
+    var aoColumns = dealDayTableTitle();
+    var params = [
+        {name: 'dayId', value: id}
+    ];
+    var url = path + 'get_remitList_table';
+    commonDataTablesNoPage("remitListTables", url, aoColumns, params, "remitListData");
 }
 //获取选中的行数据
 function checkBtn() {

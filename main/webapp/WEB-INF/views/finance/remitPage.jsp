@@ -37,16 +37,35 @@
             <div class="row" id="remitData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
-                    <div class="panel panel-default downLoad toggle ">
+                    <div class="panel panel-default toggle ">
                         <!-- Start .panel -->
                         <div class="panel-heading">
-                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;汇款单信息</i>
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;回款单信息</i>
                             </h4>
                         </div>
                         <div class="panel-body">
                             <div style="padding-top: 7px;float: left">
                             </div>
                             <table id="remitDataTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 12px" cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
+            <div class="row" id="remitListData" style="display: none;">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;回款列表</i>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="remitListTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -70,7 +89,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel2">汇款单信息</h4>
+                <h4 class="modal-title" id="myModalLabel2">回款单信息</h4>
             </div>
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">

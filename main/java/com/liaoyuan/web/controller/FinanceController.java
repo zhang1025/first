@@ -43,6 +43,15 @@ public class FinanceController extends BaseController {
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public ModelAndView payment(ModelMap modelMap){
         log.info("=========财务====客户交款============");
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        List<DataBean> st = commonDataService.getListData(Constant.SETTLEMENT);
+        List<DataBean> funds = commonDataService.getListData(Constant.FUND);
+        modelMap.put("coals",coals);
+        modelMap.put("funds",funds);
+        modelMap.put("settlements",st);
+        modelMap.put("receives",receiveName);//收货单位 客户
+        modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/finance/paymentPage");
     }
     @RequestMapping(value = "/get_payment_table", method = RequestMethod.POST)
@@ -58,6 +67,15 @@ public class FinanceController extends BaseController {
     @RequestMapping(value = "/balance", method = RequestMethod.GET)
     public ModelAndView balance(ModelMap modelMap){
         log.info("=========财务====结算单============");
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        List<DataBean> st = commonDataService.getListData(Constant.SETTLEMENT);
+        List<DataBean> funds = commonDataService.getListData(Constant.FUND);
+        modelMap.put("coals",coals);
+        modelMap.put("funds",funds);
+        modelMap.put("settlements",st);
+        modelMap.put("receives",receiveName);//收货单位 客户
+        modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/finance/balancePage");
     }
 

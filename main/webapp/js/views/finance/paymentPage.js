@@ -9,9 +9,9 @@ $(document).ready(function () {
     initDateRangePicker();
     $(".select").select2();
     initButtonClick();
-    queryData();
+    queryPaymentData();
 });
-function queryData() {
+function queryPaymentData() {
     var aoColumns = dealTableTitle();
     var time = $("input[name='date-range']").val();
     var dateRange = time.split("to");
@@ -34,17 +34,25 @@ function dealTableTitle() {
             return "<input type='checkbox' name='check' value='" + id + "'/>";
         }, "sWidth": "5%"
         },
-        {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
-        {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
-        {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
-        {"sTitle": "预交金额", "mData": "prepaidAmount", "sWidth": "5%"},
-        {"sTitle": "订单日期", "mData": "orderTime", "sWidth": "6%"},
-        {"sTitle": "已发送量", "mData": "sendCount", "sWidth": "5%"},
-        {"sTitle": "剩余量", "mData": "leftCount", "sWidth": "6%"},
-        {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
-        {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
+        {"sTitle": "编号", "mData": "numNo", "sWidth": "5%"},
+        {"sTitle": "结算单位", "mData": "receiveName", "sWidth": "7%"},
+        {"sTitle": "经办人", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "前期余额", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "本期存款", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "车数", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "吨数", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "单价", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "煤款", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "税金", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "装调费", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "运费", "mData": "receiveName", "sWidth": "5%"},
+        {"sTitle": "金额合计", "mData": "receiveName", "sWidth": "7%"},
+        {"sTitle": "余额", "mData": "name", "sWidth": "5%"},
+        {"sTitle": "资金方式", "mData": "orderCount", "sWidth": "5%"},
+        {"sTitle": "会计审核", "mData": "unitPrice", "sWidth": "5%"},
+        {"sTitle": "出纳员", "mData": "prepaidAmount", "sWidth": "5%"},
+        {"sTitle": "录入员", "mData": "orderTime", "sWidth": "6%"},
+        {"sTitle": "日期", "mData": "createtime", "sWidth": "5%"},
         {
             "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
@@ -63,7 +71,7 @@ function editSettlement(id, settlement, fund, taxation) {
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
-        queryData();
+        queryPaymentData();
     });
     //新增
     $("#submitBut").on("click", function () {
@@ -81,7 +89,7 @@ function initButtonClick() {
                 $('#myModal').trigger('click');
                 if (result > 0) {
                     swal("成功","操作成功！","success");
-                    queryData();
+                    queryPaymentData();
                 }  else {
                     swal("失败","操作失败","error");
                 }

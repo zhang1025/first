@@ -9,6 +9,7 @@ import com.liaoyuan.web.service.UserService;
 import com.liaoyuan.web.utils.AESUtil;
 import com.liaoyuan.web.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,16 +49,15 @@ public class GeneralController extends BaseController {
     }
 
     @RequestMapping(value = "/submit_login", method = RequestMethod.POST)
-    public Map login(String account, String pw){
+    public Integer login(String account, String pw){
         Map<String,Object> result = new HashMap<>();
-        UserBean bean =  userService.getUserFromAccount(account);
+        UserBean bean =  userService.getUserFromAccount(StringUtils.trim(account));
         if(bean == null){
-            result.put("status",-1);
-            return result;
+           return -1;
+
         }
-        if(!pw.equals(AESUtil.decrypt(bean.getPw(), Constant.AES_ENCRYPT_KEY))){
-            result.put("status",-2);
-            return result;
+        if(!StringUtils.trim(pw).equals(AESUtil.decrypt(bean.getPw(), Constant.AES_ENCRYPT_KEY))){
+            return -2;
         }
         SessionUser sessionUser = (SessionUser)httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY);
         if(sessionUser == null ){
@@ -67,24 +67,24 @@ public class GeneralController extends BaseController {
         //获取该用户的权限菜单
         Map<String,List<Permission>> map = userService.getMenus(bean.getRoleId());
         if(map==null || map.size()<=0){
-            result.put("status",-3);
-            return result;
+            return -3;
+
         }
         sessionUser.setMenuMap(map);
         httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
         httpSession.setAttribute(SessionUser.SESSION_USER,account);
-        result.put("status",1);
-        return result;
+        return 1;
     }
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView homepage(){
-        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
-            return new ModelAndView("index");
-        }else{
-            return new ModelAndView("login");
-        }
+        return new ModelAndView("index");
+//        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
+//            return new ModelAndView("index");
+//        }else{
+//            return new ModelAndView("login");
+//        }
     }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)

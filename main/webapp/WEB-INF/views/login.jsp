@@ -110,11 +110,12 @@
                     <span style="color: red;" id="errorMsg"></span>
                     </div>
                 </div>
+                <form action="" id="login_form" name="login_form" method="post">
                 <div class="form-group">
                     <div class="col-xs-12  ">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                            <input type="text" id="username" name="username" class="form-control"
+                            <input type="text" id="username" name="account" class="form-control"
                                    placeholder="用户名">
                             <%--<span style="color: red;" id="errorMsg"></span>--%>
                         </div>
@@ -124,20 +125,22 @@
                     <div class="col-xs-12 ">
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                            <input type="password" id="pw" name="password" class="form-control"
+                            <input type="password" id="pw" name="pw" class="form-control"
                                    placeholder="密码">
                         </div>
                     </div>
                 </div>
-                <div class="form-group form-actions">
+                </form>
+                <div class="form-group">
                     <div class="col-xs-4 col-xs-offset-4 ">
-                        <button id="loginSubmit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span>登录</button>
+                        <button id="loginSubmit"  type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span>登 录</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script  src="<c:url value="/js/views/login.js"/>" type="text/javascript"></script>
 </body>
+<script type="text/javascript"  src="<c:url value="/plugins/forms/validation/jquery.form.js"/>" ></script>
+<script type="text/javascript" src="<c:url value="/js/views/login.js"/>" ></script>
 </html>

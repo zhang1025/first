@@ -2,11 +2,15 @@ package com.liaoyuan.web.controller;
 
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.service.CoalService;
+import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
+import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +34,9 @@ public class CoalController extends BaseController{
     @Autowired
     MarketService marketService;
 
+    @Autowired
+    CommonDataService commonDataService;
+
 
     /**
      * 货运单操作页面
@@ -48,7 +55,11 @@ public class CoalController extends BaseController{
      * 煤卡绑定页面
      */
     @RequestMapping(value = "/card", method = RequestMethod.GET)
-    public ModelAndView card (){
+    public ModelAndView card (ModelMap modelMap){
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        modelMap.put("coals",coals);
+        modelMap.put("receives",receiveName);//收货单位 客户
         return new ModelAndView("/coal/card");
     }
     @RequestMapping(value = "/get_card_table", method = RequestMethod.POST)
