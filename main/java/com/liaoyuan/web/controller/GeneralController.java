@@ -79,12 +79,11 @@ public class GeneralController extends BaseController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView homepage(){
-        return new ModelAndView("index");
-//        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
-//            return new ModelAndView("index");
-//        }else{
-//            return new ModelAndView("login");
-//        }
+        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
+            return new ModelAndView("index");
+        }else{
+            return new ModelAndView("login");
+        }
     }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)

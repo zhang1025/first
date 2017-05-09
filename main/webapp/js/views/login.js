@@ -35,20 +35,21 @@ function initClick() {
         // });
         $.ajax({
             type: "post",
-            url: "/general/submit_login",
+            url: "submit_login",
             async:false,
             data:{account:user,pw:pw},
             success:function (data) {
                 if(data==1){
                     window.location.href = '/general/index';
-                }else if(data.status==-1){
+                }else if(data==-1){
                     $("#errorMsg").html("用户名不存在！");
-                }else if(data.status==-2){
+                }else if(data==-2){
                     $("#errorMsg").html("密码不正确！");
-                }else if(data.status==-3){
+                }else if(data==-3){
                     window.location.href = '/general/loginErr';
                 }
             }
+
         });
     });
 
