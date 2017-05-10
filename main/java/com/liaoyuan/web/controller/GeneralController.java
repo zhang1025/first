@@ -38,23 +38,22 @@ public class GeneralController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView index(){
-        System.out.println("=============index============");
+        System.out.println("=============login============");
         return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView logout(){
         httpSession.removeAttribute(SessionUser.SESSION_ROOT_KEY);
+        httpSession.removeAttribute(SessionUser.SESSION_USER);
         return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/submit_login", method = RequestMethod.POST)
     public Integer login(String account, String pw){
-        Map<String,Object> result = new HashMap<>();
         UserBean bean =  userService.getUserFromAccount(StringUtils.trim(account));
         if(bean == null){
            return -1;
-
         }
         if(!StringUtils.trim(pw).equals(AESUtil.decrypt(bean.getPw(), Constant.AES_ENCRYPT_KEY))){
             return -2;
@@ -64,26 +63,21 @@ public class GeneralController extends BaseController {
             sessionUser = new SessionUser();
         }
         sessionUser.setBean(bean);
+        httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
+        httpSession.setAttribute(SessionUser.SESSION_USER,account);
         //获取该用户的权限菜单
         Map<String,List<Permission>> map = userService.getMenus(bean.getRoleId());
         if(map==null || map.size()<=0){
             return -3;
-
         }
         sessionUser.setMenuMap(map);
-        httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
-        httpSession.setAttribute(SessionUser.SESSION_USER,account);
         return 1;
     }
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView homepage(){
-        if(httpSession.getAttribute(SessionUser.SESSION_ROOT_KEY)!=null){
-            return new ModelAndView("index");
-        }else{
-            return new ModelAndView("login");
-        }
+        return new ModelAndView("index");
     }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)

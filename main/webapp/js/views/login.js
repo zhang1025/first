@@ -6,6 +6,9 @@ $(function () {
             $("#loginSubmit").trigger("click");
         }
     });
+    $("#pw").focus(function () {
+        $("#errorMsg").html("");
+    });
 });
 function initClick() {
     $("#loginSubmit").on("click",function () {
@@ -35,7 +38,7 @@ function initClick() {
         // });
         $.ajax({
             type: "post",
-            url: "submit_login",
+            url: "/general/submit_login",
             async:false,
             data:{account:user,pw:pw},
             success:function (data) {

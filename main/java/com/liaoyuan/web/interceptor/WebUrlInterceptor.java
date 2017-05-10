@@ -17,6 +17,10 @@ import java.io.IOException;
 public class WebUrlInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        //登陆提交验证，放行
+        if(request.getRequestURI().contains("/submit_login")){
+            return true;
+        }
         SessionUser sessionUser = (SessionUser)request.getSession().getAttribute(SessionUser.SESSION_ROOT_KEY);
         if(null == sessionUser){
             try {
