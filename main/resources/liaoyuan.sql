@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-05-10 00:34:54
+Date: 2017-05-14 18:41:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -54,8 +54,8 @@ CREATE TABLE `car_contract` (
 -- ----------------------------
 INSERT INTO `car_contract` VALUES ('1', '20170313', null, '白山市大业物贸有限公司', '洗粒', '166', '560', '50', '尹延财', '尹延财', null, null, null, null, '3', '0', '0', '2017-03-18', '2017-03-16 11:12:54', '0', null, null, null, null, null, null);
 INSERT INTO `car_contract` VALUES ('2', '20170318', null, '中国石油天然气股份有限公司', '大煤矿', '100', '300', '50', '测试1', '测试1', null, null, null, null, '2', '0', '0', '2017-03-17', '2017-03-17 19:14:09', '2', null, null, null, null, null, null);
-INSERT INTO `car_contract` VALUES ('4', '20170314', '621413212', '吉林亚泰集团物资贸易有限公司', '大煤矿', '3143', '212', '0', '', '发特围', null, null, null, null, '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
-INSERT INTO `car_contract` VALUES ('6', '20170315', '111111111', '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', 'admin', '我听人说', null, null, null, null, '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', null, '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好1', '43213132313', '1532231233', '范德萨发生', '54324241313');
+INSERT INTO `car_contract` VALUES ('4', '20170314', '', '吉林亚泰集团物资贸易有限公司', '大煤矿', '3143', '212', '0', '', '发特围', null, null, null, null, '4', '1', '0', '2017-03-19', '2017-03-19 21:58:01', '1', '中国发达色温发达色温范', '认为反倒是发的是废物发的方', '3142313131', '15312413121', '招商银行', '63232425800089832');
+INSERT INTO `car_contract` VALUES ('6', '20170315', '', '白山市大业物贸有限公司', '低质煤', '1231', '12', '0', 'admin', '我听人说', null, null, null, null, '1', '1', '0', '2017-03-20', '2017-03-21 23:16:51', null, '发的散热啊投入已经有看头康泰克', '的四个热管的过的好人re好1', '43213132313', '1532231233', '范德萨发生', '54324241313');
 INSERT INTO `car_contract` VALUES ('7', '20170322', '45324313', '白山市大业物贸有限公司', '低质煤', '212', '22', '0', 'admin', '非师范', null, null, null, null, '1', '1', '0', '2017-03-22', '2017-03-22 23:54:57', null, '非师范方式非师范方式', '付是否是否1', '13213123', '1231313121', '第三方士', '4123131313');
 INSERT INTO `car_contract` VALUES ('9', '20170322', '41321212', '白山市大业物贸有限公司', '低质煤', '123', '12', '0', 'admin', '发顺丰', 'admin', '白山市大业物贸有限公司', '银行卡', '12.98', '2', '0', '0', '2017-03-23', '2017-03-23 23:44:46', '3', '防辐射法萨芬方式付方式方式  ', '付方式是否 方式服务而发师范大学', '234231313213', '1341451232123', '发的萨芬', '42413145345353');
 
@@ -75,6 +75,36 @@ CREATE TABLE `coal_card` (
 -- ----------------------------
 -- Records of coal_card
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `coal_deposit`
+-- ----------------------------
+DROP TABLE IF EXISTS `coal_deposit`;
+CREATE TABLE `coal_deposit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `name` varchar(200) DEFAULT NULL COMMENT '客户名称',
+  `numNo` varchar(100) DEFAULT NULL COMMENT '合同号',
+  `coalCard` varchar(100) DEFAULT NULL COMMENT '煤卡号',
+  `deposit` double DEFAULT '0' COMMENT '押金',
+  `payPeople` varchar(100) DEFAULT NULL COMMENT '交款人',
+  `refundPeople` varchar(100) DEFAULT NULL COMMENT '退款人',
+  `inputPerson` varchar(100) DEFAULT NULL COMMENT '录入人',
+  `usePerson` varchar(100) DEFAULT NULL COMMENT '操作人',
+  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `refundtime` varchar(100) DEFAULT NULL COMMENT '退款时间',
+  `status` int(11) DEFAULT '0' COMMENT ' 0 押金  -1已退款',
+  PRIMARY KEY (`id`),
+  KEY `numNo` (`numNo`),
+  KEY `createtime` (`createtime`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='煤卡押金';
+
+-- ----------------------------
+-- Records of coal_deposit
+-- ----------------------------
+INSERT INTO `coal_deposit` VALUES ('1', '1', '吉林亚泰水泥有限公司', '20170501', '21314211', '50', '发的萨芬', '张三', 'admin', 'admin', '2017-05-14 18:14:20', '2017-05-14 18:30:52', '-1');
+INSERT INTO `coal_deposit` VALUES ('2', '2', '中国石油天然气股份有限', '20170503', '745645321', '50', '与人发生', null, 'admin', null, '2017-05-14 18:28:31', '', '0');
+INSERT INTO `coal_deposit` VALUES ('3', '2', '中国石油天然气股份有限', '20170505', '856745435', '70', '会过热的方式', null, 'admin', null, '2017-05-14 18:32:03', null, '0');
 
 -- ----------------------------
 -- Table structure for `diaoyun`
@@ -535,7 +565,7 @@ CREATE TABLE `t_user` (
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_account` (`account`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
@@ -543,3 +573,4 @@ CREATE TABLE `t_user` (
 INSERT INTO `t_user` VALUES ('1', 'admin', 'admin', '48AD68465C333B2EBC473E449E2C01CC', '1', '管理员11', null, '0');
 INSERT INTO `t_user` VALUES ('2', null, 'sale', '6260D03DDF3B435CD20CF3B681E65575', '2', '销售部门11', null, '0');
 INSERT INTO `t_user` VALUES ('3', null, 'ceshi', '5BFEE76D5F023163BB64B7CADF9D01EB', '2', '测试', null, '0');
+INSERT INTO `t_user` VALUES ('4', null, '123', '3C5BA64A9962BE6B2E0BBDFE611D7D38', '5', '调运', null, '0');
