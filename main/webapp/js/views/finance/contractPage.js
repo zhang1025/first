@@ -199,9 +199,20 @@ function initButtonClick() {
         verifyStatus(checkBtn());
     });
 
-    // $("#addFinanceInfo").on("click", function () {
-    //     addFinanceInfo(checkBtn());
-    // });
+    //导出excle事件
+    $('.fa-download').parent().on("click", function () {
+        var numNo = $("#s_numNo").val();
+        var receives = $("#s_receives").val();
+        var coal = $("#s_coal").val();
+        var status = $("#s_status").val();
+        var type = $("#s_type").val();
+        var time = $("input[name='date-range']").val();
+        var dateRange = time.split("to");
+        var beginDate = $.trim(dateRange[0]);
+        var endDate = $.trim(dateRange[1]);
+        var param = 'numNo=' + numNo + '&receiveName=' + receives + '&beginDate=' + beginDate + '&endDate=' + endDate + '&name=' + coal + '&status=' + status + '&contractType=' + type;
+        location.href = '/market/export_excel_data?' + param;
+    });
 
 }
 function verifyStatus(id) {

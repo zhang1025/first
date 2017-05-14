@@ -8,8 +8,8 @@
         <if test="numNo!=null and numNo!=''">
             and numNo like "%"#{numNo}"%"
         </if>
-        <if test="settlement!=null and settlement!=''">
-            and settlement like "%"#{settlement}"%"
+        <if test="receiveName!=null and receiveName!=''">
+            and receiveName like "%"#{receiveName}"%"
         </if>
         <if test="name!=null and name!=''">
             and name like "%"#{name}"%"
@@ -43,15 +43,16 @@
     <!--添加合同信息-->
     <insert id="addContractInfo" parameterType="ContractBean">
         insert into car_contract(numNo,receiveName,name,orderCount,unitPrice,inputPerson,
-        usePerson,contractType,forkliftFee,orderTime,status,billName,address,billNo,tel,bankName,bankNo) values (#{numNo},#{settlement},#{name},
+        usePerson,contractType,forkliftFee,orderTime,billName,address,billNo,tel,bankName,bankNo)
+        values (#{numNo},#{receiveName},#{name},
         #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
-        #{orderTime},#{status},#{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
+        #{orderTime},#{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
     </insert>
     <update id="editContractInfo" parameterType="ContractBean">
         update car_contract set numNo=#{numNo},receiveName=#{receiveName},name=#{name},
         orderCount=#{orderCount},unitPrice=#{unitPrice},inputPerson=#{inputPerson},
         usePerson=#{usePerson},contractType=#{contractType},
-        forkliftFee=#{forkliftFee},orderTime=#{orderTime},status=#{status},
+        forkliftFee=#{forkliftFee},orderTime=#{orderTime},
         billName=#{billName},address=#{address},billNo=#{billNo},tel=#{tel},
         bankName=#{bankName},bankNo=#{bankNo} where id=#{id}
     </update>
@@ -215,13 +216,13 @@
     </update>
 
 
-    <!--绑定煤卡信息-->
+    <!--绑定煤卡信息 magneticCard是否绑定-->
     <update id="bindingCard">
-        update car_contract set coalCard=#{cardNo} where id=#{id}
+        update car_contract set coalCard=#{cardNo},magneticCard=1 where id=#{id}
     </update>
 
     <!--解绑煤卡信息-->
     <update id="unBindingCard">
-        update car_contract set coalCard="" where id=#{id}
+        update car_contract set coalCard="",magneticCard=0 where id=#{id}
     </update>
 </mapper>

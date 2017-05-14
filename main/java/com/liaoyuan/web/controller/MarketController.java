@@ -232,6 +232,7 @@ public class MarketController extends BaseController {
     @RequestMapping(value = "/export_excel_data", method = RequestMethod.GET)
     public void exportData(ContractBean bean,HttpServletResponse response) throws Exception{
         List<String> columnnames ;
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
         int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
         bean.setIDisplayLength(count);
         List<ContractBean> gridData = marketService.getTableContractData(bean);
@@ -249,6 +250,7 @@ public class MarketController extends BaseController {
         List<String> columnnames ;
         List<List<Object>> datas ;
         String excelName = "";
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
         int count;
         List<PlanBean> gridData;  String fileName;
         if(bean.getSearchType().equals("month")){

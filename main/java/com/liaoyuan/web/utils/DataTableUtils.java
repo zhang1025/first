@@ -31,8 +31,17 @@ public class DataTableUtils {
         columnnames.add("录入人");
         columnnames.add("录入时间");
         columnnames.add("合同类型");
-//        columnnames.add("预交欠费");
         columnnames.add("铲车费");
+        columnnames.add("发票合同名");
+        columnnames.add("公司地址");
+        columnnames.add("税号");
+        columnnames.add("电话");
+        columnnames.add("开户银行");
+        columnnames.add("账号");
+        columnnames.add("结算单位");
+        columnnames.add("资金方式");
+        columnnames.add("税金");
+
         return columnnames;
     }
 
@@ -42,7 +51,7 @@ public class DataTableUtils {
         for(ContractBean reportData:gridData) {
             List<Object> row = new ArrayList<>();
             row.add(reportData.getNumNo());
-            row.add(reportData.getSettlement());
+            row.add(reportData.getReceiveName());
             row.add(reportData.getName());
             row.add(reportData.getOrderCount());
             row.add(reportData.getUnitPrice());
@@ -53,13 +62,15 @@ public class DataTableUtils {
             row.add(reportData.getSendPrice());
             row.add(reportData.getLeftPrice());
             switch (reportData.getStatus()){
+                case "0": row.add("未审核");
+                    break;
                 case "1": row.add("解锁");
                     break;
                 case "2": row.add("锁定");
                     break;
                 case "3": row.add("正在发运");
                     break;
-                case "4": row.add("未审核");
+                case "4": row.add("已结算");
                     break;
                 case "-1": row.add("未通过");
                     break;
@@ -72,6 +83,8 @@ public class DataTableUtils {
                     break;
                 case "2": row.add("零销煤");
                     break;
+                case "3": row.add("其他");
+                    break;
                 case "4": row.add("职工煤");
                     break;
                 default:row.add("");
@@ -79,10 +92,19 @@ public class DataTableUtils {
             switch (reportData.getForkliftFee()){
                 case "1": row.add("包含铲车费");
                     break;
-                case "2": row.add("不包含");
+                case "0": row.add("不包含");
                     break;
                 default:row.add("");
             }
+            row.add(reportData.getBillName());
+            row.add(reportData.getAddress());
+            row.add(reportData.getBillNo());
+            row.add(reportData.getTel());
+            row.add(reportData.getBankName());
+            row.add(reportData.getBankNo());
+            row.add(reportData.getSettlement());
+            row.add(reportData.getFund());
+            row.add(reportData.getTaxation());
             datas.add(row);
         }
         return datas;

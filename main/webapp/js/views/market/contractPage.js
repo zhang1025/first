@@ -272,7 +272,7 @@ function initButtonClick() {
     //导出excle事件
     $('.fa-download').parent().on("click", function () {
         var numNo = $("#s_numNo").val();
-        var settlements = $("#s_settlements").val();
+        var receives = $("#s_receives").val();
         var coal = $("#s_coal").val();
         var status = $("#s_status").val();
         var type = $("#s_type").val();
@@ -280,7 +280,7 @@ function initButtonClick() {
         var dateRange = time.split("to");
         var beginDate = $.trim(dateRange[0]);
         var endDate = $.trim(dateRange[1]);
-        var param = 'numNo=' + numNo + '&settlement=' + settlements + '&beginDate=' + beginDate + '&endDate=' + endDate + '&name=' + coal + '&status=' + status + '&contractType=' + type;
+        var param = 'numNo=' + numNo + '&receiveName=' + receives + '&beginDate=' + beginDate + '&endDate=' + endDate + '&name=' + coal + '&status=' + status + '&contractType=' + type;
         location.href = path + 'export_excel_data?' + param;
     });
     $("#lock").on("click", function () {
