@@ -72,8 +72,11 @@ public class DataTableUtils {
                     break;
                 case "4": row.add("已结算");
                     break;
+                case "5": row.add("审核通过");
+                    break;
                 case "-1": row.add("未通过");
                     break;
+                default:row.add("");
             }
             row.add(reportData.getUsePerson());
             row.add(reportData.getInputPerson());

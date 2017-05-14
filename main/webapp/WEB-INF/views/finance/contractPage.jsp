@@ -56,6 +56,7 @@
                                             <option value="2">锁定</option>
                                             <option value="1">解锁</option>
                                             <option value="4">已结算</option>
+                                            <option value="5">审核通过</option>
                                             <option value="0">未审核</option>
                                             <option value="-1">未通过</option>
                                         </select>
@@ -209,7 +210,7 @@
                         <div class="col-lg-10" style="width: 75%;padding-left: 5px">
                             <select id="status" class="select fancy-select form-control required">
                                 <option value="-1">未通过</option>
-                                <option value="3">通过</option>
+                                <option value="5">通过</option>
                             </select>
                         </div>
                     </div>

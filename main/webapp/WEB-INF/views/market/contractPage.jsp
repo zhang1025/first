@@ -56,6 +56,7 @@
                                             <option value="2">锁定</option>
                                             <option value="1">解锁</option>
                                             <option value="4">已结算</option>
+                                            <option value="5">审核通过</option>
                                             <option value="0">未审核</option>
                                             <option value="-1">未通过</option>
                                         </select>

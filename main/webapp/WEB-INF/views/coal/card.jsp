@@ -47,20 +47,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 48px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">合同状态</span>
-                                        <select id="s_status" class="fancy-select form-control" style="width: 100px">
-                                            <option value="">请选择</option>
-                                            <option value="3">正在发运</option>
-                                            <option value="2">锁定</option>
-                                            <option value="1">解锁</option>
-                                            <option value="4">已结算</option>
-                                            <option value="0">未审核</option>
-                                            <option value="-1">未通过</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 48px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<span class="input-group-addon">合同状态</span>--%>
+                                        <%--<select id="s_status" class="fancy-select form-control" style="width: 100px">--%>
+                                            <%--<option value="">请选择</option>--%>
+                                            <%--<option value="3">正在发运</option>--%>
+                                            <%--<option value="2">锁定</option>--%>
+                                            <%--<option value="1">解锁</option>--%>
+                                            <%--<option value="4">已结算</option>--%>
+                                            <%--<option value="5">审核通过</option>--%>
+                                            <%--<option value="0">未审核</option>--%>
+                                            <%--<option value="-1">未通过</option>--%>
+                                        <%--</select>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 50px">
                                     <div class="input-group">
                                         <span class="input-group-addon">合同类型</span>

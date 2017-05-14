@@ -68,6 +68,9 @@ function dealTableTitle() {
             if (status == 2) {
                 return "锁定";
             }
+            if (status == 5) {
+                return "审核通过";
+            }
             if (status == 0) {
                 return "未审核";
             }
