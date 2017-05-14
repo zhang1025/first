@@ -3,18 +3,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liaoyuan.web.dao.ICoalDao">
 
-    <select id="countCoalData" parameterType="DataBean" resultType="java.lang.Integer">
-        select count(*) from ${table}  where 1=1 
-        <if test="name!=null and name!=''">
-            and name like "%"#{name}"%"
+    <!--煤卡押金-->
+    <select id="countCoalDepositData" parameterType="DepositBean" resultType="java.lang.Integer">
+        select count(*) from coal_deposit  where 1=1
+        <if test="rid!=null and rid!=''">
+            and rid=#{rid}
         </if>
+        <if test="numNo!=null and numNo!=''">
+            and numNo=#{numNo}
+        </if>
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
     </select>
-    <select id="getTableData" parameterType="DataBean" resultType="DataBean">
-        select * from ${table}   where 1=1 
-        <if test="name!=null and name!=''">
-            and name like "%"#{name}"%"
+    <select id="getDepositTableData" parameterType="DepositBean" resultType="DepositBean">
+        select * from coal_deposit   where 1=1
+        <if test="rid!=null and rid!=''">
+            and rid=#{rid}
         </if>
-         order by id desc limit ${iDisplayStart},${iDisplayLength}
+        <if test="numNo!=null and numNo!=''">
+            and numNo=#{numNo}
+        </if>
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+        order by id desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
+    <select id="depositTotal" resultType="java.lang.Integer">
+        select COALESCE(sum(deposit),0) from coal_deposit
+    </select>
+
+    <select id="refundTotal" resultType="java.lang.Integer">
+        select COALESCE(sum(deposit),0) from coal_deposit where status=-1
+    </select>
+
+
+    <insert id="addDepositInfo" parameterType="DepositBean">
+        INSERT  INTO coal_deposit (rid,name,numNo,coalCard,deposit,payPeople,inputPerson)
+         VALUES (#{rid},#{name},#{numNo},#{coalCard},#{deposit},#{payPeople},#{inputPerson});
+    </insert>
+
+    <update id="refundInfo">
+        update coal_deposit set refundPeople=#{backPeople},usePerson=#{usePeople},
+        refundtime = NOW(),status=-1 where id=#{id}
+    </update>
 </mapper>

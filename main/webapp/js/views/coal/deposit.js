@@ -9,130 +9,146 @@ $(document).ready(function () {
     initDateRangePicker();
     $(".select").select2();
     initButtonClick();
-    initFormValid();
-    queryData();
+    queryDepositData();
 });
-function queryData() {
+function queryDepositData() {
     var aoColumns = dealTableTitle();
     var time = $("input[name='date-range']").val();
     var dateRange = time.split("to");
     var beginDate = $.trim(dateRange[0]);
     var endDate = $.trim(dateRange[1]);
+    var numNo = $("#s_numNo").val();
+    var receives = $("#s_receives").val();
+    var status = $("#s_status").val();
     var params = [
         {name: 'beginDate', value: beginDate},
-        {name: 'endDate', value: endDate}
+        {name: 'endDate', value: endDate},
+        {name: 'numNo', value: numNo},
+        {name: 'rid', value: receives},
+        {name: 'status', value: status}
     ];
     var url = path+'/get_deposit_table';
-    commonDataTables("depositDataTables", url, aoColumns, params, "depositData");
+    commonDataTablesWW("depositDataTables", url, aoColumns, params, "depositData");
 }
 //处理table的公共title
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
+        // {
+        //     "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
+        //     var id = rowObject['id'];
+        //     return "<input type='checkbox' name='check' value='" + id + "'/>";
+        // }, "sWidth": "5%"
+        // },
+        {"sTitle": "合同号", "mData": "numNo", "sWidth": "7%"},
+        {"sTitle": "煤卡号", "mData": "coalCard", "sWidth": "7%"},
+        {"sTitle": "客户名称", "mData": "name", "sWidth": "10%"},
+        {"sTitle": "押金", "mData": "deposit", "sWidth": "5%"},
+        {"sTitle": "缴款人", "mData": "payPeople", "sWidth": "5%"},
+        {"sTitle": "录入人", "mData": "inputPerson", "sWidth": "5%"},
+        {"sTitle": "缴款时间", "mData": "createtime", "sWidth": "8%"},
+        {"sTitle": "状态", "mData": "orderTime", "sWidth": "6%","mRender":function(data, type, row){
+            var status = row['status'];
+            if (status == 0) {
+                return "正常押金";
+            }
+            if (status == -1) {
+                return "已经退款";
+            }
+            return "未知";
+        }},
+        {"sTitle": "退款时间", "mData": "refundtime", "sWidth": "5%"},
+        {"sTitle": "退款人", "mData": "refundPeople", "sWidth": "6%"},
+        {"sTitle": "操作员", "mData": "usePerson", "sWidth": "6%"},
         {
-            "sTitle": "选择", "mData": "id", "mRender": function (data, type, rowObject) {
-            var id = rowObject['id'];
-            return "<input type='checkbox' name='check' value='" + id + "'/>";
-        }, "sWidth": "5%"
-        },
-        {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
-        {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
-        {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
-        {"sTitle": "预交金额", "mData": "prepaidAmount", "sWidth": "5%"},
-        {"sTitle": "订单日期", "mData": "orderTime", "sWidth": "6%"},
-        {"sTitle": "已发送量", "mData": "sendCount", "sWidth": "5%"},
-        {"sTitle": "剩余量", "mData": "leftCount", "sWidth": "6%"},
-        {"sTitle": "发运金额", "mData": "sendPrice", "sWidth": "6%"},
-        {"sTitle": "剩余金额", "mData": "leftPrice", "sWidth": "5%"},
-        {
-            "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
+            "sTitle": "操作", "mData": "id", "sWidth": "10%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
         }
         });
     return aoColumns;
 }
-
 function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['id'];
-    var settlement = rowObject['settlement'];
-    var fund = rowObject['fund'];
-    var taxation = rowObject['taxation'];
-
-    return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
-        + id + "','"
-        + settlement + "','" + fund + "','"
-        + taxation
-        + "')\">编辑</button>";
+    var status = rowObject['status'];
+    if(status==0){
+        return "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' onclick=\"refundDeal('"
+            + id
+            + "')\">退款</button>";
+    }else{
+        return "<button type='button' disabled='disabled' class='btn btn-danger btn-small' data-toggle='modal'>退款</button>";
+    }
 }
-//编辑
-function editSettlement(id, settlement, fund, taxation) {
-    subType = 2;
+//退款操作
+function refundDeal(id) {
+    $("#hideId").val(id);
+    $("#myModalBack").modal("show");
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
-        queryData();
+        queryDepositData();
     });
-    //新增
-    $("#submitBut").on("click", function () {
-        var $form = $('#validate');
+
+    $("#paymentBtn").on("click",function () {
+        $("#myModalDeposit").modal("show");
+        setTimeout($("#coalCard").focus(),1000);
+    });
+    $("#totalBtn").on("click",function () {
+        $.post(path + "total",function (data) {
+            swal("总缴费",(data==null)?0:data,"info");
+        })
+    });
+    $("#surplusBtn").on("click",function () {
+        $.post(path + "surplus",function (data) {
+            swal("剩余",(data==null||data==0)?"暂无":data,"info");
+        })
+    });
+    $("#submitBut").on("click",function () {
+        var $form = $('#validate1');
         if (!$form.valid()) {
             return false;
         }
-        var url = path + (subType == 1?"addDepositInfo":"editDepositInfo");
-        $.post(url, {
-                settlement: $.trim($("#settlement").val()), fund: $("#fund").val(),
-                taxation: $("#taxation").val(),
-                id: $("#hideId").val()
+        $.post(path + "depositSubmit",
+            {numNo: $("#numNo").val(),coalCard:$.trim($("#coalCard").val()),
+                rid:$("#name").val(),name:$("#name option:selected").text(),
+                payPeople:$("#payPeople").val(),deposit:$("#amountMoney").val()
             },
-            function (result) {
-                $('#myModal').trigger('click');
-                if (result > 0) {
-                    swal("成功","操作成功！","success");
-                    queryData();
-                }  else {
-                    swal("失败","操作失败","error");
-                }
-            });
+            function (data) {
+            if(data > 0){
+                swal("ok","操作成功！","success");
+                $("#myModalDeposit").modal("hide");
+                queryDepositData();
+            }else{
+                swal("failed","操作失败","error");
+            }
+        });
     });
-
-    // $("#addFinanceInfo").on("click", function () {
-    //     addFinanceInfo(checkBtn());
-    // });
-
+    $("#submitButBack").on("click",function () {
+        swal({
+                title:"是否退款?",
+                type:"warning",
+                showCancelButton:true,
+                confirmButtonClass:"btn-danger",
+                confirmButtonText:"确认",
+                cancelButtonText:"取消",
+                closeOnConfirm:false
+            },
+            function (isConfirm) {
+                if(isConfirm){
+                    $.post(path + "refund", {id: $("#hideId").val(),refundPeople:$.trim($("#refundPeople").val())},
+                        function (data) {
+                            if(data > 0){
+                                swal("ok","操作成功！","success");
+                                $("#myModalBack").modal("hide");
+                                queryDepositData();
+                            }else{
+                                swal("failed","操作失败","error");
+                            }
+                        });
+                }
+            }
+        )
+    });
 }
-function verifyStatus(id) {
-    if (id == "") {
-        swal("", "请选中一行！", "warning");
-        return;
-    }
-    if (id.indexOf(",") > -1) {
-        swal("","请选中一行进行操作！","warning");
-        return;
-    }
-    $("#hideId").val(id);
-    $('#myModalVerify').modal("show");
-}
-//添加财务信息
-// function addFinanceInfo(id) {
-//     if (id == "" || id.indexOf(",") > -1) {
-//         swal("", "请选中一行！", "warning");
-//         return;
-//     }
-//     $.post(path + "balanceContractInfo", {id: id}, function (data) {
-//         if (data == 1) {
-//             swal("成功", "操作成功！", "success");
-//             queryData();
-//         } else if (data == -1) {
-//             swal("失败", "操作失败", "error");
-//         }else if (data == -2) {
-//             swal("失败", "未审核或是锁定状态的合同不能进行结算", "warning");
-//         }else{
-//             swal("失败", "网络异常", "error");
-//         }
-//     });
-// }
 //获取选中的行数据
 function checkBtn() {
     var checkTemp = "";
@@ -144,39 +160,4 @@ function checkBtn() {
         }
     });
     return checkTemp;
-}
-//form表单提交 格式规则校验
-function initFormValid() {
-    $("#validate").validate({
-        errorPlacement: function (error, element) {
-            var place = element.closest('.input-group');
-            if (!place.get(0)) {
-                place = element;
-            }
-            if (place.get(0).type === 'checkbox') {
-                place = element.parent();
-            }
-            if (error.text() !== '') {
-                place.after(error);
-            }
-        },
-        errorClass: 'help-block',
-        rules: {
-            dataNumber: {
-                required: true,
-                dataNumber: true
-            },
-            number: {
-                required: true,
-                number: true
-            }
-        },
-        highlight: function (label) {
-            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (label) {
-            $(label).closest('.form-group').removeClass('has-error');
-            label.remove();
-        }
-    });
 }

@@ -85,17 +85,18 @@
                                 </div>
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
                                     <div class="input-group">
-                                        <span class="input-group-addon">绑定煤卡：</span>
+                                        <span class="input-group-addon">请刷煤卡：</span>
                                         <input type="text" id="coalCard" class="form-control" autofocus="autofocus">
+                                        <%--<button id="StartBind" class="btn btn-primary mr5 mb10" type="button">开始绑定</button>--%>
                                     </div>
                                 </div>
-                                <div style="padding: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"
-                                                data-target="#myModal" type="button">新增
-                                        </button>
-                                    </div>
-                                </div>
+                                <%--<div style="padding: 15px;float: right">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"--%>
+                                                <%--data-target="#myModal" type="button">新增--%>
+                                        <%--</button>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
 
                                 <%--<!-- 查询按钮-->--%>
                                 <div style="padding-top: 15px;float: right">

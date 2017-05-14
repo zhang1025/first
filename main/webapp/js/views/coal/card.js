@@ -120,13 +120,12 @@ function initButtonClick() {
         queryData();
         $("#coalCard").focus();
     });
-
+    
     $("#bundling").on("click",function () {
         if(checkSelect()==true){
             var coalNo = $('input:checkbox[name="check"]:checked').parent().next().next().html();
             if(!coalNo){
                 $("#myModal").modal("show");
-                $("#coalCard").attr("autofocus","autofocus");
                 binding();
             }else{
                 swal("警告","已绑定过的合同不能再次绑定","warning");
@@ -151,6 +150,8 @@ function initButtonClick() {
                         $.post(path + "unBindingCard", {id: checkBtn()}, function (data) {
                             if(data > 0){
                                 swal("ok","注销绑定成功！","success");
+                                queryData();
+                                cardInputSelect("coalCard");
                             }else{
                                 swal("failed","注销失败","error");
                             }
@@ -177,7 +178,7 @@ function binding() {
                     if(data > 0){
                         swal("ok","绑定成功！","success");
                         queryData();
-                        $("#coalCard").val("");
+                        cardInputSelect("coalCard");
                     }else{
                         swal("failed","绑定失败","error");
                     }
@@ -185,6 +186,10 @@ function binding() {
             }
         }
     )
+}
+function cardInputSelect(id) {
+    $("#"+id).attr("autofocus","autofocus");
+    $("#"+id).focus();
 }
 function checkSelect() {
     var id = checkBtn();

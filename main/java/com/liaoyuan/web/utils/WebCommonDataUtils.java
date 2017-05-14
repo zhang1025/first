@@ -2,6 +2,7 @@ package com.liaoyuan.web.utils;
 
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DepositBean;
 import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PlanBean;
 import net.sf.json.JSONArray;
@@ -58,6 +59,30 @@ public class WebCommonDataUtils{
      */
     public static ContractBean getContractData(String jsonString) {
         ContractBean bean = new ContractBean();
+        try {
+            // 把参数 转换为Map
+            Map<String, Object> params = jsonToMap(jsonString);
+            int iDisplayLength = Integer.parseInt(params.get("iDisplayLength") + "");
+            int iDisplayStart = Integer.parseInt(params.get("iDisplayStart") + "");
+            int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal") + "");
+            BeanUtils.populate(bean, params);
+            bean.setIDisplayLength(iDisplayLength);
+            bean.setIDisplayStart(iDisplayStart);
+            bean.setIRecordsTotal(iRecordsTotal);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
+                bean.setEndDate(bean.getEndDate()+" 23:59:59");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bean;
+    }
+
+    /**
+     * ContractBean
+     */
+    public static DepositBean getDepositBean(String jsonString) {
+        DepositBean bean = new DepositBean();
         try {
             // 把参数 转换为Map
             Map<String, Object> params = jsonToMap(jsonString);
