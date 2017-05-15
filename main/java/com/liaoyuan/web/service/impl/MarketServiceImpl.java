@@ -91,14 +91,15 @@ public class MarketServiceImpl implements MarketService{
             System.out.println("找不到合同信息模板 路径：/print/hetong");
             return;
         }
-        CreateWordT.printInfo(bean, fileURL.getPath());
+        String fileName = "hetong.doc";
+        CreateWordT.printInfo(bean, fileURL.getPath(),fileName);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //打印
-        DocPrint.printFile(fileURL.getPath());
+        DocPrint.printFile(fileURL.getPath()+fileName);
     }
 
     @Override
@@ -150,7 +151,7 @@ public class MarketServiceImpl implements MarketService{
     public List<PlanBean> getTableDayPlanData(PlanBean bean){
         List<PlanBean> list = iMarkerDao.getTableDayPlanData(bean);
         //查询某一个月计划对应的日计划  不分页  最后一行显示合并
-        if(bean.getSearchType().equals("dayNoPage")){
+        if(("dayNoPage").equals(bean.getSearchType())){
             int dayPlanCar=0,dayActualCar=0,dayPlanTonnage=0,dayActualTonnage=0;
             if(null!=list && !list.isEmpty()){
                 for (PlanBean pb : list) {

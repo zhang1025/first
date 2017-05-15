@@ -3,10 +3,12 @@ package com.liaoyuan.web.controller;
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.entity.SessionUser;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
+import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -38,11 +40,11 @@ public class FinanceController extends BaseController {
     MarketService marketService;
 
     /**
-     * 客户交款 页面
+     * 外运客户交款 页面
      */
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public ModelAndView payment(ModelMap modelMap){
-        log.info("=========财务====客户交款============");
+        log.info("=========财务====外运客户交款============");
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
         List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
         List<DataBean> st = commonDataService.getListData(Constant.SETTLEMENT);
@@ -81,6 +83,13 @@ public class FinanceController extends BaseController {
 
     @RequestMapping(value = "/get_balance_table", method = RequestMethod.POST)
     public void getBalanceTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
+//        PlanBean bean = WebCommonDataUtils.getPlanData(jsonString);
+//        List<PlanBean> gridData ;
+//        int count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+//        bean.setIDisplayLength(count);//不分页  显示全部
+//        gridData = marketService.getTableDayPlanData(bean);
+//        printDataTables(response, count, gridData);
+
         int count = 0;
         List<ContractBean> gridData = new ArrayList<>();
         printDataTables(response, count, gridData);

@@ -52,12 +52,22 @@ public class PlanBean implements Serializable{
             this.planTonnage =  Double.parseDouble(planTonnage);
         }
     }
+    //实发吨数
     private double actualSendedTonnage;
     public void setActualSendedTonnage(String actualSendedTonnage) {
         if(StringUtils.isBlank(actualSendedTonnage)){
             this.actualSendedTonnage = 0;
         }else{
             this.actualSendedTonnage =  Double.parseDouble(actualSendedTonnage);
+        }
+    }
+    //实发煤款= 实发吨 * 单价
+    private double actualSendedTotal;
+    public void setActualSendedTotal(String actualSendedTotal) {
+        if(StringUtils.isBlank(actualSendedTotal)){
+            this.actualSendedTotal = 0;
+        }else{
+            this.actualSendedTotal =  Double.parseDouble(actualSendedTotal);
         }
     }
 

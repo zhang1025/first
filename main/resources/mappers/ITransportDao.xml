@@ -4,11 +4,19 @@
 <mapper namespace="com.liaoyuan.web.dao.ITransportDao">
 
 
-    <select id="countDealPlanData"  resultType="java.lang.Integer">
-        select count(*) from diaoyun  where dayId=#{dayId}
+    <select id="countDealPlanData" parameterType="DiaoyunBean"  resultType="java.lang.Integer">
+        select count(*) from diaoyun  where  1=1
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+         and dayId=#{dayId}
     </select>
     <select id="getTableDealPlanData" parameterType="DiaoyunBean" resultType="DiaoyunBean">
-        select * from diaoyun where dayId=#{dayId}
+        select * from diaoyun where 1=1
+        <if test="status!=null and status!=''">
+            and status=#{status}
+        </if>
+        and dayId=#{dayId}
         order by createtime desc
         limit ${iDisplayStart},${iDisplayLength}
     </select>

@@ -20,8 +20,8 @@ public class TransportServiceImpl implements TransportService {
 
 
     @Override
-    public int countDealPlanData( int id) {
-        return iTransportDao.countDealPlanData(id);
+    public int countDealPlanData(DiaoyunBean bean) {
+        return iTransportDao.countDealPlanData(bean);
     }
 
     @Override

@@ -6,6 +6,8 @@ package com.liaoyuan.web.utils;
  * http://blog.csdn.net/u012246342/article/details/51698187
  */
 
+import com.deepoove.poi.XWPFTemplate;
+import com.deepoove.poi.render.RenderAPI;
 import com.liaoyuan.web.entity.ContractBean;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
@@ -21,8 +23,10 @@ import java.util.Map;
 @Slf4j
 public class CreateWordT {
 
-    //打印合同信息
-    public static void printInfo(ContractBean bean, String filePath) {
+    /**
+     * 使用freemarker 生成word文档  数据动态填充
+     */
+    public static void printInfo(ContractBean bean, String filePath, String fileName) {
         if (null == bean) {
             return;
         }
@@ -41,7 +45,7 @@ public class CreateWordT {
             String tempName = "hetong.xml";
 
             //生成文件的路径及文件名。
-            File outFile = new File(filePath + "/hetong.doc");
+            File outFile = new File(filePath +fileName);
             Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
             // 使用FileTemplateLoader 指定模板路径
             TemplateLoader templateLoader = new FileTemplateLoader(fir);
@@ -58,6 +62,34 @@ public class CreateWordT {
         }
     }
 
+    /**
+     * 使用poi-tl生成word文档  动态数据填充
+     */
+    public static void createWordInfo(final ContractBean bean, String filePath, String outFilePath) {
+        if (null == bean) {
+            return;
+        }
+        //read template
+        XWPFTemplate doc = XWPFTemplate.create(filePath);
+        //render
+        RenderAPI.render(doc, new HashMap<String, Object>() {{
+            put("receiveName", bean.getReceiveName());
+            put("numNo", bean.getNumNo());
+            put("orderCount", bean.getOrderCount());
+            put("name", bean.getName());
+            put("price", bean.getUnitPrice());
+            put("count", bean.getUnitPrice() * bean.getOrderCount());
+            put("forkliftFee", Integer.parseInt(bean.getForkliftFee()) == 1 ? "包括" : "不包括");
+            put("usePerson", bean.getUsePerson());
+        }});
+        try {
+            FileOutputStream out = new FileOutputStream(outFilePath);
+            doc.write(out);
+            out.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         Map<String, Object> cont = new HashMap<>();// 存储数据

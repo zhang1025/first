@@ -80,7 +80,7 @@ public class TransportController extends BaseController {
     @RequestMapping(value = "/get_diaoyunInfo_table", method = RequestMethod.POST)
     public void getDiaoyunInfo_table(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         DiaoyunBean bean = WebCommonDataUtils.getDiaoyunBean(jsonString);
-        int count = bean.getIRecordsTotal() == 0 ? transportService.countDealPlanData(bean.getDayId()) : bean.getIRecordsTotal();
+        int count = bean.getIRecordsTotal() == 0 ? transportService.countDealPlanData(bean) : bean.getIRecordsTotal();
         bean.setIDisplayLength(count);
         List<DiaoyunBean> gridData = transportService.getTableDealPlanData(bean);
         printDataTables(response, count, gridData);

@@ -74,6 +74,25 @@
                 </div>
                 <!-- col-lg-12 end here -->
             </div>
+            <div class="row" id="noBalanceListData" style="display: none;">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <!-- Start .panel -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><i class="fa fa-table">&nbsp;未结算列表</i>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table id="noBalanceListTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 12px" cellspacing="0" width="100%">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
         </div>
         <!-- / .page-content-inner -->
     </div>

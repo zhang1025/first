@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface TransportService {
 
-    int countDealPlanData(int id);
+    int countDealPlanData(DiaoyunBean bean);
     List<DiaoyunBean> getTableDealPlanData(DiaoyunBean bean);
 
     int addDealDayPlan(DiaoyunBean bean);

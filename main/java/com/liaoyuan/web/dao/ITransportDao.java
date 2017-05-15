@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Repository
 public interface ITransportDao {
-    int countDealPlanData(@Param(value = "dayId") int id);
+    int countDealPlanData(DiaoyunBean bean);
     List<DiaoyunBean> getTableDealPlanData(DiaoyunBean bean);
 
     int addDealDayPlan(DiaoyunBean bean);

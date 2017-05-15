@@ -58,20 +58,20 @@ public class DiaoyunBean implements Serializable {
 
     private String createtime;
 
-    private int status;
+    private Integer status;
     public void setStatus(String status) {
         if(StringUtils.isBlank(status)){
-            this.status = 0;
+            this.status = null;
         }else{
             this.status =  Integer.parseInt(status);
         }
     }
 
     //对应的日计划id
-    private int dayId;
+    private Integer dayId;
     public void setDayId(String dayId) {
         if(StringUtils.isBlank(dayId)){
-            this.dayId = 0;
+            this.dayId = null;
         }else{
             this.dayId =  Integer.parseInt(dayId);
         }

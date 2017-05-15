@@ -24,7 +24,7 @@ public class DocPrint {
     public static void printFile(String filePath){
         FileInputStream textStream = null;
         try {
-            textStream = new FileInputStream(new File(filePath+"/hetong.doc"));
+            textStream = new FileInputStream(new File(filePath));
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -19,7 +19,8 @@ function queryBalanceData() {
     var endDate = $.trim(dateRange[1]);
     var params = [
         {name: 'beginDate', value: beginDate},
-        {name: 'endDate', value: endDate}
+        {name: 'endDate', value: endDate},
+        {name: 'searchType', value: "day"}//查询日计划
     ];
     var url = path+'/get_balance_table';
     commonDataTablesHideFirstId("balanceDataTables", url, aoColumns, params, "balanceData");
@@ -29,19 +30,19 @@ function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
         {"sTitle": "序号", "mData": "id"},
-        {"sTitle": "日期", "mData": "numNo", "sWidth": "7%"},
-        {"sTitle": "计划号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "结算单位", "mData": "numNo", "sWidth": "8%"},
-        {"sTitle": "吨数", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "车数", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "实发合计", "mData": "numNo", "sWidth": "7%"},
-        {"sTitle": "实发煤款", "mData": "numNo", "sWidth": "7%"},
-        {"sTitle": "实发税金", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "实发运费", "mData": "numNo", "sWidth": "7%"},
-        {"sTitle": "实发调车费", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "实发装车费", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "付款类型", "mData": "numNo", "sWidth": "7%"},
+        {"sTitle": "日期", "mData": "createtime", "sWidth": "7%"},
+        {"sTitle": "计划号", "mData": "rid", "sWidth": "5%"},
+        {"sTitle": "结算单位", "mData": "settlement", "sWidth": "8%"},
+        {"sTitle": "吨数", "mData": "planTonnage", "sWidth": "5%"},
+        {"sTitle": "车数", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "单价", "mData": "actualUnitPrice", "sWidth": "5%"},
+        {"sTitle": "实发合计", "mData": "actualUnitPrice", "sWidth": "7%"},
+        {"sTitle": "实发煤款", "mData": "actualUnitPrice", "sWidth": "7%"},
+        {"sTitle": "实发税金", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "实发运费", "mData": "planCarNum", "sWidth": "7%"},
+        {"sTitle": "实发调车费", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "实发装车费", "mData": "planCarNum", "sWidth": "5%"},
+        {"sTitle": "付款类型", "mData": "method", "sWidth": "7%"},
         {
             "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
             return operateButton(data, type, row);
@@ -99,12 +100,31 @@ function initButtonClick() {
 function queryBalanceDataList(id) {
     $("#searchDayId").val(id); //记录查看对应日计划的id
     $("#balanceListData").show();
-    var aoColumns = dealDayTableTitle();
+    $("#noBalanceListData").show();
+    var aoColumns = dealBalanceTableTitle();
     var params = [
-        {name: 'dayId', value: id}
+        {name: 'dayId', value: id},
+        {name: 'status', value: 1}
     ];
-    var url = path + 'get_balanceList_table';
-    commonDataTablesNoPage("balanceListTables", url, aoColumns, params, "balanceListData");
+    var noParams = [
+        {name: 'dayId', value: id},
+        {name: 'status', value: 0}
+    ];
+    var urlBalance =  '/transport/get_diaoyunInfo_table';
+    commonDataTablesNoPage("balanceListTables", urlBalance, aoColumns, params, "balanceListData");
+    commonDataTablesNoPage("noBalanceListTables", urlBalance, aoColumns, noParams, "noBalanceListData");
+}
+function dealBalanceTableTitle() {
+    var aoColumns = new Array();
+    aoColumns.push(
+        {"sTitle": "车皮号", "mData": "wagonNo", "sWidth": "167px"},
+        // {"sTitle": "运费", "mData": "freight", "sWidth": "130px"},
+        {"sTitle": "实发吨数", "mData": "tonnage", "sWidth": "110px"},
+        {"sTitle": "品种", "mData": "wellsName", "sWidth": "130px"},
+        {"sTitle": "实发合计", "mData": "coalName", "sWidth": "120px"},
+        {"sTitle": "实发煤款", "mData": "siteName", "sWidth": "130px"}
+    );
+    return aoColumns;
 }
 //获取选中的行数据
 function checkBtn() {
