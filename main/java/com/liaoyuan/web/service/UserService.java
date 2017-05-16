@@ -20,4 +20,6 @@ public interface UserService {
     Map<String,List<Permission>> getMenus(int roleId);
 
     UserBean getUserFromAccount(String account);
+
+    List<UserBean> getUsersInfo();
 }

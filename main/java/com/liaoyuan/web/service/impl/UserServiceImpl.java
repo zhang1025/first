@@ -100,4 +100,9 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+
+    public  List<UserBean> getUsersInfo(){
+        return iUserDao.getUsersInfo();
+    }
 }

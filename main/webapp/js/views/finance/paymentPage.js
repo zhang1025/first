@@ -17,7 +17,9 @@ function queryPaymentData() {
     var dateRange = time.split("to");
     var beginDate = $.trim(dateRange[0]);
     var endDate = $.trim(dateRange[1]);
+    var settlement = $("#s_st").val();
     var params = [
+        {name: 'settlement', value: settlement},
         {name: 'beginDate', value: beginDate},
         {name: 'endDate', value: endDate}
     ];
@@ -35,39 +37,26 @@ function dealTableTitle() {
         }, "sWidth": "5%"
         },
         {"sTitle": "编号", "mData": "numNo", "sWidth": "5%"},
-        {"sTitle": "结算单位", "mData": "receiveName", "sWidth": "7%"},
-        {"sTitle": "经办人", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "前期余额", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "本期存款", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "车数", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "吨数", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "单价", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "煤款", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "税金", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "装调费", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "运费", "mData": "receiveName", "sWidth": "5%"},
-        {"sTitle": "金额合计", "mData": "receiveName", "sWidth": "7%"},
-        {"sTitle": "余额", "mData": "name", "sWidth": "5%"},
-        {"sTitle": "资金方式", "mData": "orderCount", "sWidth": "5%"},
-        {"sTitle": "会计审核", "mData": "unitPrice", "sWidth": "5%"},
-        {"sTitle": "出纳员", "mData": "prepaidAmount", "sWidth": "5%"},
-        {"sTitle": "录入员", "mData": "orderTime", "sWidth": "6%"},
-        {"sTitle": "日期", "mData": "createtime", "sWidth": "5%"},
-        {
-            "sTitle": "操作", "mData": "id", "sWidth": "5%", "mRender": function (data, type, row) {
-            return operateButton(data, type, row);
-        }
-        });
+        {"sTitle": "结算单位", "mData": "settlement", "sWidth": "7%"},
+        {"sTitle": "经办人", "mData": "usePerson", "sWidth": "5%"},
+        {"sTitle": "前期余额", "mData": "priorbalance", "sWidth": "5%"},
+        {"sTitle": "本期存款", "mData": "currentDeposit", "sWidth": "5%"},
+        {"sTitle": "车数", "mData": "planCar", "sWidth": "5%"},
+        {"sTitle": "吨数", "mData": "planTonnage", "sWidth": "5%"},
+        {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
+        {"sTitle": "煤款", "mData": "coalMoney", "sWidth": "5%"},
+        {"sTitle": "税金", "mData": "taxation", "sWidth": "5%"},
+        {"sTitle": "装调费", "mData": "entruck", "sWidth": "5%"},
+        {"sTitle": "运费", "mData": "freight", "sWidth": "5%"},
+        {"sTitle": "金额合计", "mData": "totalAmount", "sWidth": "7%"},
+        {"sTitle": "余额", "mData": "balance", "sWidth": "5%"},
+        {"sTitle": "资金方式", "mData": "fund", "sWidth": "5%"},
+        {"sTitle": "会计审核", "mData": "auditPeople", "sWidth": "5%"},
+        {"sTitle": "出纳员", "mData": "cashier", "sWidth": "5%"},
+        {"sTitle": "录入员", "mData": "addPeople", "sWidth": "6%"},
+        {"sTitle": "日期", "mData": "createtime", "sWidth": "5%"}
+        );
     return aoColumns;
-}
-
-function operateButton(cellvalue, options, rowObject) {
-
-
-}
-//编辑
-function editSettlement(id, settlement, fund, taxation) {
-    subType = 2;
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
@@ -81,9 +70,13 @@ function initButtonClick() {
         }
         var url = path + (subType == 1?"addPaymentInfo":"editPaymentInfo");
         $.post(url, {
-                settlement: $.trim($("#settlement").val()), fund: $("#fund").val(),
-                taxation: $("#taxation").val(),
-                id: $("#hideId").val()
+                numNo: $("#numNo").val(),settlement: $.trim($("#settlement").val()),
+                usePerson: $("#usePerson").val(),priorbalance: $("#priorbalance").val(),
+                currentDeposit: $("#currentDeposit").val(),planCar: $("#planCar").val(),
+                planTonnage: $("#planTonnage").val(),
+                unitPrice: $("#unitPrice").val(),cashier: $("#cashier").val(),
+                fund: $("#fund").val(),auditPeople: $("#auditPeople").val(),
+                addPeople: $("#addPeople").val()
             },
             function (result) {
                 $('#myModal').trigger('click');

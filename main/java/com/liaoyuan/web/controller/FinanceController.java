@@ -1,12 +1,10 @@
 package com.liaoyuan.web.controller;
 
 import com.liaoyuan.web.controller.base.BaseController;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.PlanBean;
-import com.liaoyuan.web.entity.SessionUser;
+import com.liaoyuan.web.entity.*;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
+import com.liaoyuan.web.service.UserService;
 import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +36,8 @@ public class FinanceController extends BaseController {
     HttpSession httpSession;
     @Autowired
     MarketService marketService;
+    @Autowired
+    UserService userService;
 
     /**
      * 外运客户交款 页面
@@ -45,14 +45,12 @@ public class FinanceController extends BaseController {
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     public ModelAndView payment(ModelMap modelMap){
         log.info("=========财务====外运客户交款============");
-        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
-        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
         List<DataBean> st = commonDataService.getListData(Constant.SETTLEMENT);
         List<DataBean> funds = commonDataService.getListData(Constant.FUND);
-        modelMap.put("coals",coals);
+        List<UserBean> users = userService.getUsersInfo();
+        modelMap.put("users",users);
         modelMap.put("funds",funds);
         modelMap.put("settlements",st);
-        modelMap.put("receives",receiveName);//收货单位 客户
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/finance/paymentPage");
     }

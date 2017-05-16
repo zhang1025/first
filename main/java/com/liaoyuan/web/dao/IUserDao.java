@@ -21,4 +21,5 @@ public interface IUserDao {
     int editUser(UserBean user);
     List<Permission> getMenus(@Param("roleId") int roleId);
     UserBean checkUser(String account);
+    List<UserBean> getUsersInfo();
 }
