@@ -34,15 +34,16 @@ public class CreateWordT {
         cont.put("receiveName", bean.getReceiveName());
         cont.put("numNo", bean.getNumNo());
         cont.put("orderCount", bean.getOrderCount());
-        cont.put("name", bean.getName());
+        cont.put("coal", bean.getName());
+        cont.put("wells", bean.getWells());
         cont.put("price", bean.getUnitPrice());
-        cont.put("count", bean.getUnitPrice() * bean.getOrderCount());
-        cont.put("forkliftFee", Integer.parseInt(bean.getForkliftFee()) == 1 ? "包括" : "不包括");
-        cont.put("usePerson", bean.getUsePerson());
+        cont.put("total", bean.getUnitPrice() * bean.getOrderCount());
+        cont.put("fee", Integer.parseInt(bean.getForkliftFee()) == 1 ? "包括" : "不包括");
+        cont.put("coalMoney", "");//煤卡费
         try {
             //模板的路径 不包含文件名称
             File fir = new File(filePath);
-            String tempName = "hetong.xml";
+            String tempName = "hetong1.xml";
 
             //生成文件的路径及文件名。
             File outFile = new File(filePath +fileName);

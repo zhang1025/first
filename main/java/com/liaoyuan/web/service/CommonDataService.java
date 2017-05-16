@@ -55,6 +55,8 @@ public interface CommonDataService {
            
     public int editSettlement(DataBean bean);
 
+    DataBean getSettlementForRate(DataBean bean);
+
     
 
     

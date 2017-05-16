@@ -82,24 +82,25 @@ public class MarketServiceImpl implements MarketService{
     }
 
     //打印合同信息
-    public void printContractInfo( int id){
+    public int printContractInfo( int id){
         ContractBean bean =  iMarkerDao.getContractInfoFromId(id);
         //生成word信息
         URL fileURL = CreateWordT.class.getClassLoader().getResource(Constant.FILEPTH);
         if(fileURL == null){
             log.error("找不到合同信息模板 路径：/print/hetong");
             System.out.println("找不到合同信息模板 路径：/print/hetong");
-            return;
+            return -1;
         }
         String fileName = "hetong.doc";
         CreateWordT.printInfo(bean, fileURL.getPath(),fileName);
         try {
-            Thread.sleep(500);
+            Thread.sleep(1500);
+            //打印
+            DocPrint.printFile(fileURL.getPath()+fileName);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //打印
-        DocPrint.printFile(fileURL.getPath()+fileName);
+        return 1;
     }
 
     @Override

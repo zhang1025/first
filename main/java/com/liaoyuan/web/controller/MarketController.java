@@ -52,6 +52,8 @@ public class MarketController extends BaseController {
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
         List<DataBean> settlements = commonDataService.getListData(Constant.SETTLEMENT);
         List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        List<DataBean> wells = commonDataService.getListData(Constant.WELLS);
+        modelMap.put("wells",wells);
         modelMap.put("coals",coals);
         modelMap.put("settlements",settlements);//结算单位
         modelMap.put("receives",receiveName);//收货单位 客户
@@ -109,8 +111,8 @@ public class MarketController extends BaseController {
      * 打印合同信息
      */
     @RequestMapping(value = "/printInfo", method = RequestMethod.POST)
-    public void printInfo(int id) {
-        marketService.printContractInfo(id);
+    public int printInfo(int id) {
+        return marketService.printContractInfo(id);
     }
     @RequestMapping(value = "/monthPlan", method = RequestMethod.GET)
     public ModelAndView monthPlan(ModelMap modelMap){

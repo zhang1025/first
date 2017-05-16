@@ -222,6 +222,21 @@
                             </td>
                             <td>
                                 <div class="form-group">
+                                    <label for="name" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">井区:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <select id="wells" class=" select fancy-select form-control required">
+                                            <c:forEach var="w" items="${wells}" varStatus="s">
+                                                <option value="${w.name}">${w.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
                                     <label for="orderCount" class="col-lg-4 control-label"
                                            style="padding-right: 1px">订单总量:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
@@ -230,8 +245,6 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 <div class="form-group">
                                     <label for="unitPrice" class="col-lg-4 control-label"
@@ -242,28 +255,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="inputPerson" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">录入人:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="inputPerson" class="form-control"
-                                               placeholder="${account}" readonly="readonly">
-                                    </div>
-                                </div>
-                            </td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="usePerson" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">经办人:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="usePerson" class="form-control required" aria-required="true"
-                                               placeholder="经办人">
-                                    </div>
-                                </div>
-                            </td>
                             <td>
                                 <div class="form-group">
                                     <label for="contractType" class="col-lg-4 control-label"
@@ -277,6 +270,28 @@
                                             <option value="4">职工煤</option>
                                             <option value="3">其他</option>
                                         </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="inputPerson" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">录入人:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="inputPerson" class="form-control"
+                                               placeholder="${account}" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="usePerson" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">经办人:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="usePerson" class="form-control required" aria-required="true"
+                                               placeholder="经办人">
                                     </div>
                                 </div>
                             </td>

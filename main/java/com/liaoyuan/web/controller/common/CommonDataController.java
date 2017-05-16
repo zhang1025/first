@@ -114,6 +114,13 @@ public class CommonDataController extends BaseController {
         modelMap.put("provinces",provinces);
         return new ModelAndView("/dataPage/settlementData");
     }
+    @RequestMapping(value = "/getSettlementRate", method = RequestMethod.POST)
+    public String settlementPage(DataBean bean) {
+        DataBean dataBean = commonDataService.getSettlementForRate(bean);
+        return dataBean==null?"":dataBean.getRate();
+    }
+
+
 
     @RequestMapping(value = "/get_common_table", method = RequestMethod.POST)
     public void getUserDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {

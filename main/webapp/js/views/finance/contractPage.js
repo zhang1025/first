@@ -47,6 +47,7 @@ function dealTableTitle() {
         },
         {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
         {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
+        {"sTitle": "井区", "mData": "wells", "sWidth": "5%"},
         {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
         {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
         {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
@@ -142,20 +143,34 @@ function operateButton(cellvalue, options, rowObject) {
     var settlement = rowObject['settlement'];
     var fund = rowObject['fund'];
     var taxation = rowObject['taxation'];
+    var orderCount = rowObject['orderCount'];
+    var unitPrice = rowObject['unitPrice'];
 
     return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
         + id + "','"
-        + settlement + "','" + fund + "','"
+        + settlement + "','" + fund + "','"+ orderCount + "','"+ unitPrice + "','"
         + taxation
         + "')\">编辑</button>";
 }
 //编辑
-function editSettlement(id, settlement, fund, taxation) {
+function editSettlement(id, settlement, fund,orderCount,unitPrice, taxation) {
     subType = 2;
     $("#hideId").val(id);
-    $("#taxation").val(taxation);
+    // $("#taxation").val(taxation);
     $("#settlement").val(settlement).select2();
     $("#fund").val(fund).select2();
+    $("#totalId").val(orderCount*unitPrice);
+}
+function gotTaxation() {
+    var st = $("#settlement").val();
+    var total = $("#totalId").val();
+    $.post("/common/getSettlementRate",{name:st},function (data) {
+        if(data==""){
+            swal("警告","该结算单位暂未配置税率！","warning");
+            return false;
+        }
+        $("#taxation").val((parseInt(total)*data).toFixed(2));
+    });
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {

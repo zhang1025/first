@@ -33,17 +33,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 110px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">结算省份</span>
-                                        <select id="s_province" class="select fancy-select form-control" style="width: 120px">
-                                            <option value="">请选择</option>
-                                            <c:forEach var="province" items="${provinces}" varStatus="s">
-                                                <option value="${province.name}">${province.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left: 110px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<span class="input-group-addon">结算省份</span>--%>
+                                        <%--<select id="s_province" class="select fancy-select form-control" style="width: 120px">--%>
+                                            <%--<option value="">请选择</option>--%>
+                                            <%--<c:forEach var="province" items="${provinces}" varStatus="s">--%>
+                                                <%--<option value="${province.name}">${province.name}</option>--%>
+                                            <%--</c:forEach>--%>
+                                        <%--</select>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <%--<!-- 查询按钮-->--%>
                                 <div class="col-md-1" style="padding-top: 5px;padding-left: 140px">
                                     <div class="input-group">
@@ -157,6 +157,34 @@
                                 <option value="0">普通级</option>
                                 <option value="1">VIP级</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rateNo" class="col-lg-4 control-label"
+                               style="width:30%;padding-left: 20px;padding-right: 1px">费率编码:</label>
+                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                            <input type="text" id="rateNo" class="fancy-select form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rate" class="col-lg-4 control-label"
+                               style="width:30%;padding-left: 20px;padding-right: 1px">税率:</label>
+                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                            <input type="text" id="rate" class="fancy-select form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shunting" class="col-lg-4 control-label"
+                               style="width:30%;padding-left: 20px;padding-right: 1px">调车费率:</label>
+                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                            <input type="text" id="shunting" class="fancy-select form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="entruck" class="col-lg-4 control-label"
+                               style="width:30%;padding-left: 20px;padding-right: 1px">装车费率:</label>
+                        <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                            <input type="text" id="entruck" class="fancy-select form-control required" aria-required="true">
                         </div>
                     </div>
                 </form>

@@ -28,7 +28,7 @@
 
     </select>
     <select id="getTableContractData" parameterType="ContractBean" resultType="ContractBean">
-        select id,numNo,coalCard,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
+        select id,numNo,wells,coalCard,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
         orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
         orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
@@ -42,14 +42,14 @@
     </select>
     <!--添加合同信息-->
     <insert id="addContractInfo" parameterType="ContractBean">
-        insert into car_contract(numNo,receiveName,name,orderCount,unitPrice,inputPerson,
+        insert into car_contract(numNo,wells,receiveName,name,orderCount,unitPrice,inputPerson,
         usePerson,contractType,forkliftFee,orderTime,billName,address,billNo,tel,bankName,bankNo)
-        values (#{numNo},#{receiveName},#{name},
+        values (#{numNo},#{wells},#{receiveName},#{name},
         #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
         #{orderTime},#{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
     </insert>
     <update id="editContractInfo" parameterType="ContractBean">
-        update car_contract set numNo=#{numNo},receiveName=#{receiveName},name=#{name},
+        update car_contract set numNo=#{numNo},wells=#{wells},receiveName=#{receiveName},name=#{name},
         orderCount=#{orderCount},unitPrice=#{unitPrice},inputPerson=#{inputPerson},
         usePerson=#{usePerson},contractType=#{contractType},
         forkliftFee=#{forkliftFee},orderTime=#{orderTime},

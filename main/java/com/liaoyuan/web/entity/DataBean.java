@@ -28,6 +28,12 @@ public class DataBean {
     //重点非重点
     private int type;
 
+    //结算单位 税率
+    private String rateNo;
+    private String rate;
+    private String shunting;
+    private String entruck;
+
 
     private String model;
     private String table;

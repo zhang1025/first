@@ -48,9 +48,9 @@
          <if test="method!=null and method!='' and method!='请选择'">
             and method = #{method}
         </if>
-            <if test="province!=null and province!='' and province!='请选择'">
-            and province = #{province}
-        </if>
+        <!--<if test="province!=null and province!='' and province!='请选择'">-->
+            <!--and province = #{province}-->
+        <!--</if>-->
     </select>
     <select id="getTableSettlement" parameterType="DataBean" resultType="DataBean">
         select * from ${table}  where 1=1 
@@ -60,11 +60,18 @@
          <if test="method!=null and method!='' and method!='请选择'">
             and method = #{method}
         </if>
-        <if test="province!=null and province!='' and province!='请选择'">
-            and province = #{province}
-        </if>
+        <!--<if test="province!=null and province!='' and province!='请选择'">-->
+            <!--and province = #{province}-->
+        <!--</if>-->
          order by id desc limit ${iDisplayStart},${iDisplayLength}
     </select>
+
+
+    <!--通过结算单位找到他对应的税率rate-->
+    <select id="getSettlementForRate" parameterType="DataBean" resultType="DataBean">
+        select * from dm_settlement  where  name like "%"#{name}"%"  limit 1
+    </select>
+
 
 
 <!--name是否已经存在-->

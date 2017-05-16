@@ -13,6 +13,7 @@ public class ContractBean {
     private String numNo;
     private String receiveName;
     private String settlement;
+    private String wells;//井区
     private String name;//煤炭种类
     private double orderCount;
     private double unitPrice;

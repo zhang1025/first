@@ -55,6 +55,7 @@ function dealTableTitle() {
         },
         {"sTitle": "合同编号", "mData": "numNo", "sWidth": "5%"},
         {"sTitle": "客户名称", "mData": "receiveName", "sWidth": "10%"},
+        {"sTitle": "井区", "mData": "wells", "sWidth": "5%"},
         {"sTitle": "品种", "mData": "name", "sWidth": "5%"},
         {"sTitle": "订单总量", "mData": "orderCount", "sWidth": "5%"},
         {"sTitle": "单价", "mData": "unitPrice", "sWidth": "5%"},
@@ -145,6 +146,7 @@ function operateButton(cellvalue, options, rowObject) {
     var id = rowObject['id'];
     var status = rowObject['status'];
     var numNo = rowObject['numNo'];
+    var wells = rowObject['wells'];
     var receiveName = rowObject['receiveName'];
     var name = rowObject['name'];
     var orderCount = rowObject['orderCount'];
@@ -165,14 +167,14 @@ function operateButton(cellvalue, options, rowObject) {
         + name + "','" + numNo + "','" + receiveName + "','" + orderCount + "','"
         + unitPrice + "','" + inputPerson + "','" + usePerson + "','"
         + contractType + "','" + orderTime + "','"
-        + billName + "','" + address + "','"
+        + billName + "','" + address + "','"+ wells + "','"
         + billNo + "','" + tel + "','" + bankName + "','" + bankNo + "','"+ status + "','"
         + forkliftFee
         + "')\">编辑</button>";
 }
 //编辑
 function editSettlement(id, name, numNo, receiveName, orderCount, unitPrice, ip, up, ct, orderTime,
-                        billName, address, billNo, tel, bankName, bankNo,status, ff) {
+                        billName, address,wells, billNo, tel, bankName, bankNo,status, ff) {
     subType = 2;
     $("#myModalLabel2").html("编辑合同信息");
     $("#numNo").val(numNo);
@@ -181,6 +183,7 @@ function editSettlement(id, name, numNo, receiveName, orderCount, unitPrice, ip,
 
     $("#receiveName").val(receiveName).select2();
     $("#name").val(name).select2();
+    $("#wells").val(wells).select2();
     $("#orderTime").val(orderTime);
     $("#orderCount").val(orderCount);
     $("#unitPrice").val(unitPrice);
@@ -248,6 +251,7 @@ function initButtonClick() {
                 unitPrice: $("#unitPrice").val(),
                 orderTime: $("#orderTime").val(),
                 inputPerson: $("#inputPerson").val(),
+                wells: $("#wells").val(),
                 usePerson: $("#usePerson").val(),
                 contractType: $("#contractType").val(),
                 forkliftFee: $("#forkliftFee").val(),

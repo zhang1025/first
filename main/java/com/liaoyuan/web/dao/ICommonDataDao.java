@@ -69,6 +69,7 @@ public interface ICommonDataDao {
      int editFreight(DataBean bean);
            
      int editSettlement(DataBean bean);
+     DataBean getSettlementForRate(DataBean bean);
 
 
      int alreadyNameAdd(DataBean bean);

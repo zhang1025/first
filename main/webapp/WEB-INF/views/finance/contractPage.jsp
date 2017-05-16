@@ -130,6 +130,7 @@
 </div>
 <!--新增信息-->
 <input type="hidden" id="hideId">
+<input type="hidden" id="totalId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -146,7 +147,7 @@
                         <label for="settlement" class="col-lg-4 control-label"
                                style="padding: 1px;width: 17%">结算单位:</label>
                         <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                            <select id="settlement" class="select fancy-select form-control required">
+                            <select id="settlement" onchange="gotTaxation()" class="select fancy-select form-control required">
                                 <c:forEach var="st" items="${settlements}" varStatus="s">
                                     <option value="${st.name}">${st.name}</option>
                                 </c:forEach>
@@ -170,8 +171,7 @@
                         <label for="taxation" class="col-lg-4 control-label"
                                style="padding: 1px;width: 17%">税金:</label>
                         <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                            <input type="text" id="taxation" class="form-control required" aria-required="true"
-                                   name="number" placeholder="请输入税金">
+                            <input type="text" id="taxation" class="form-control required" aria-required="true">
                         </div>
                     </div>
                     <div class="form-group">

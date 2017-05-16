@@ -148,6 +148,9 @@ public class CommonDataServiceImpl implements CommonDataService {
     }
 
 
+    public DataBean getSettlementForRate(DataBean bean){
+       return iCommonDataDao.getSettlementForRate(bean);
+    }
     @Override
     public int deleteCommon(int id, String model) {
         return iCommonDataDao.deleteCommon(id, "dm_" + model);

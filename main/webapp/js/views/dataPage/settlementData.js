@@ -16,12 +16,11 @@ function querySettlementData() {
     // var method = $("#s_method option:selected").text();
     // var province = $("#s_province option:selected").text();
     var method = $("#s_method").val();
-    var province = $("#s_province").val();
+    // var province = $("#s_province").val();
     var params = [
         {name: 'model', value: model},
         {name: 'name', value: name},
-        {name: 'method', value: method},
-        {name: 'province', value: province}
+        {name: 'method', value: method}
     ];
     var url = path + 'get_common_table';
     commonDataTablesWW(model + "DataTables", url, aoColumns, params, model + "Data");
@@ -30,12 +29,16 @@ function querySettlementData() {
 function dealTableTitle() {
     var aoColumns = new Array();
     aoColumns.push(
-        {"sTitle": "编号", "mData": "id","sWidth":"10%"},
-        {"sTitle": "结算单位名称", "mData": "name","sWidth":"20%"},
-        {"sTitle": "结算简记符", "mData": "mnc","sWidth":"15%"},
-        {"sTitle": "结算方式", "mData": "method","sWidth":"15%"},
-        {"sTitle": "结算行业", "mData": "industry","sWidth":"20%"},
-        {"sTitle": "结算省份", "mData": "province","sWidth":"15%"},
+        {"sTitle": "编号", "mData": "id","sWidth":"7%"},
+        {"sTitle": "结算单位名称", "mData": "name","sWidth":"15%"},
+        {"sTitle": "结算简记符", "mData": "mnc","sWidth":"8%"},
+        {"sTitle": "结算方式", "mData": "method","sWidth":"10%"},
+        {"sTitle": "结算行业", "mData": "industry","sWidth":"10%"},
+        {"sTitle": "结算省份", "mData": "province","sWidth":"8%"},
+        {"sTitle": "费率编号", "mData": "rateNo","sWidth":"8%"},
+        {"sTitle": "税率", "mData": "rate","sWidth":"8%"},
+        {"sTitle": "调车费率", "mData": "shunting","sWidth":"8%"},
+        {"sTitle": "装车费率", "mData": "entruck","sWidth":"8%"},
         {
             "sTitle": "类型", "mData": "type","sWidth":"10%", "mRender": function (data, type, row) {
             return operateType(data, type, row);
@@ -67,6 +70,10 @@ function operateButton(cellvalue, options, rowObject) {
     var method = rowObject['method'];
     var industry = rowObject['industry'];
     var province = rowObject['province'];
+    var rateNo = rowObject['rateNo'];
+    var rate = rowObject['rate'];
+    var shunting = rowObject['shunting'];
+    var entruck = rowObject['entruck'];
     var type = rowObject['type'];
     var editBtn = "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
         + c_id + "','"
@@ -75,12 +82,17 @@ function operateButton(cellvalue, options, rowObject) {
         + method + "','"
         + industry + "','"
         + province + "','"
+        + rateNo + "','"
+        + rate + "','"
+        + shunting + "','"
+        + entruck + "','"
         + type
         + "')\">编辑</button>";
     return editBtn + "<button type='button' class='btn btn-danger btn-small' data-toggle='modal' data-target='#modalDelete'  onclick='deleteSettlement(" + c_id + ")'>移除</button>";
 }
 //编辑
-function editSettlement(c_id, c_name, c_mnc, method, industry, province, type) {
+function editSettlement(c_id, c_name, c_mnc, method, industry, province,
+                        rateNo,rate,shunting,entruck,type) {
     subType = 2;
     $("#name").val(c_name);
     $("#mnc").val(c_mnc);
@@ -90,6 +102,10 @@ function editSettlement(c_id, c_name, c_mnc, method, industry, province, type) {
     $("#method").val(method).select2();
     $("#industry").val(industry).select2();
     $("#type").val(type);
+    $("#rateNo").val(rateNo);
+    $("#rate").val(rate);
+    $("#shunting").val(shunting);
+    $("#entruck").val(entruck);
 
 }
 function initButtonClick() {
@@ -113,6 +129,10 @@ function initButtonClick() {
                 method: $("#method").val(),
                 industry: $("#industry").val(),
                 province: $("#province").val(),
+                rateNo: $("#rateNo").val(),
+                rate: $("#rate").val(),
+                shunting: $("#shunting").val(),
+                entruck: $("#entruck").val(),
                 type: $("#type").val()
                 , id: subType == 1 ? 0 : $("#hideId").val()
             },

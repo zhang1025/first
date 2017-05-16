@@ -62,19 +62,19 @@
                                         <%--</select>--%>
                                     <%--</div>--%>
                                 <%--</div>--%>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 50px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">合同类型</span>
-                                        <select id="s_type" class="fancy-select form-control"
-                                                style="width: 100px">
-                                            <option value="">请选择</option>
-                                            <option value="1">公用煤</option>
-                                            <option value="2">零销煤</option>
-                                            <option value="4">职工煤</option>
-                                            <option value="3">其他</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 50px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<span class="input-group-addon">合同类型</span>--%>
+                                        <%--<select id="s_type" class="fancy-select form-control"--%>
+                                                <%--style="width: 100px">--%>
+                                            <%--<option value="">请选择</option>--%>
+                                            <%--<option value="1">公用煤</option>--%>
+                                            <%--<option value="2">零销煤</option>--%>
+                                            <%--<option value="4">职工煤</option>--%>
+                                            <%--<option value="3">其他</option>--%>
+                                        <%--</select>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                             </div>
                             <div class="row">
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">

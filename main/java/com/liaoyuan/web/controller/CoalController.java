@@ -73,7 +73,6 @@ public class CoalController extends BaseController{
     @RequestMapping(value = "/get_card_table", method = RequestMethod.POST)
     public void getCardTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
         ContractBean bean = WebCommonDataUtils.getContractData(jsonString);
-        bean.setStatus("5");//审核通过的
         int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
         List<ContractBean> gridData = marketService.getTableContractData(bean);
         printDataTables(response, count, gridData);

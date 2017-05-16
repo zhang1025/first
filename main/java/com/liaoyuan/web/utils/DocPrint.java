@@ -69,6 +69,20 @@ public class DocPrint {
         }
     }
 
+
+    //打开word查看
+    public static void printWordFile(String filename){
+
+        try{
+
+            Runtime.getRuntime().exec("cmd.exe /c start /min winword " +filename+" /q /n /f /mFilePrint/mFileExit");
+
+        }catch(Exception e){
+
+            System.out.println("打印异常:" +e.getMessage());}
+    }
+
+
     /* 打印指定的文件 */
     private void printFileAction()
     {
