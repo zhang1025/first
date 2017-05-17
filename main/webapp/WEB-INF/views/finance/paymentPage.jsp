@@ -23,11 +23,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:20px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-top: 5px;padding-left:20px">
                                     <div class="input-group">
                                         <span class="input-group-addon">结算单位</span>
                                         <select id="s_st" class="select fancy-select form-control"
-                                                style="width: 150px">
+                                                style="width: 230px">
                                             <option value="">请选择</option>
                                             <c:forEach var="st" items="${settlements}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
@@ -41,15 +41,15 @@
                                         <button id="searBtn" class="btn btn-primary mr5 mb10" type="button">查询</button>
                                     </div>
                                 </div>
+                                <%--<div style="padding: 15px;float: right">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<button id="delBtn" class="btn btn-danger mr5 mb10" type="button">删除--%>
+                                        <%--</button>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div style="padding: 15px;float: right">
                                     <div class="input-group">
-                                        <button id="delBtn" class="btn btn-danger mr5 mb10" type="button">删除
-                                        </button>
-                                    </div>
-                                </div>
-                                <div style="padding: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="addPayBtn" class="btn btn-success mr5 mb10" type="button">追加</button>
+                                        <button id="addPayBtn" class="btn btn-warning mr5 mb10" type="button">追加</button>
                                     </div>
                                 </div>
                                 <div style="padding: 15px;float: right">
@@ -105,24 +105,26 @@
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <div class="form-group">
                                     <label for="numNo" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">客户编码:</label>
-                                    <div class="col-lg-10" style="width: 25%;padding-left: 5px">
+                                           style="padding-right: 1px;width: 17%">客户编码:</label>
+                                    <div class="col-lg-10" style="width: 250px;padding-left: 5px">
                                         <input type="text" id="numNo" class="form-control required" aria-required="true"
                                                placeholder="客户编码">
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
                                 <div class="form-group">
                                     <label for="name" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">结算单位:</label>
-                                    <div class="col-lg-10" style="width: 60%;padding-left: 5px">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                                         <select id="name" onchange="searchTaxation()" class="select fancy-select form-control">
                                             <c:forEach var="re" items="${settlements}" varStatus="s">
-                                                <option value="${re.name}">${re.name}</option>
+                                                <option value="${re.id}">${re.name}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -142,11 +144,14 @@
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="priorbalance" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">前期余额:</label>
+                                    <label for="fn" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">到站站点:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="priorbalance" class="form-control" readonly="readonly"
-                                                value="0" >
+                                        <select id="fn" class="select fancy-select form-control">
+                                            <c:forEach var="re" items="${sites}" varStatus="s">
+                                                <option value="${re.name}">${re.name}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
                             </td>
@@ -255,6 +260,36 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" id="submitBut" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalVerify" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel3">追加交款信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="validate1" class="form-horizontal group-border stripped" role="form">
+                    <div class="form-group">
+                        <label for="appendPay" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">是否通过:</label>
+                        <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                            <input type="text" id="appendPay" class="form-control required" aria-required="true"
+                                   placeholder="追加存款">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="submitBut1" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>

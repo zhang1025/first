@@ -22,4 +22,6 @@ public interface ITransportDao {
     //更改调运状态 已传的同时更新对应日计划和月计划的实发车以及实发吨数
     int updateDayInfo(DiaoyunBean bean);
     int updateMonthInfo(DiaoyunBean bean);
+
+    int checkPlanCars(@Param(value = "dayId") int dayId);
 }

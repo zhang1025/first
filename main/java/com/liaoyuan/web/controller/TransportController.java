@@ -86,6 +86,16 @@ public class TransportController extends BaseController {
         printDataTables(response, count, gridData);
     }
 
+
+    /**
+     * 检车已经发车数量
+     * 对比实发已超出计划车书
+     */
+    @RequestMapping(value = "/checkPlanCars", method = RequestMethod.POST)
+    public Integer checkPlanCars(int dayId) {
+        return transportService.checkPlanCars(dayId);
+    }
+
     /**
      * 调运 安排发车
      */

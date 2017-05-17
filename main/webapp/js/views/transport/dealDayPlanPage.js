@@ -85,18 +85,18 @@ function operateButton(cellvalue, options, rowObject) {
     if(status == -1){ //计划中止，不能安排发车调运
         dealBut =  "<button type='button' class='btn btn-success btn-small' disabled='disabled'>安排发车</button>";
     }else{
-        dealBut= "<button type='button' class='btn btn-success btn-small' data-toggle='modal' data-target='#myModal'  onclick=\"dealDayPlan('"
+        dealBut= "<button type='button' class='btn btn-success btn-small' onclick=\"dealDayPlan('"
             + id + "','"
             + status + "','"  + monthId + "','"+ name + "','"+ planTonnage + "','"
             + ast + "','"+ rid + "','"
-            + wellsName + "','"
+            + wellsName + "','" + planCarNum + "','"
             + coalName + "','" + siteName
             + "')\">安排发车</button>";
     }
     return dealBut;
 }
 //新建调运计划
-function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,coalName,siteName) {
+function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,pc,coalName,siteName) {
     $("#freightTD").hide();//运费信息在填写车皮号的时候输入，这里先隐藏
     $("#hideId").val(id); //日计划的id
     $("#hideMonId").val(monthId); //对应月计划的id
@@ -107,6 +107,14 @@ function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,coalNa
     $("#coalName").val(coalName);
     $("#siteName").val(siteName);
     $("#status").val(status);
+    //根据id查询已经安排发出的数量
+    $.post(path+"checkPlanCars",{dayId:id},function (data) {
+        if(data >= parseInt(pc)){
+            swal("警告","已安排发车数不能大于计划发车数量","warning");
+        }else{
+            $("#myModal").modal("show");
+        }
+    });
 }
 function initButtonClick() {
     $("#searBtn").on("click", function () {
@@ -131,7 +139,7 @@ function initButtonClick() {
                 id:$("#hideDealId").val(),monthId:$("#hideMonId").val()
             },
             function (result) {
-                $('#myModal').trigger('click');
+                $("#myModal").modal("hide");
                 if (result > 0) {
                     swal("成功","操作成功！","success");
                     queryDealDayPlanData($("#hideId").val());

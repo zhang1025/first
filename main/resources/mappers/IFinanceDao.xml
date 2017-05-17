@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoyuan.web.dao.FinanceDao">
+
+
+    <select id="countPaymentData" parameterType="CustomerPayment" resultType="java.lang.Integer">
+        select count(*) from customer_payment where 1=1
+        <if test="settlement!=null and settlement!=''">
+            and settlement like "#{settlement}%"
+        </if>
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+    </select>
+
+    <select id="getPaymentTableData" parameterType="CustomerPayment" resultType="CustomerPayment">
+        select * from customer_payment where 1=1
+        <if test="settlement!=null and settlement!=''">
+            and settlement like "#{settlement}%"
+        </if>
+        and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
+        order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+    </select>
+
+
+
+    <select id="checkRate" resultType="DataBean">
+       select * from dm_settlement where id=#{id} and rate is not NULL
+    </select>
+
+
+    <insert id="addPaymentInfo" parameterType="CustomerPayment">
+        INSERT  INTO customer_payment (numNo,settlement,usePerson,priorbalance,currentDeposit,
+        planCar,planTonnage,coalMoney,unitPrice,taxation,freight,entruck,totalAmount,
+        balance,fund,freightName,auditPeople,cashier,addPeople,createtime)
+         VALUES (#{numNo},#{settlement},#{usePerson},#{priorbalance},#{currentDeposit},
+         #{planCar},#{planTonnage},#{coalMoney},#{unitPrice},#{taxation},#{freight},
+         #{entruck},#{totalAmount},
+         #{balance},#{fund},#{freightName},#{auditPeople},#{cashier},#{addPeople},NOW());
+    </insert>
+
+    <select id="getInfoFromId" resultType="CustomerPayment">
+        select * from customer_payment where id=#{id}
+    </select>
+    <!--追加交款  更新信息-->
+    <update id="appendPayInfo" parameterType="CustomerPayment">
+        update customer_payment set priorbalance=#{priorbalance},
+        currentDeposit=#{currentDeposit},totalAmount=#{totalAmount},
+        balance=#{balance}  where id=#{id}
+    </update>
+
+    <!--根据站点和吨数取相应的运费信息-->
+    <select id="selectRateFromFreight" resultType="DataBean" >
+        SELECT * from dm_freight where name=#{name}  and tonnage=#{tonnage}
+    </select>
+    <insert id="addLogs" parameterType="PayLogs">
+        INSERT  INTO pay_logs (account,settlement,currentDeposit,description,createtime) VALUES
+        (#{account},#{settlement},#{currentDeposit},#{description},now())
+    </insert>
+</mapper>

@@ -1,6 +1,7 @@
 package com.liaoyuan.web.service;
 
 import com.liaoyuan.web.entity.DiaoyunBean;
+
 import java.util.List;
 
 /**
@@ -15,5 +16,7 @@ public interface TransportService {
     int editDealDayPlan(DiaoyunBean bean);
 
     int dealStatusDayPlan(DiaoyunBean bean);
+
+    int checkPlanCars( int dayId);
 
 }

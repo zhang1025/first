@@ -303,6 +303,14 @@ function initButtonClick() {
     $("#balance").on("click", function () {
         balanceSettlement(checkBtn());
     });
+    //调整价格  $("#myModalAdjustPrice").modal("show");
+    $("#adjustPrice").on("click", function () {
+        balanceSettlement(checkBtn());
+    });
+    //追加 增补合同  $("#myModalAddCon").modal("show");
+    $("#addContract").on("click", function () {
+        balanceSettlement(checkBtn());
+    });
     //打印合同
     $("#print").on("click", function () {
          printInfo(checkBtn());
@@ -327,6 +335,11 @@ function balanceSettlement(id) {
         swal("", "请选中一行！", "warning");
         return;
     }
+    $.post(path +"getInfoFromId",{id:id},function (data) {
+        //赋值
+        $("#myModalBalance").modal("show");
+    });
+
     $.post(path + "balanceContractInfo", {id: id}, function (data) {
         if (data == 1) {
             swal("成功", "操作成功！", "success");
@@ -334,7 +347,7 @@ function balanceSettlement(id) {
         } else if (data == -1) {
             swal("失败", "操作失败", "error");
         }else if (data == -2) {
-            swal("失败", "未审核或是锁定状态的合同不能进行结算", "warning");
+            swal("", "未通过或未审核或锁定的合同不能进行结算", "warning");
         }else{
             swal("失败", "网络异常", "error");
         }

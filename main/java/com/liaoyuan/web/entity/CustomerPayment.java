@@ -30,6 +30,14 @@ public class CustomerPayment {
     private String addPeople;//录入
     private String createtime;
 
+    //到站站点
+    private String freightName;
+
+    private int status;
+
+    private String beginDate;
+    private String endDate;
+
     //分页用
     private int iDisplayStart;
     private int iDisplayLength;

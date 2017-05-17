@@ -85,6 +85,15 @@ public class MarketController extends BaseController {
     public Integer balanceContractInfo(String id) {
         return  marketService.balanceContractInfo(Integer.parseInt(id));
     }
+
+    /**
+     * 根据id获取合同信息
+     */
+    @RequestMapping(value = "/getInfoFromId", method = RequestMethod.POST)
+    public ContractBean getInfoFromId(String id) {
+        return  marketService.getContractInfoFromId(Integer.parseInt(id));
+    }
+
     @RequestMapping(value = "/lockInfo", method = RequestMethod.POST)
     public Integer lockInfo(String id,int type) {
         int rtn = 0;

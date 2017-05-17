@@ -27,6 +27,10 @@
         (#{rid},#{name},#{wagonNo},#{tonnage},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
     </insert>
 
+    <!--检查已经发车数量实发大于计划数量-->
+    <select id="checkPlanCars" resultType="java.lang.Integer">
+         SELECT COUNT(*)  from diaoyun where dayId=#{dayId}
+    </select>
     <!--更改调运信息-->
     <update id="editDealDayPlan" parameterType="DiaoyunBean">
         update diaoyun set wagonNo=#{wagonNo},tonnage=#{tonnage} where id=#{id}

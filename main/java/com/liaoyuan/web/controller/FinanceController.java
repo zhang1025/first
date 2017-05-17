@@ -3,11 +3,13 @@ package com.liaoyuan.web.controller;
 import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.*;
 import com.liaoyuan.web.service.CommonDataService;
+import com.liaoyuan.web.service.FinanceService;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.service.UserService;
 import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.WebCommonDataUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,9 @@ public class FinanceController extends BaseController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    FinanceService financeService;
+
     /**
      * 外运客户交款 页面
      */
@@ -47,18 +52,55 @@ public class FinanceController extends BaseController {
         log.info("=========财务====外运客户交款============");
         List<DataBean> st = commonDataService.getListData(Constant.SETTLEMENT);
         List<DataBean> funds = commonDataService.getListData(Constant.FUND);
+        List<DataBean> sites = commonDataService.getListData(Constant.SITE);
         List<UserBean> users = userService.getUsersInfo();
         modelMap.put("users",users);
         modelMap.put("funds",funds);
         modelMap.put("settlements",st);
+        modelMap.put("sites",sites);
         modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
         return new ModelAndView("/finance/paymentPage");
     }
     @RequestMapping(value = "/get_payment_table", method = RequestMethod.POST)
     public void getPaymentTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
-        int count = 0;
-        List<ContractBean> gridData = new ArrayList<>();
+        CustomerPayment bean = WebCommonDataUtils.getCustomerPaymentData(jsonString);
+        int count =  bean.getIRecordsTotal() == 0 ? financeService.countPaymentData(bean):bean.getIRecordsTotal();
+        List<CustomerPayment> gridData =financeService.getPaymentTableData(bean) ;
         printDataTables(response, count, gridData);
+    }
+    /**
+     * 根据结算单位查询是否配置了相应税率
+     */
+    @RequestMapping(value = "/checkRate", method = RequestMethod.POST)
+    public Integer checkRate(int id){
+        DataBean bean = financeService.checkRate(id);
+        if(null==bean || StringUtils.isBlank(bean.getRate()) || "0".equals(bean.getRate())){
+            return -1;
+        }
+        return 1;
+    }
+
+    //添加客户交款信息
+    @RequestMapping(value = "/addPaymentInfo", method = RequestMethod.POST)
+    public Integer addPaymentInfo(CustomerPayment bean){
+        DataBean dataBean = financeService.checkRate(Integer.parseInt(bean.getId()));
+        int rtn = financeService.addPaymentInfo(bean,dataBean);
+        if(rtn > 0){
+            financeService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    bean.getSettlement(),bean.getCurrentDeposit(),"新增客户交款信息"));
+        }
+        return rtn;
+    }
+
+    //追加交款信息
+    @RequestMapping(value = "/appendPayInfo", method = RequestMethod.POST)
+    public Integer appendPayInfo(int id,String appendPay){
+        int rtn = financeService.appendPayInfo(id,appendPay);
+        if(rtn > 0){
+            financeService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "",appendPay,"追加--客户交款"+appendPay));
+        }
+        return rtn;
     }
 
     /**

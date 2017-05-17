@@ -75,12 +75,16 @@ public class MarketServiceImpl implements MarketService{
         if(bean == null){
             return -1;
         }
-        if(Integer.parseInt(bean.getStatus())==0||Integer.parseInt(bean.getStatus())==2){
-            return -2;//0未审核  2锁定  不能结算合同
+        int status = Integer.parseInt(bean.getStatus());
+        if(status==0||status==2||status==-1){
+            return -2;//0未审核  2锁定  -1未通过  不能结算合同
         }
         return iMarkerDao.balanceContractInfo(id);
     }
 
+    public ContractBean getContractInfoFromId(int id){
+        return iMarkerDao.getContractInfoFromId(id);
+    }
     //打印合同信息
     public int printContractInfo( int id){
         ContractBean bean =  iMarkerDao.getContractInfoFromId(id);

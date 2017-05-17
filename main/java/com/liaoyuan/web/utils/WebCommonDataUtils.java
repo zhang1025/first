@@ -1,10 +1,7 @@
 package com.liaoyuan.web.utils;
 
 import com.liaoyuan.web.controller.base.BaseController;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DepositBean;
-import com.liaoyuan.web.entity.DiaoyunBean;
-import com.liaoyuan.web.entity.PlanBean;
+import com.liaoyuan.web.entity.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
@@ -118,6 +115,30 @@ public class WebCommonDataUtils{
             bean.setIDisplayStart(iDisplayStart);
             bean.setIRecordsTotal(iRecordsTotal);
             bean.setDayId(dayId);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
+                bean.setEndDate(bean.getEndDate()+" 23:59:59");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bean;
+    }
+
+    /**
+     * PlanBean
+     */
+    public static CustomerPayment getCustomerPaymentData(String jsonString) {
+        CustomerPayment bean = new CustomerPayment();
+        try {
+            // 把参数 转换为Map
+            Map<String, Object> params = jsonToMap(jsonString);
+            int iDisplayLength = Integer.parseInt(params.get("iDisplayLength") + "");
+            int iDisplayStart = Integer.parseInt(params.get("iDisplayStart") + "");
+            int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal") + "");
+            BeanUtils.populate(bean, params);
+            bean.setIDisplayLength(iDisplayLength);
+            bean.setIDisplayStart(iDisplayStart);
+            bean.setIRecordsTotal(iRecordsTotal);
             if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
                 bean.setEndDate(bean.getEndDate()+" 23:59:59");
             }

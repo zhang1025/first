@@ -43,6 +43,9 @@ public class TransportServiceImpl implements TransportService {
         return list;
     }
 
+    public int checkPlanCars( int dayId){
+        return iTransportDao.checkPlanCars(dayId);
+    }
     @Override
     public int addDealDayPlan(DiaoyunBean bean) {
         return iTransportDao.addDealDayPlan(bean);
