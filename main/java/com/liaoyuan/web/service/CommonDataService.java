@@ -64,4 +64,7 @@ public interface CommonDataService {
 
 
     public List<DataBean> getListData(String model);
+
+
+ int addLogs(PayLogs logs);
 }

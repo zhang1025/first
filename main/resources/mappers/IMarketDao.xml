@@ -28,13 +28,14 @@
 
     </select>
     <select id="getTableContractData" parameterType="ContractBean" resultType="ContractBean">
-        select id,numNo,wells,coalCard,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,orderCount*unitPrice as prepaidAmount,
+        select id,numNo,wells,coalCard,receiveName,fund,taxation,financePerson,settlement,name,orderCount,unitPrice,
+        orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
-        orderCount*unitPrice-sendCount*unitPrice as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
+        (orderCount*unitPrice-sendCount*unitPrice) as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
         orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
         where 1=1
         <include refid="search"/>
-        order by createtime desc limit ${iDisplayStart},${iDisplayLength}
+        order by name desc, createtime desc limit ${iDisplayStart},${iDisplayLength}
     </select>
 
     <select id="getContractInfoFromId" resultType="ContractBean">
@@ -57,6 +58,30 @@
         bankName=#{bankName},bankNo=#{bankNo} where id=#{id}
     </update>
 
+    <update id="balanceContractInfo">
+        update car_contract set status=4 where id=#{id}
+    </update>
+
+    <!--增加合同  增加吨数 更新-->
+    <update id="addTonnageInfo">
+        update car_contract set orderCount=orderCount+${addTonnage}
+        where id=#{id}
+    </update>
+
+    <!--调整价格-->
+    <update id="updateStatusForAdjust">
+        update car_contract set status=7 where id=#{id}
+    </update>
+    <insert id="addNewInfoForAdjust" parameterType="ContractBean">
+        insert into car_contract(coalCard,numNo,wells,receiveName,name,orderCount,unitPrice,inputPerson,
+        usePerson,contractType,forkliftFee,orderTime,status,
+        financePerson,settlement,fund,taxation,magneticCard,billName,address,billNo,tel,bankName,bankNo)
+        values (#{coalCard},#{numNo},#{wells},#{receiveName},#{name},
+        #{orderCount},#{unitPrice},#{inputPerson},#{usePerson},#{contractType},#{forkliftFee},
+        #{orderTime},#{status},#{financePerson},#{settlement},#{fund},#{taxation},#{magneticCard},
+        #{billName},#{address},#{billNo},#{tel},#{bankName},#{bankNo});
+    </insert>
+
     <!--财务人员更新合同信息-->
     <update id="editContractInfoForFinance" parameterType="ContractBean">
          update car_contract set settlement=#{settlement},fund=#{fund},taxation=#{taxation},
@@ -68,9 +93,6 @@
     </update>
     <update id="unlockInfo">
         update car_contract set status=1 where id=#{id}
-    </update>
-    <update id="balanceContractInfo">
-        update car_contract set status=4 where id=#{id}
     </update>
 
     <!--财务审核-->

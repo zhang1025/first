@@ -44,8 +44,6 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <div style="padding-top: 7px;float: left">
-                            </div>
                             <table id="balanceDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
@@ -84,6 +82,11 @@
                             </h4>
                         </div>
                         <div class="panel-body">
+                            <div style="padding-top: 15px;float: left">
+                                <div class="input-group">
+                                    <button id="balance" class="btn btn-warning mr5 mb10" type="button">结算金额输入</button>
+                                </div>
+                            </div>
                             <table id="noBalanceListTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
@@ -101,7 +104,7 @@
 <!--新增信息-->
 <input type="hidden" id="hideId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
+           aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,6 +160,69 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" id="submitBut" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--计算金额输入-->
+<div class="modal fade" id="myModalBalance" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">结算金额输入信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="validate1" class="form-horizontal group-border stripped" role="form">
+                    <div class="form-group">
+                        <label for="settlement" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">结算单位:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <select id="settlement" class="select fancy-select form-control required">
+                                <c:forEach var="st" items="${settlements}" varStatus="s">
+                                    <option value="${st.name}">${st.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fund" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">资金方式:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <select id="fund" class="select fancy-select form-control required">
+                                <c:forEach var="st" items="${funds}" varStatus="s">
+                                    <option value="${st.name}">${st.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taxation" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">税金:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <input type="text" id="taxation" class="form-control required" aria-required="true"
+                                   name="number" placeholder="请输入税金">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="financePerson" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">财务经办人:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <input type="text" id="financePerson"
+                                   placeholder="${account}" readonly="readonly">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="submitBut2" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>

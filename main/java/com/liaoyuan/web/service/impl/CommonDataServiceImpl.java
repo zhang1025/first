@@ -2,6 +2,7 @@ package com.liaoyuan.web.service.impl;
 
 import com.liaoyuan.web.dao.ICommonDataDao;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.PayLogs;
 import com.liaoyuan.web.service.CommonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -160,4 +161,8 @@ public class CommonDataServiceImpl implements CommonDataService {
     public List<DataBean> getListData(String model) {
         return iCommonDataDao.getListData("dm_" + model);
     }
+    public int addLogs(PayLogs logs){
+        return iCommonDataDao.addLogs(logs);
+    }
+
 }

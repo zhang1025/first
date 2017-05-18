@@ -16,6 +16,12 @@ public interface FinanceService {
     List<CustomerPayment> getPaymentTableData(CustomerPayment bean);
 
     DataBean checkRate( int id);
+
+
+    DataBean getRateInfoFromSettName( String st);
+    DataBean selectRateFromFreight(String name, String tonnage);
+
+
     int addPaymentInfo(CustomerPayment bean,DataBean dataBean);
 
     int appendPayInfo(int id,String appendPay);

@@ -69,7 +69,7 @@ function initButtonClick() {
         if (!$form.valid()) {
             return false;
         }
-        var url = path + (subType == 1?"addPaymentInfo":"editPaymentInfo");
+        var url = path + "addPaymentInfo";
         $.post(url, {
                 numNo: $("#numNo").val(),settlement: $("#name option:selected").text(),
                 usePerson: $("#usePerson").val(),freightName: $("#fn").val(),
@@ -86,7 +86,9 @@ function initButtonClick() {
                 if (result > 0) {
                     swal("成功","操作成功！","success");
                     queryPaymentData();
-                }  else {
+                }  else if(result==-1) {
+                    swal("警告","没有相应的运费信息，请到数据维护中添加","warning");
+                }else{
                     swal("失败","操作失败","error");
                 }
             });
@@ -103,12 +105,10 @@ function initButtonClick() {
             return;
         }
         $("#myModalVerify").modal("show");
-        appendClick(id);
+        $("#addPayHideId").val(id);
     });
-}
-function appendClick(id) {
     $("#submitBut1").on("click",function () {
-        $.post(path + "appendPayInfo", {id:id,appendPay: $("#appendPay").val()},
+        $.post(path + "appendPayInfo", {id:$("#addPayHideId").val(),appendPay: $("#appendPay").val()},
             function (data) {
                 if(data == 1){
                     $("#myModalVerify").modal("hide");

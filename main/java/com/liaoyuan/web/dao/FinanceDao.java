@@ -20,6 +20,7 @@ public interface FinanceDao {
     List<CustomerPayment> getPaymentTableData(CustomerPayment bean);
 
     DataBean checkRate(@Param("id") int id);
+    DataBean getRateInfoFromSettName(@Param("settlement") String st);
     int addPaymentInfo(CustomerPayment bean);
     DataBean selectRateFromFreight(@Param("name") String name,@Param("tonnage") String tonnage);
 

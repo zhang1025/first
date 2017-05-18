@@ -123,17 +123,32 @@ public class FinanceController extends BaseController {
 
     @RequestMapping(value = "/get_balance_table", method = RequestMethod.POST)
     public void getBalanceTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
-//        PlanBean bean = WebCommonDataUtils.getPlanData(jsonString);
-//        List<PlanBean> gridData ;
-//        int count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
-//        bean.setIDisplayLength(count);//不分页  显示全部
-//        gridData = marketService.getTableDayPlanData(bean);
-//        printDataTables(response, count, gridData);
+        PlanBean bean = WebCommonDataUtils.getPlanData(jsonString);
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countDayPlanData(bean) : bean.getIRecordsTotal();
+        List<PlanBean> gridData = marketService.getTableDayPlanData(bean);
+        DataBean db ;
+        //获取到日计划信息，重新组合数据  税率等信息
+        for (PlanBean pb : gridData) {
+            db = financeService.getRateInfoFromSettName(pb.getSettlement());
+            pb.setActualSendedTotal(String.format("%.2f",
+                    pb.getActualSendedTonnage()*pb.getActualUnitPrice()));
+            pb.setRate(String.format("%.2f",
+                    pb.getActualSendedTotal()*(db==null?0:Double.parseDouble(db.getRate()))));
+            if(db==null){
+                pb.setEntruck("0");
+                pb.setShunting("0");
+            }else{
+                pb.setEntruck(String.format("%.2f",pb.getPlanTonnage()*Double.parseDouble(db.getEntruck())));
+                pb.setShunting(String.format("%.2f",pb.getPlanTonnage()*Double.parseDouble(db.getShunting())));
+            }
 
-        int count = 0;
-        List<ContractBean> gridData = new ArrayList<>();
+            db = financeService.selectRateFromFreight(pb.getSiteName(),String.valueOf(pb.getPlanTonnage()));
+            pb.setCost(db==null?0:db.getCost());
+        }
         printDataTables(response, count, gridData);
     }
+
+
     /**
      * 汇款单录入 页面
      */

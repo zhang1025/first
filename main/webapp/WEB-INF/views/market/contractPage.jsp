@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../include/taglib.jsp" %>
 
@@ -75,12 +74,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
                                     <div class="input-group">
                                         <span class="input-group-addon">时间</span>
-                                        <input type="text" id="date-range" name='date-range' class="form-control white-bg text-center"
+                                        <input type="text" id="date-range" name='date-range'
+                                               class="form-control white-bg text-center"
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
@@ -116,27 +116,29 @@
 
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="adjustPrice"  class="btn btn-primary mr5 mb10" type="button">调整价格</button>
+                                    <button id="adjustPrice" class="btn btn-primary mr5 mb10" type="button">调整价格
+                                    </button>
                                 </div>
                             </div>
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="balance"  class="btn btn-primary mr5 mb10" type="button">合同结账</button>
+                                    <button id="balance" class="btn btn-primary mr5 mb10" type="button">合同结账</button>
                                 </div>
                             </div>
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="addContract"  class="btn btn-primary mr5 mb10" type="button">增补合同</button>
+                                    <button id="addContract" class="btn btn-primary mr5 mb10" type="button">增补合同
+                                    </button>
                                 </div>
                             </div>
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="unlock"  class="btn btn-primary mr5 mb10" type="button">解锁</button>
+                                    <button id="unlock" class="btn btn-primary mr5 mb10" type="button">解锁</button>
                                 </div>
                             </div>
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="lock"  class="btn btn-primary mr5 mb10" type="button">锁定</button>
+                                    <button id="lock" class="btn btn-primary mr5 mb10" type="button">锁定</button>
                                 </div>
                             </div>
                             <div style="padding: 5px;float: left">
@@ -146,7 +148,7 @@
                             </div>
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
-                                    <button id="delete"  class="btn btn-danger mr5 mb10" type="button">删除</button>
+                                    <button id="delete" class="btn btn-danger mr5 mb10" type="button">删除</button>
                                 </div>
                             </div>
                             <table id="contractDataTables" class="table table-striped table-bordered table-hover"
@@ -195,8 +197,9 @@
                                     <label for="orderTime" class="col-lg-4 control-label"
                                            style="padding-right: 1px">订单日期:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="orderTime" class="form-control form_datetime" aria-required="true"
-                                               style="cursor: pointer;"  readonly="readonly">
+                                        <input type="text" id="orderTime" class="form-control form_datetime"
+                                               aria-required="true"
+                                               style="cursor: pointer;" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -206,7 +209,7 @@
                                 <div class="form-group">
                                     <label for="receiveName" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">客户名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <select id="receiveName" class="select fancy-select form-control required">
                                             <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
@@ -250,7 +253,8 @@
                                     <label for="orderCount" class="col-lg-4 control-label"
                                            style="padding-right: 1px">订单总量:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="orderCount" class="form-control required" aria-required="true"
+                                        <input type="text" id="orderCount" class="form-control required"
+                                               aria-required="true"
                                                name="number" placeholder="订单总量">
                                     </div>
                                 </div>
@@ -260,7 +264,8 @@
                                     <label for="unitPrice" class="col-lg-4 control-label"
                                            style="padding-right: 1px">合同单价:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="unitPrice" class="form-control required" aria-required="true"
+                                        <input type="text" id="unitPrice" class="form-control required"
+                                               aria-required="true"
                                                name="dataNumber" placeholder="合同单价">
                                     </div>
                                 </div>
@@ -300,7 +305,8 @@
                                     <label for="usePerson" class="col-lg-4 control-label"
                                            style="padding-right: 1px">经办人:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="usePerson" class="form-control required" aria-required="true"
+                                        <input type="text" id="usePerson" class="form-control required"
+                                               aria-required="true"
                                                placeholder="经办人">
                                     </div>
                                 </div>
@@ -332,8 +338,9 @@
                                 <div class="form-group">
                                     <label for="billName" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">公司名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="billName" class="form-control required" aria-required="true"
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="billName" class="form-control required"
+                                               aria-required="true"
                                                placeholder="公司名称">
                                     </div>
                                 </div>
@@ -344,8 +351,9 @@
                                 <div class="form-group">
                                     <label for="address" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">公司地址:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="address" class="form-control required" aria-required="true"
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="address" class="form-control required"
+                                               aria-required="true"
                                                placeholder="公司地址">
                                     </div>
                                 </div>
@@ -357,7 +365,8 @@
                                     <label for="billNo" class="col-lg-4 control-label"
                                            style="padding-right: 1px">税号:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="billNo" class="form-control required" aria-required="true"
+                                        <input type="text" id="billNo" class="form-control required"
+                                               aria-required="true"
                                                placeholder="税号">
                                     </div>
                                 </div>
@@ -379,7 +388,8 @@
                                     <label for="bankName" class="col-lg-4 control-label"
                                            style="padding-right: 1px">开户银行:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="bankName" class="form-control required" aria-required="true"
+                                        <input type="text" id="bankName" class="form-control required"
+                                               aria-required="true"
                                                placeholder="开户银行">
                                     </div>
                                 </div>
@@ -389,7 +399,8 @@
                                     <label for="bankNo" class="col-lg-4 control-label"
                                            style="padding-right: 1px">账号:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="bankNo" class="form-control required" aria-required="true"
+                                        <input type="text" id="bankNo" class="form-control required"
+                                               aria-required="true"
                                                placeholder="账号">
                                     </div>
                                 </div>
@@ -407,6 +418,7 @@
 </div>
 
 <!---->
+<input type="hidden" id="balanceHideId">
 <div class="modal fade" id="myModalBalance" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -425,8 +437,8 @@
                                 <div class="form-group">
                                     <label for="numNo1" class="col-lg-4 control-label"
                                            style="padding-right: 1px">合同编号:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                       <input type="text" id="numNo1">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="numNo1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -434,8 +446,8 @@
                                 <div class="form-group">
                                     <label for="name1" class="col-lg-4 control-label"
                                            style="padding: 1px;">煤炭品种:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="name1">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="name1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -445,8 +457,8 @@
                                 <div class="form-group">
                                     <label for="receiveName1" class="col-lg-4 control-label"
                                            style="padding: 1px;">客户名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="receiveName1">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                                        <input type="text" id="receiveName1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -456,8 +468,8 @@
                                 <div class="form-group">
                                     <label for="orderCount1" class="col-lg-4 control-label"
                                            style="padding: 1px;">订单总量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="orderCount1">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="orderCount1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -465,8 +477,8 @@
                                 <div class="form-group">
                                     <label for="sendCount1" class="col-lg-4 control-label"
                                            style="padding: 1px;">发运量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="sendCount1">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="sendCount1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -476,8 +488,8 @@
                                 <div class="form-group">
                                     <label for="left1" class="col-lg-4 control-label"
                                            style="padding: 1px;">剩余量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="left1">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="left1" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -485,8 +497,28 @@
                                 <div class="form-group">
                                     <label for="total" class="col-lg-4 control-label"
                                            style="padding: 1px;">预交金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="total">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="total" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="sendPrice" class="col-lg-4 control-label"
+                                           style="padding: 1px;">发运金额:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="sendPrice" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="leftPrice" class="col-lg-4 control-label"
+                                           style="padding: 1px;">剩余金额:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="leftPrice" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -499,19 +531,21 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="back" class="col-lg-4 control-label"
+                                    <label for="backPrice" class="col-lg-4 control-label"
                                            style="padding: 1px;">退款金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="back">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="backPrice" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
                                 <div class="form-group">
-                                    <label for="jn" class="col-lg-4 control-label"
-                                           style="padding: 1px;">缴纳金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="jn">
+                                    <label for="remarks1" class="col-lg-4 control-label"
+                                           style="padding: 1px;">备注:</label>
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                                        <input type="text" id="remarks1" class="form-control">
                                     </div>
                                 </div>
                             </td>
@@ -528,6 +562,7 @@
     </div>
 </div>
 
+<input type="hidden" id="adjustHideId">
 <div class="modal fade" id="myModalAdjustPrice" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -546,8 +581,8 @@
                                 <div class="form-group">
                                     <label for="numNo2" class="col-lg-4 control-label"
                                            style="padding-right: 1px">合同编号:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="numNo2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="numNo2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -555,8 +590,8 @@
                                 <div class="form-group">
                                     <label for="name2" class="col-lg-4 control-label"
                                            style="padding: 1px;">煤炭品种:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="name2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="name2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -566,8 +601,8 @@
                                 <div class="form-group">
                                     <label for="receiveName2" class="col-lg-4 control-label"
                                            style="padding: 1px;">客户名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="receiveName2">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                                        <input type="text" id="receiveName2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -577,8 +612,8 @@
                                 <div class="form-group">
                                     <label for="orderCount2" class="col-lg-4 control-label"
                                            style="padding: 1px;">订单总量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="orderCount2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="orderCount2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -586,8 +621,8 @@
                                 <div class="form-group">
                                     <label for="unitPrice2" class="col-lg-4 control-label"
                                            style="padding: 1px;">合同单价:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="unitPrice2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="unitPrice2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -597,8 +632,8 @@
                                 <div class="form-group">
                                     <label for="total2" class="col-lg-4 control-label"
                                            style="padding: 1px;">预交金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="total2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="total2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -606,8 +641,8 @@
                                 <div class="form-group">
                                     <label for="arrears2" class="col-lg-4 control-label"
                                            style="padding: 1px;">预交欠费:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="arrears2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="arrears2" value="0" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -617,8 +652,8 @@
                                 <div class="form-group">
                                     <label for="leftPrice2" class="col-lg-4 control-label"
                                            style="padding: 1px;">剩余金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="leftPrice2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="leftPrice2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -626,8 +661,8 @@
                                 <div class="form-group">
                                     <label for="left2" class="col-lg-4 control-label"
                                            style="padding: 1px;">剩余量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="left2">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="left2" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -638,60 +673,26 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="adjustType" class="col-lg-4 control-label"
-                                           style="padding: 1px;">调价类型:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="adjustType">
-                                    </div>
+                            <td colspan="2">
+                            <div class="form-group">
+                                <label for="currentPrize" class="col-lg-4 control-label"
+                                       style="padding: 1px;">煤炭当前价格:</label>
+                                <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                    <input type="text" id="currentPrize" class="form-control">
                                 </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="orderCount2_1" class="col-lg-4 control-label"
-                                           style="padding: 1px;">订单总量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="orderCount2_1">
-                                    </div>
-                                </div>
+                            </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <div class="form-group">
-                                    <label for="unitPrice2_1" class="col-lg-4 control-label"
-                                           style="padding: 1px;">合同单价:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="unitPrice2_1">
+                                    <label for="remarks2" class="col-lg-4 control-label"
+                                           style="padding: 1px;">备注:</label>
+                                    <div class="col-lg-10" style="width: 330px;padding-left: 5px">
+                                        <input type="text" id="remarks2" class="form-control">
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="total2_1" class="col-lg-4 control-label"
-                                           style="padding: 1px;">预交金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="total2_1">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <div class="form-group">
-                                <label for="left2_1" class="col-lg-4 control-label"
-                                       style="padding: 1px;">剩余量:</label>
-                                <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                    <input type="text" id="left2_1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="arrears2_1" class="col-lg-4 control-label"
-                                       style="padding: 1px;">预交欠款:</label>
-                                <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                    <input type="text" id="arrears2_1">
-                                </div>
-                            </div>
                         </tr>
 
                     </table>
@@ -699,12 +700,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="submitButAdjust" class="btn btn-primary">提交</button>
+                <button type="button"  subType="2" class="btn btn-primary">差额结算</button>
+                <button type="button"  subType="1" class="btn btn-primary">补交差额</button>
             </div>
         </div>
     </div>
 </div>
 
+<input type="hidden" id="AddConHideId">
 <div class="modal fade" id="myModalAddCon" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -713,7 +716,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel5">增补价格</h4>
+                <h4 class="modal-title" id="myModalLabel5">增补合同</h4>
             </div>
             <div class="modal-body">
                 <form id="validate3" class="form-horizontal group-border stripped" role="form">
@@ -723,8 +726,8 @@
                                 <div class="form-group">
                                     <label for="numNo3" class="col-lg-4 control-label"
                                            style="padding-right: 1px">合同编号:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="numNo3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="numNo3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -732,8 +735,8 @@
                                 <div class="form-group">
                                     <label for="name3" class="col-lg-4 control-label"
                                            style="padding: 1px;">煤炭品种:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="name3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="name3"  class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -743,8 +746,8 @@
                                 <div class="form-group">
                                     <label for="receiveName3" class="col-lg-4 control-label"
                                            style="padding: 1px;">客户名称:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="receiveName3">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                                        <input type="text" id="receiveName3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -754,8 +757,8 @@
                                 <div class="form-group">
                                     <label for="orderCount3" class="col-lg-4 control-label"
                                            style="padding: 1px;">订单总量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="orderCount3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="orderCount3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -763,8 +766,8 @@
                                 <div class="form-group">
                                     <label for="unitPrice3" class="col-lg-4 control-label"
                                            style="padding: 1px;">合同单价:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="unitPrice3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="unitPrice3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -774,8 +777,8 @@
                                 <div class="form-group">
                                     <label for="total3" class="col-lg-4 control-label"
                                            style="padding: 1px;">预交金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="total3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="total3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -783,8 +786,8 @@
                                 <div class="form-group">
                                     <label for="arrears3" class="col-lg-4 control-label"
                                            style="padding: 1px;">预交欠费:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="arrears3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="arrears3" value="0" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -794,8 +797,8 @@
                                 <div class="form-group">
                                     <label for="leftPrice3" class="col-lg-4 control-label"
                                            style="padding: 1px;">剩余金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="leftPrice3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="leftPrice3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -803,8 +806,8 @@
                                 <div class="form-group">
                                     <label for="left3" class="col-lg-4 control-label"
                                            style="padding: 1px;">剩余量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="left3">
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="left3" class="form-control" readonly="readonly">
                                     </div>
                                 </div>
                             </td>
@@ -817,19 +820,30 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="addMoney" class="col-lg-4 control-label"
-                                           style="padding: 1px;">追加金额:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="addMoney">
+                                    <label for="addTonnage" class="col-lg-4 control-label"
+                                           style="padding: 1px;">追加数量:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="addTonnage" onkeyup="inputPrice()">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="addTonnage" class="col-lg-4 control-label"
-                                           style="padding: 1px;">追加数量:</label>
-                                    <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                                        <input type="text" id="addTonnage">
+                                    <label for="addMoney" class="col-lg-4 control-label"
+                                           style="padding: 1px;">追加金额:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="addMoney" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <label for="remarks3" class="col-lg-4 control-label"
+                                           style="padding: 1px;">备注:</label>
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
+                                        <input type="text" id="remarks3" class="form-control">
                                     </div>
                                 </div>
                             </td>

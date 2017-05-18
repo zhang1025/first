@@ -124,6 +124,14 @@ public class PlanBean implements Serializable{
     private String searchType;
 
     private String excelType;
+
+    //税率
+    private String rate;
+    private String shunting;
+    private String entruck;
+    //运费
+    private double cost;
+
     //分页用
     private int iDisplayStart;
     private int iDisplayLength;

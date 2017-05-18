@@ -17,7 +17,7 @@ public interface UserService {
     int editUserPw(UserBean user);
     int deleteUSer(int id);
     int editUser(UserBean user);
-    Map<String,List<Permission>> getMenus(int roleId,String account);
+    Map<String,List<Permission>> getMenus(int roleId);
 
     UserBean getUserFromAccount(String account);
 

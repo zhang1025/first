@@ -120,6 +120,11 @@
         delete from ${table} where id=#{id}
     </delete>
 
+    <insert id="addLogs" parameterType="PayLogs">
+        INSERT  INTO pay_logs (account,settlement,currentDeposit,description,createtime) VALUES
+        (#{account},#{settlement},#{currentDeposit},#{description},now())
+    </insert>
+
 
     <!--根据name获取对应的信息 -->
     <select id="getInfoFromName"  resultType="DataBean">

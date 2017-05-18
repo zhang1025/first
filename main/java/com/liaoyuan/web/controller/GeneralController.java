@@ -66,7 +66,7 @@ public class GeneralController extends BaseController {
         httpSession.setAttribute(SessionUser.SESSION_ROOT_KEY,sessionUser);
         httpSession.setAttribute(SessionUser.SESSION_USER,account);
         //获取该用户的权限菜单
-        Map<String,List<Permission>> map = userService.getMenus(bean.getRoleId(),account);
+        Map<String,List<Permission>> map = userService.getMenus(bean.getRoleId());
         if(map==null || map.size()<=0){
             return -3;
         }

@@ -52,8 +52,8 @@
     </select>
     <!--用户登录查询相应的菜单信息-->
     <select id="getMenus" resultType="Permission">
-        select p.permission_id as permissionId,p.resource_url as resourceUrl,p.resource_name as resourceName,p.menu_name as menuName from t_user u, t_role r, t_permission p,
-        t_permission_mapping m where u.role_id=r.role_id and r.role_id =m.role_id and m.permission_id = p.permission_id and u.role_id=${roleId} and u.account=#{account} order by p.resource_order
+        select p.permission_id as permissionId,p.resource_url as resourceUrl,p.resource_name as resourceName,p.menu_name as menuName from  t_role r, t_permission p,
+        t_permission_mapping m where  r.role_id =m.role_id and m.permission_id = p.permission_id and r.role_id=${roleId}  order by p.resource_order
     </select>
 
     <select id="getUsersInfo" resultType="UserBean">

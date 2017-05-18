@@ -47,11 +47,7 @@
                                         <%--</button>--%>
                                     <%--</div>--%>
                                 <%--</div>--%>
-                                <div style="padding: 15px;float: right">
-                                    <div class="input-group">
-                                        <button id="addPayBtn" class="btn btn-warning mr5 mb10" type="button">追加</button>
-                                    </div>
-                                </div>
+
                                 <div style="padding: 15px;float: right">
                                     <div class="input-group">
                                         <button id="addNewBtn" class="btn btn-success mr5 mb10"
@@ -74,7 +70,11 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-
+                            <div style="padding: 15px;float: left">
+                                <div class="input-group">
+                                    <button id="addPayBtn" class="btn btn-warning mr5 mb10" type="button">追加</button>
+                                </div>
+                            </div>
                             <table id="paymentDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
@@ -265,6 +265,7 @@
     </div>
 </div>
 
+<input type="hidden" id="addPayHideId">
 <div class="modal fade" id="myModalVerify" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 550px">
@@ -279,7 +280,7 @@
                 <form id="validate1" class="form-horizontal group-border stripped" role="form">
                     <div class="form-group">
                         <label for="appendPay" class="col-lg-4 control-label"
-                               style="padding: 1px;width: 17%">是否通过:</label>
+                               style="padding: 1px;width: 17%">追加存款:</label>
                         <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                             <input type="text" id="appendPay" class="form-control required" aria-required="true"
                                    placeholder="追加存款">

@@ -89,6 +89,9 @@ function dealTableTitle() {
             if (status == 4) {
                 return "已结算";
             }
+            if (status == 7) {
+                return "调价前合同";
+            }
             return "未知";
         }
         },
@@ -303,18 +306,74 @@ function initButtonClick() {
     $("#balance").on("click", function () {
         balanceSettlement(checkBtn());
     });
+    $("#submitButBalance").on("click",function () {
+        $.post(path + "balanceContractInfo", {id: $("#balanceHideId").val(),
+            remarks1:$("#remarks1").val()}, function (data) {
+            if (data == 1) {
+                swal("成功", "操作成功！", "success");
+                $("#myModalBalance").modal("hide");
+                queryData();
+            } else if (data == -1) {
+                swal("失败", "操作失败", "error");
+            }else if (data == -2) {
+                swal("", "合同不是正常状态", "warning");
+            }else{
+                swal("失败", "网络异常", "error");
+            }
+        });
+    });
     //调整价格  $("#myModalAdjustPrice").modal("show");
     $("#adjustPrice").on("click", function () {
-        balanceSettlement(checkBtn());
+        adjustPriceFun(checkBtn());
+    });
+    $("button[subType]").on("click",function () {
+        var subtype = $(this).attr("subType");
+        $.post(path + "updatePriceInfo",
+            {id: $("#adjustHideId").val(), remarks2:$("#remarks2").val(),
+                currentPrize:$("#currentPrize").val(),subType:subtype}, function (data) {
+                if (data == 1) {
+                    $("#myModalAdjustPrice").modal("hide");
+                    swal("成功", "操作成功！", "success");
+                    queryData();
+                } else if (data == -1) {
+                    swal("失败", "操作失败", "error");
+                } else if (data == -2) {
+                    swal("失败", "合同不是正常状态!", "error");
+                }else if (data == -3) {
+                    swal("失败", "操作异常!", "error");
+                }else{
+                    swal("失败", "网络异常", "error");
+                }
+            });
     });
     //追加 增补合同  $("#myModalAddCon").modal("show");
     $("#addContract").on("click", function () {
-        balanceSettlement(checkBtn());
+        addContractFun(checkBtn());
+    });
+    $("#submitButAddCon").on("click",function () {
+        $.post(path + "addTonnageContractInfo",
+            {id: $("#AddConHideId").val(),addTonnage:$("#addTonnage").val(),
+                remarks3:$("#remarks3").val()}, function (data) {
+            if (data == 1) {
+                $("#myModalAddCon").modal("hide");
+                swal("成功", "操作成功！", "success");
+                queryData();
+            } else if (data == -1) {
+                swal("失败", "操作失败", "error");
+            }else{
+                swal("失败", "网络异常", "error");
+            }
+        });
     });
     //打印合同
     $("#print").on("click", function () {
          printInfo(checkBtn());
     });
+}
+//根据输入的追加金额计算他的应该追加交款
+function inputPrice() {
+    var price = parseFloat($("#addTonnage").val()) * parseFloat($("#unitPrice3").val());
+    $("#addMoney").val(price.toFixed(2));
 }
 //打印合同信息
 function printInfo(id) {
@@ -337,20 +396,48 @@ function balanceSettlement(id) {
     }
     $.post(path +"getInfoFromId",{id:id},function (data) {
         //赋值
+        $("#numNo1").val(data.numNo);$("#name1").val(data.name);
+        $("#receiveName1").val(data.receiveName);$("#orderCount1").val(data.orderCount);
+        $("#sendCount1").val(data.sendCount);$("#total").val(data.prepaidAmount);
+        $("#sendPrice").val(data.sendPrice);$("#leftPrice").val(data.leftPrice);
+        $("#backPrice").val(data.leftPrice);$("#left1").val(data.leftCount);
+
+        $("#balanceHideId").val(id);
         $("#myModalBalance").modal("show");
     });
+}
+function adjustPriceFun(id) {
+    if (id == "" || id.indexOf(",") > -1) {
+        swal("", "请选中一行！", "warning");
+        return;
+    }
+    $.post(path +"getInfoFromId",{id:id},function (data) {
+        //赋值
+        $("#numNo2").val(data.numNo);$("#name2").val(data.name);
+        $("#receiveName2").val(data.receiveName);$("#orderCount2").val(data.orderCount);
+        $("#unitPrice2").val(data.unitPrice);
+        $("#left2").val(data.leftCount);$("#total2").val(data.prepaidAmount);
+        $("#leftPrice2").val(data.leftPrice);
 
-    $.post(path + "balanceContractInfo", {id: id}, function (data) {
-        if (data == 1) {
-            swal("成功", "操作成功！", "success");
-            queryData();
-        } else if (data == -1) {
-            swal("失败", "操作失败", "error");
-        }else if (data == -2) {
-            swal("", "未通过或未审核或锁定的合同不能进行结算", "warning");
-        }else{
-            swal("失败", "网络异常", "error");
-        }
+        $("#adjustHideId").val(id);
+        $("#myModalAdjustPrice").modal("show");
+    });
+}
+function addContractFun(id) {
+    if (id == "" || id.indexOf(",") > -1) {
+        swal("", "请选中一行！", "warning");
+        return;
+    }
+    $.post(path +"getInfoFromId",{id:id},function (data) {
+        //赋值
+        $("#numNo3").val(data.numNo);$("#name3").val(data.name);
+        $("#receiveName3").val(data.receiveName);$("#orderCount3").val(data.orderCount);
+        $("#unitPrice3").val(data.unitPrice);
+        $("#left3").val(data.leftCount);$("#total3").val(data.prepaidAmount);
+        $("#leftPrice3").val(data.leftPrice);
+
+        $("#AddConHideId").val(id);
+        $("#myModalAddCon").modal("show");
     });
 }
 //移除

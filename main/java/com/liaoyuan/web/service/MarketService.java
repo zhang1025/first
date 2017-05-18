@@ -1,7 +1,9 @@
 package com.liaoyuan.web.service;
 
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +21,12 @@ public interface MarketService {
     int editContractInfoForFinance(ContractBean bean);
     int deleteContractInfo(int id);
     ContractBean getContractInfoFromId(int id);
+
     int balanceContractInfo(int id);
+    int updatePriceInfo(int id,double currentPrize ,int subType);
+    int addTonnageContractInfo(int id,String tonnage);
+
+
     int printContractInfo( int id);
 
     int updateStatus(int id, int status);

@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
      * 通过角色id获取用户的权限列表菜单
      */
     @Override
-    public Map<String,List<Permission>> getMenus(int roleId,String account) {
+    public Map<String,List<Permission>> getMenus(int roleId) {
         Map<String,List<Permission>> map = new LinkedHashMap<>();
-        List<Permission> list = iUserDao.getMenus(roleId,account);
+        List<Permission> list = iUserDao.getMenus(roleId);
         List<Permission> menuEntityList;
         for (Permission permission : list) {
             if(map.containsKey(permission.getMenuName())){

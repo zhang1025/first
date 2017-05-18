@@ -86,6 +86,7 @@ public class DiaoyunBean implements Serializable {
         }
     }
 
+    private String type;
     private String beginDate;
     private String endDate;
 

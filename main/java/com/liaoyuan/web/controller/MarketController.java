@@ -1,10 +1,7 @@
 package com.liaoyuan.web.controller;
 
 import com.liaoyuan.web.controller.base.BaseController;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.PlanBean;
-import com.liaoyuan.web.entity.SessionUser;
+import com.liaoyuan.web.entity.*;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
@@ -24,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,17 +79,56 @@ public class MarketController extends BaseController {
     public Integer deleteContractInfo(String id) {
         return  marketService.deleteContractInfo(Integer.parseInt(id));
     }
-    @RequestMapping(value = "/balanceContractInfo", method = RequestMethod.POST)
-    public Integer balanceContractInfo(String id) {
-        return  marketService.balanceContractInfo(Integer.parseInt(id));
-    }
 
+    //退款 结账
+    @RequestMapping(value = "/balanceContractInfo", method = RequestMethod.POST)
+    public Integer balanceContractInfo(String id,String remarks1) {
+        int rtn = marketService.balanceContractInfo(Integer.parseInt(id));
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "销售部门","合同结算",remarks1));
+        }
+        return  rtn;
+    }
+    /**
+     * 调整价格
+     * 更改原来的合同作废，在原来的合同里应该是有那个sendCount这个，
+     * 这个是按照发出去的煤更新的，重新插入一条合同信息，然后价格就写调整后的价格，
+     * 如果是再交钱的，就直接吨数是原合同还没拉走的吨数；
+     * 如果是余额折算，则吨数直接就变为剩余款项/调整后的价格
+     */
+    @RequestMapping(value = "/updatePriceInfo", method = RequestMethod.POST)
+    public Integer updatePriceInfo(int id,String remarks2,
+                                   double currentPrize ,int subType){
+        int rtn =  marketService.updatePriceInfo(id,currentPrize,subType);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "销售部门","调整价格",remarks2));
+        }
+        return rtn;
+    }
+    //追加合同  增加吨数
+    @RequestMapping(value = "/addTonnageContractInfo", method = RequestMethod.POST)
+    public Integer addTonnageContractInfo(int id,String addTonnage,String remarks3){
+        int rtn =  marketService.addTonnageContractInfo(id,addTonnage);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "销售部门","增补合同",remarks3));
+        }
+        return rtn;
+    }
     /**
      * 根据id获取合同信息
      */
     @RequestMapping(value = "/getInfoFromId", method = RequestMethod.POST)
     public ContractBean getInfoFromId(String id) {
-        return  marketService.getContractInfoFromId(Integer.parseInt(id));
+        ContractBean bean = marketService.getContractInfoFromId(Integer.parseInt(id));
+        DecimalFormat df  =new DecimalFormat("#.00");
+        bean.setPrepaidAmount(Double.parseDouble(df.format(bean.getOrderCount()*bean.getUnitPrice())));
+        bean.setSendPrice(Double.parseDouble(df.format(bean.getSendCount()*bean.getUnitPrice())));
+        bean.setLeftCount(bean.getOrderCount()-bean.getSendCount());
+        bean.setLeftPrice(bean.getPrepaidAmount()-bean.getSendPrice());
+        return  bean;
     }
 
     @RequestMapping(value = "/lockInfo", method = RequestMethod.POST)

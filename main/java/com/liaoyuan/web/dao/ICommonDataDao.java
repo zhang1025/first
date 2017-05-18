@@ -1,6 +1,7 @@
 package com.liaoyuan.web.dao;
 
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.PayLogs;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -81,4 +82,6 @@ public interface ICommonDataDao {
 
      // 根据name获取对应的信息
      DataBean getInfoFromName(@Param("table") String model,@Param("name") String name);
+
+     int addLogs(PayLogs logs);
 }

@@ -30,11 +30,19 @@ public class FinanceServiceImpl implements FinanceService {
         return financeDao.getPaymentTableData(bean);
     }
 
+
+    //获取结算单位对用的税率信息
     @Override
     public DataBean checkRate(int id) {
         return financeDao.checkRate(id);
     }
 
+    public DataBean getRateInfoFromSettName( String st){
+        return financeDao.getRateInfoFromSettName(st);
+    }
+    public DataBean selectRateFromFreight(String name, String tonnage){
+        return financeDao.selectRateFromFreight(name,tonnage);
+    }
     @Override
     public int addPaymentInfo(CustomerPayment bean,DataBean dataBean) {
         bean.setPriorbalance("0");//前期存款为0
@@ -51,7 +59,10 @@ public class FinanceServiceImpl implements FinanceService {
 
         //获取运费信息
         DataBean dd = financeDao.selectRateFromFreight(bean.getFreightName(),bean.getPlanTonnage());
-        bean.setFreight(dd==null?"0":String.format("%.2f",dd.getCost()));
+        if(dd==null){
+            return -1;
+        }
+        bean.setFreight(String.format("%.2f",dd.getCost()));
         //装调费的计算方式是：吨数*（调车费率+装车费率）
         bean.setEntruck(String.format("%.2f",
                 (shunting+entruck)*Double.parseDouble(bean.getPlanTonnage())));
@@ -67,9 +78,16 @@ public class FinanceServiceImpl implements FinanceService {
 
     public int appendPayInfo(int id,String appendPay){
         CustomerPayment bean = financeDao.getInfoFromId(id);
+
+        //前期余额
+        bean.setBalance(String.format("%.2f",Double.parseDouble(bean.getPriorbalance())+
+                Double.parseDouble(bean.getCurrentDeposit())-Double.parseDouble(bean.getTotalAmount())));
+        //追加之后 前期余额==追加前的余额
+        bean.setPriorbalance(bean.getBalance());
+
         bean.setCurrentDeposit(appendPay);
-        bean.setPriorbalance(String.format("%.2f",
-                Double.parseDouble(appendPay)+Double.parseDouble(bean.getPriorbalance())));
+//        bean.setPriorbalance(String.format("%.2f",
+//                Double.parseDouble(appendPay)+Double.parseDouble(bean.getPriorbalance())));
         //余额的计算方式为：前期存款+本期存款-金额合计。
         bean.setBalance(String.format("%.2f",Double.parseDouble(bean.getPriorbalance())+
                 Double.parseDouble(bean.getCurrentDeposit())-Double.parseDouble(bean.getTotalAmount())));

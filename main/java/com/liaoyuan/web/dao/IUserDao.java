@@ -19,7 +19,7 @@ public interface IUserDao {
     int editUserPw(UserBean user);
     int deleteUSer(@Param("id") int id);
     int editUser(UserBean user);
-    List<Permission> getMenus(@Param("roleId") int roleId,@Param("account") String account);
+    List<Permission> getMenus(@Param("roleId") int roleId);
     UserBean checkUser(String account);
     List<UserBean> getUsersInfo();
 }

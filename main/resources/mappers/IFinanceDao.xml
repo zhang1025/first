@@ -7,7 +7,7 @@
     <select id="countPaymentData" parameterType="CustomerPayment" resultType="java.lang.Integer">
         select count(*) from customer_payment where 1=1
         <if test="settlement!=null and settlement!=''">
-            and settlement like "#{settlement}%"
+            and settlement like  CONCAT('%','${settlement}','%' )
         </if>
         and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
     </select>
@@ -15,7 +15,7 @@
     <select id="getPaymentTableData" parameterType="CustomerPayment" resultType="CustomerPayment">
         select * from customer_payment where 1=1
         <if test="settlement!=null and settlement!=''">
-            and settlement like "#{settlement}%"
+            and settlement like  CONCAT('%','${settlement}','%' )
         </if>
         and createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
         order by createtime desc limit ${iDisplayStart},${iDisplayLength}
@@ -26,6 +26,12 @@
     <select id="checkRate" resultType="DataBean">
        select * from dm_settlement where id=#{id} and rate is not NULL
     </select>
+
+
+    <select id="getRateInfoFromSettName" resultType="DataBean">
+        select * from dm_settlement where name LIKE  CONCAT('%','${settlement}','%' )  and rate is not NULL
+    </select>
+
 
 
     <insert id="addPaymentInfo" parameterType="CustomerPayment">

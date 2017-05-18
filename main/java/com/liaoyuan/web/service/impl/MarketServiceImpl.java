@@ -7,11 +7,14 @@ import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.CreateWordT;
 import com.liaoyuan.web.utils.DocPrint;
+import com.liaoyuan.web.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -31,6 +34,7 @@ public class MarketServiceImpl implements MarketService{
 
     @Override
     public List<ContractBean> getTableContractData(ContractBean bean) {
+
         return iMarkerDao.getTableContractData(bean);
     }
 
@@ -76,14 +80,54 @@ public class MarketServiceImpl implements MarketService{
             return -1;
         }
         int status = Integer.parseInt(bean.getStatus());
-        if(status==0||status==2||status==-1){
-            return -2;//0未审核  2锁定  -1未通过  不能结算合同
+        if(status!=3 && status!=5 && status!=2){
+            return -2;//3 正在发运  5审核通过 2解锁
         }
         return iMarkerDao.balanceContractInfo(id);
     }
 
+    //调整价格
+    @Transactional(rollbackFor=Exception.class)
+    public int updatePriceInfo(int id,double currentPrize ,int subType){
+        ContractBean bean = iMarkerDao.getContractInfoFromId(id);
+        if(bean == null){
+            return -1;
+        }
+        int status = Integer.parseInt(bean.getStatus());
+        if(status!=3 && status!=2 && status!=5){
+            return -2;//3 正在发运  5审核通过 2解锁
+        }
+        //更新合同状态无效
+        iMarkerDao.updateStatusForAdjust(id);
+
+        bean.setUnitPrice(currentPrize);//当前价格
+        DecimalFormat df  =new DecimalFormat("#.00");
+        //新插入一个新合同信息
+        if(subType ==1){//补交差额
+            bean.setOrderCount(bean.getOrderCount()-bean.getSendCount());
+            return iMarkerDao.addNewInfoForAdjust(bean);
+        }
+        if(subType ==2){//差额结算
+            bean.setPrepaidAmount(Double.parseDouble(df.format(bean.getOrderCount()*bean.getUnitPrice())));
+            bean.setSendPrice(Double.parseDouble(df.format(bean.getSendCount()*bean.getUnitPrice())));
+            bean.setLeftPrice(bean.getPrepaidAmount()-bean.getSendPrice());
+
+            double newOrderCount = Double.parseDouble(df.format((bean.getPrepaidAmount()-bean.getSendPrice())/currentPrize));
+            bean.setOrderCount(newOrderCount);
+            return iMarkerDao.addNewInfoForAdjust(bean);
+        }
+        return -3;
+    }
+    //增补合同  增加吨数
+    public int addTonnageContractInfo(int id,String tonnage){
+        return iMarkerDao.addTonnageInfo(id,Double.parseDouble(tonnage));
+    }
     public ContractBean getContractInfoFromId(int id){
-        return iMarkerDao.getContractInfoFromId(id);
+        ContractBean bean = iMarkerDao.getContractInfoFromId(id);
+        if(bean == null){
+            return null;
+        }
+        return bean;
     }
     //打印合同信息
     public int printContractInfo( int id){
