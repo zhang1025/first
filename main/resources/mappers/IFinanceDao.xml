@@ -62,4 +62,27 @@
         INSERT  INTO pay_logs (account,settlement,currentDeposit,description,createtime) VALUES
         (#{account},#{settlement},#{currentDeposit},#{description},now())
     </insert>
+
+
+    <!--获取调运信息-->
+    <select id="getDiaoyunInfoFromIds" resultType="DiaoyunBean">
+        select * from diaoyun where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <!--结算调运信息 结算金额输入dealBalanceInfo-->
+    <update id="dealBalanceInfo" >
+        update diaoyun set type=1  where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!--反结按钮  取消已经结算的调运信息 -->
+    <update id="cancelBalanceInfo" >
+        update diaoyun set type=0  where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

@@ -89,8 +89,8 @@ public class CoalController extends BaseController{
         return new ModelAndView("/coal/deposit");
     }
     @RequestMapping(value = "/bindingCard", method = RequestMethod.POST)
-    public Integer bindingCard(int id,String coalCard) {
-        return  marketService.bindlingCard(id,coalCard);
+    public Integer bindingCard(int id,String coalCard,String money,String numNo) {
+        return  marketService.bindlingCard(id,coalCard,money,numNo);
     }
     @RequestMapping(value = "/unBindingCard", method = RequestMethod.POST)
     public Integer unBindingCard(int id) {

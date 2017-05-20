@@ -128,6 +128,7 @@ public class MarketController extends BaseController {
         bean.setSendPrice(Double.parseDouble(df.format(bean.getSendCount()*bean.getUnitPrice())));
         bean.setLeftCount(bean.getOrderCount()-bean.getSendCount());
         bean.setLeftPrice(bean.getPrepaidAmount()-bean.getSendPrice());
+        bean.setCreatetime(bean.getCreatetime().substring(0,10));
         return  bean;
     }
 
@@ -287,6 +288,22 @@ public class MarketController extends BaseController {
         columnnames = DataTableUtils.getExcelHTColumnName();
         List<List<Object>> datas = DataTableUtils.getExcelHTDataLists(gridData);
         String fileName = URLEncoder.encode("合同信息数据", "utf-8")+".xls";
+        ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+    }
+
+    /**
+     *导出 地付煤明细 excel数据
+     */
+    @RequestMapping(value = "/export_detailExcel_data", method = RequestMethod.GET)
+    public void exportDetailData(ContractBean bean,HttpServletResponse response) throws Exception{
+        List<String> columnnames ;
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
+        bean.setIDisplayLength(count);
+        List<ContractBean> gridData = marketService.getTableDetailContractData(bean);
+        columnnames = DataTableUtils.getExcelHTDeailColumnName();
+        List<List<Object>> datas = DataTableUtils.getExcelHTDetailDataLists(gridData);
+        String fileName = URLEncoder.encode("地付煤明细信息数据", "utf-8")+".xls";
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }
 

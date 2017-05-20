@@ -219,15 +219,15 @@
                                     </div>
                                 </div>
                             </td>
-                            <%--<td>--%>
-                                <%--<div class="form-group" id="freightTD">--%>
-                                    <%--<label for="freight" class="col-lg-4 control-label"--%>
-                                           <%--style="padding-right: 1px">运费:</label>--%>
-                                    <%--<div class="col-lg-10" style="width: 150px;padding-left: 5px">--%>
-                                        <%--<input type="text" id="freight" class="form-control" readonly="readonly">--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</td>--%>
+                            <td>
+                                <div class="form-group" id="freightTD">
+                                    <label for="unitPrice" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">单价:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="unitPrice" class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <input type="hidden" id="rid" class="form-control" readonly="readonly">

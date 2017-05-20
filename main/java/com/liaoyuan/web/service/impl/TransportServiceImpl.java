@@ -29,15 +29,19 @@ public class TransportServiceImpl implements TransportService {
         List<DiaoyunBean> list = iTransportDao.getTableDealPlanData(bean);
         //  不分页  最后一行显示合并吨数
         double tonnage = 0;
-        double freight = 0;
+//        double freight = 0;
         if(null!=list && !list.isEmpty()){
             for (DiaoyunBean diaoyunBean : list) {
                 tonnage += diaoyunBean.getTonnage();
-                freight += diaoyunBean.getFreight();
+//                freight += diaoyunBean.getFreight();
+                diaoyunBean.setAllMoney(diaoyunBean.getTonnage()*diaoyunBean.getUnitPrice());
+                diaoyunBean.setCoalMoney(diaoyunBean.getAllMoney());
             }
+
+            //最后一行数据
             DiaoyunBean db = new DiaoyunBean();
             db.setTonnage(String.valueOf(tonnage));
-            db.setFreight(String.valueOf(freight));
+//            db.setFreight(String.valueOf(freight));
             list.add(db);
         }
         return list;

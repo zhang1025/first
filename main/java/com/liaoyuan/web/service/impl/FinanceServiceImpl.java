@@ -3,11 +3,13 @@ package com.liaoyuan.web.service.impl;
 import com.liaoyuan.web.dao.FinanceDao;
 import com.liaoyuan.web.entity.CustomerPayment;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PayLogs;
 import com.liaoyuan.web.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,5 +98,57 @@ public class FinanceServiceImpl implements FinanceService {
     @Override
     public int addLogs(PayLogs logs) {
         return financeDao.addLogs(logs);
+    }
+
+
+    public  DiaoyunBean getDiaoyunInfoFromIds(String ids,String st){
+        List listIds = new ArrayList();
+        for (String s : ids.split(",")) {
+            listIds.add(Integer.parseInt(s));
+        }
+        List<DiaoyunBean> list = financeDao.getDiaoyunInfoFromIds(listIds);
+        DataBean db = financeDao.getRateInfoFromSettName(st);//税率 装车调车费率
+        double totalTonnage = 0;
+        DiaoyunBean newBean = new DiaoyunBean();
+        if(list!=null && !list.isEmpty()){
+            for (DiaoyunBean bean : list) {
+                totalTonnage += bean.getTonnage();
+            }
+            newBean = list.get(0);//日计划信息中除去调运吨数其他的调运信息一致
+        }
+        newBean.setTotalTonnage(totalTonnage);
+        newBean.setCoalMoney(newBean.getUnitPrice()*newBean.getTotalTonnage());
+        if(db != null){
+            newBean.setTaxation(newBean.getTotalTonnage()*Double.parseDouble(db.getRate()));
+            newBean.setShunting(newBean.getTotalTonnage()*Double.parseDouble(db.getShunting()));
+            newBean.setEntruck(newBean.getTotalTonnage()*Double.parseDouble(db.getEntruck()));
+        }
+        //计算运费  根据吨数和计算单位 结算表中找他的运费信息
+        DataBean cost = financeDao.selectRateFromFreight(st,String.valueOf(newBean.getTotalTonnage()));
+        if(cost!=null){
+            newBean.setFreight(String.valueOf(cost.getCost()));
+        }else{
+            newBean.setFreight(String.valueOf("0"));
+        }
+        double all = newBean.getCoalMoney()+newBean.getEntruck()+newBean.getShunting()
+                +newBean.getTaxation()+newBean.getFreight();
+        newBean.setAllMoney(Double.parseDouble(String.format("%.2f",all)));
+        return newBean;
+    }
+
+    public int dealBalanceInfo(String ids){
+        List listIds = new ArrayList();
+        for (String s : ids.split(",")) {
+            listIds.add(Integer.parseInt(s));
+        }
+       return financeDao.dealBalanceInfo(listIds);
+    }
+
+    public int cancelBalanceInfo(String ids){
+        List listIds = new ArrayList();
+        for (String s : ids.split(",")) {
+            listIds.add(Integer.parseInt(s));
+        }
+        return financeDao.cancelBalanceInfo(listIds);
     }
 }

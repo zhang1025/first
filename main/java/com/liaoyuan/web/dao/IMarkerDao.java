@@ -53,4 +53,7 @@ public interface IMarkerDao {
 
     int bindingCard(@Param(value = "id")int id,@Param(value = "cardNo")String cardNo);
     int unBindingCard(@Param(value = "id")int id);
+    int insertCoalCardMoney(@Param(value = "cardNo")String cardNo,
+                            @Param(value = "money")String money,
+                            @Param(value = "numNo")String numNo);
 }

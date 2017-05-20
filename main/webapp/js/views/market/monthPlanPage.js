@@ -217,8 +217,8 @@ function initButtonClick() {
                 $('#myModal').trigger('click');
                 if (result > 0) {
                     swal("成功","操作成功！","success");
-                    if(subType == 4){
-                        queryDayPlanData(editId);
+                    if(subType == 4){//查询对应的日计划
+                        queryDayPlanData($("#hideMonthId").val());
                     }else{
                         queryData();
                     }
@@ -428,6 +428,7 @@ function operateButtonDay(cellvalue, options, rowObject) {
 }
 
 function queryDayPlanData(id) {
+    $("#hideMonthId").val(id);//对应月计划的id
     //页面跳转到日计划div
     // location.hash = "playDayPlanDiv";
     $("#playDayPlanDiv").show();

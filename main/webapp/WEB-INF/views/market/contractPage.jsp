@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../include/taglib.jsp" %>
-
+<link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet" />
 <!-- .page-content -->
 <div class="page-content sidebar-page clearfix" style="top:0;">
     <!-- .page-content-wrapper -->
@@ -113,7 +113,6 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-
                             <div style="padding: 5px;float: left">
                                 <div class="input-group">
                                     <button id="adjustPrice" class="btn btn-primary mr5 mb10" type="button">调整价格
@@ -151,6 +150,16 @@
                                     <button id="delete" class="btn btn-danger mr5 mb10" type="button">删除</button>
                                 </div>
                             </div>
+                            <div style="padding: 5px;float: right">
+                                <div class="input-group">
+                                    <button id="downContractInfo" class="btn btn-primary mr5 mb10" type="button">导出合同信息</button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px;float: right">
+                                <div class="input-group">
+                                    <button id="detailExcel" class="btn btn-primary mr5 mb10" type="button">导出地付煤明细信息</button>
+                                </div>
+                            </div>
                             <table id="contractDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 10px" cellspacing="0" width="100%">
                             </table>
@@ -159,6 +168,93 @@
                     <!-- End .panel -->
                 </div>
                 <!-- col-lg-12 end here -->
+            </div>
+            <!-- 零销煤打印table -->
+            <div id="printContractData">
+            <div class="row" id="printContractData1">
+                <div class="col-lg-12">
+                    <!-- col-lg-12 start here -->
+                    <div class="panel panel-default toggle ">
+                        <div class="panel-body">
+                            <table id="printContractDataTables" class="table table-striped table-bordered table-hover"
+                                   style="font-size: 10px" cellspacing="0" width="100%" >
+                                <tr>
+                                    <td colspan="11" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">辽矿(集团)煤炭销售总公司</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" style="text-align: center;font-size: 20px;border: 1px solid #000000;border-bottom:1px solid #ffffff;">零 销 煤 销 售 结 算 单</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" style="border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">时间：<span id="time">2017-05-16</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">单位：吨\元</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">购煤单位</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="8"><span id="stName">购煤单位111111</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">合同号</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;"><span id="htNo">20170610</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">购煤数量</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">付煤地点</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">品种</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">单价</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">煤款合计</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">铲车费</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">煤卡费</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="gmNum">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dd">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="pz">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dj">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="all">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="chanche">779.21</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;" colspan="2"><span id="mk">779.21</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">备注</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">发票半年以内开具，逾期不予开据</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">领导审批</td>
+                                    <td colspan="3" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">财务科</td>
+                                    <td colspan="4" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">销售科</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">经办人</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">负责人</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">审核</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">出纳</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">销售部长</td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">签名</td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;"></td>
+                                    <td  colspan="2" style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;">
+                                        开票人
+                                    </td><td colspan="2" style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;"></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-right:1px solid #ffffff;">电话</td>
+                                    <td style="text-align: center;border: 1px solid #000000;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End .panel -->
+                </div>
+                <!-- col-lg-12 end here -->
+            </div>
             </div>
         </div>
         <!-- / .page-content-inner -->
@@ -209,7 +305,7 @@
                                 <div class="form-group">
                                     <label for="receiveName" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">客户名称:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                                         <select id="receiveName" class="select fancy-select form-control required">
                                             <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
@@ -859,6 +955,9 @@
         </div>
     </div>
 </div>
+
+<!--零销煤打印table-->
+<
 <script src="<c:url value="/plugins/tables/datatables/jquery.dataTables.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.validate.js"/> "></script>
 <script src="<c:url value="/plugins/forms/validation/jquery.form.js"/> "></script>

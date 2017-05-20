@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class DataTableUtils {
 
-    //合同信息
+    //地付 合同信息
     public static List<String> getExcelHTColumnName() {
         List<String> columnnames = new ArrayList<>();
         columnnames.add("合同编号");
@@ -74,6 +74,8 @@ public class DataTableUtils {
                     break;
                 case "5": row.add("审核通过");
                     break;
+                case "7": row.add("调价之后作废");
+                    break;
                 case "-1": row.add("未通过");
                     break;
                 default:row.add("");
@@ -108,6 +110,65 @@ public class DataTableUtils {
             row.add(reportData.getSettlement());
             row.add(reportData.getFund());
             row.add(reportData.getTaxation());
+            datas.add(row);
+        }
+        return datas;
+    }
+
+    //地付合同信息 -- 煤款详细信息
+    public static List<String> getExcelHTDeailColumnName() {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("合同编号");
+        columnnames.add("结算单位");
+        columnnames.add("井别");
+        columnnames.add("品种");
+        columnnames.add("吨数");
+        columnnames.add("单价");
+        columnnames.add("煤款");
+        columnnames.add("税金");
+        columnnames.add("调车费");
+        columnnames.add("装车费");
+        columnnames.add("合计金额");
+        columnnames.add("类别");
+        columnnames.add("资金方式");
+        columnnames.add("经办人");
+        columnnames.add("录入人");
+        columnnames.add("时间");
+//        columnnames.add("合同状态");
+        return columnnames;
+    }
+
+    public static List<List<Object>> getExcelHTDetailDataLists(List<ContractBean> gridData) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(ContractBean reportData:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(reportData.getNumNo());
+            row.add(reportData.getSettlement());
+            row.add(reportData.getWells());
+            row.add(reportData.getName());
+            row.add(reportData.getOrderCount());
+            row.add(reportData.getUnitPrice());
+            row.add(reportData.getPrepaidAmount());
+            row.add(reportData.getTaxation());
+            row.add(reportData.getShunting());
+            row.add(reportData.getEntruck());
+            row.add(reportData.getAllMoney());
+            switch (reportData.getContractType()){
+                case "1": row.add("公用煤");
+                    break;
+                case "2": row.add("零销煤");
+                    break;
+                case "3": row.add("其他");
+                    break;
+                case "4": row.add("职工煤");
+                    break;
+                default:row.add("");
+            }
+            row.add(reportData.getFund());
+            row.add(reportData.getUsePerson());
+            row.add(reportData.getInputPerson());
+            row.add(reportData.getCreatetime());
             datas.add(row);
         }
         return datas;

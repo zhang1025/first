@@ -58,8 +58,25 @@ public class ContractBean {
     private String beginDate;
     private String endDate;
 
+    private double shunting; //调车费
+    public void setShunting(String shunting) {
+        if(StringUtils.isBlank(shunting)){
+            this.shunting = 0;
+        }else{
+            this.shunting =  Double.parseDouble(shunting);
+        }
+    }
+    private double entruck; //装车费
+    public void setEntruck(String entruck) {
+        if(StringUtils.isBlank(entruck)){
+            this.entruck = 0;
+        }else{
+            this.entruck =  Double.parseDouble(entruck);
+        }
+    }
+    private String allMoney;
 
-    //合同卡号
+    //合同 煤卡卡号
     private String coalCard;
 
     //分页用

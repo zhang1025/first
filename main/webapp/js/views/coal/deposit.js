@@ -90,7 +90,7 @@ function initButtonClick() {
 
     $("#paymentBtn").on("click",function () {
         $("#myModalDeposit").modal("show");
-        setTimeout($("#coalCard").focus(),1000);
+        $("#coalCard").focus();
     });
     $("#totalBtn").on("click",function () {
         $.post(path + "total",function (data) {

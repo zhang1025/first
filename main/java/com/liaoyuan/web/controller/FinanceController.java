@@ -148,13 +148,45 @@ public class FinanceController extends BaseController {
         printDataTables(response, count, gridData);
     }
 
+    @RequestMapping(value = "/getBalanceTotal", method = RequestMethod.POST)
+    public DiaoyunBean getBalanceTotal(String ids,String st){
+        return financeService.getDiaoyunInfoFromIds(ids,st);
+    }
 
+    /**
+     * 结算调运计划信息
+     */
+    @RequestMapping(value = "/dealBalanceInfo", method = RequestMethod.POST)
+    public int balance(String ids){
+        int rtn =  financeService.dealBalanceInfo(ids);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "财务部门","计算金额输入","结算了id="+ids+" 的调运信息"));
+        }
+        return  rtn;
+    }
+    /**
+     * 反结按钮，取消已经结算的调运计划信息
+     */
+    @RequestMapping(value = "/cancelBalanceInfo", method = RequestMethod.POST)
+    public int cancelBalanceInfo(String ids){
+        int rtn =  financeService.cancelBalanceInfo(ids);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "财务部门","反结按钮--取消已经结算","取消结算id="+ids+" 的调运信息"));
+        }
+        return  rtn;
+    }
     /**
      * 汇款单录入 页面
      */
     @RequestMapping(value = "/remit", method = RequestMethod.GET)
     public ModelAndView remit(ModelMap modelMap){
-        log.info("=========财务====汇款单录入============");
+        log.info("=========财务====回款单录入============");
+        List<DataBean> settlements = commonDataService.getListData(Constant.SETTLEMENT);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        modelMap.put("settlements",settlements);//结算单位
+        modelMap.put("receives",receiveName);//收货单位 客户
         return new ModelAndView("/finance/remitPage");
     }
     @RequestMapping(value = "/get_remit_table", method = RequestMethod.POST)

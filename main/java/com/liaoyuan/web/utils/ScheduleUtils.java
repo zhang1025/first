@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduleUtils {
 
-    @Scheduled(cron="0 0 0 * * *")
-    public void clearRealTimeTrendMap(){
-
-    }
+//    @Scheduled(cron="0 0 0 * * *")
+//    public void clearRealTimeTrendMap(){
+//
+//    }
 }

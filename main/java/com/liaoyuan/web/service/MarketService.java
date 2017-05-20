@@ -15,6 +15,7 @@ public interface MarketService {
     //合同信息
     int countContractData(ContractBean bean);
     List<ContractBean> getTableContractData(ContractBean bean);
+    List<ContractBean> getTableDetailContractData(ContractBean bean);
 
     int addContractInfo(ContractBean bean);
     int editContractInfo(ContractBean bean);
@@ -49,6 +50,6 @@ public interface MarketService {
     int stopDayPlan(int id);
 
     //给合同绑定煤卡
-    int bindlingCard(int id,String cardNo);
+    int bindlingCard(int id,String cardNo,String money,String numNo);
     int unBindingCard(int id);
 }

@@ -171,6 +171,9 @@
         <if test="coalName!=null and coalName!=''">
             and d.coalName=#{coalName}
         </if>
+        <if test="settlement!=null and settlement!=''">
+            and d.settlement=#{settlement}
+        </if>
         <if test="siteName!=null and siteName!=''">
             and d.siteName=#{siteName}
         </if>
@@ -178,7 +181,7 @@
     <select id="getTableDayPlanData" parameterType="PlanBean" resultType="PlanBean">
         select d.id,d.rid,d.settlement,d.name,d.planCarNum,d.actualCarNum,d.planTonnage,d.actualSendedTonnage,
         d.planCarNum-d.actualCarNum as unsendedCarNum,
-        d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
+        d.planTonnage-d.actualSendedTonnage as unsendedTonnage,d.settlement
         d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
         d.payId,d.createtime,d.status,d.month_id as monthId from out_day_plan d
         where 1=1
@@ -195,6 +198,9 @@
         </if>
         <if test="coalName!=null and coalName!=''">
             and d.coalName=#{coalName}
+        </if>
+        <if test="settlement!=null and settlement!=''">
+            and d.settlement=#{settlement}
         </if>
         <if test="siteName!=null and siteName!=''">
             and d.siteName=#{siteName}
@@ -243,6 +249,10 @@
         update car_contract set coalCard=#{cardNo},magneticCard=1 where id=#{id}
     </update>
 
+    <insert id="insertCoalCardMoney">
+        insert into coal_card_money (numNo,coalCard,money)
+        values (#{numNo},#{cardNo},#{money})
+    </insert>
     <!--解绑煤卡信息-->
     <update id="unBindingCard">
         update car_contract set coalCard="",magneticCard=0 where id=#{id}

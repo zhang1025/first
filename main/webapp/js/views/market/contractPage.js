@@ -19,6 +19,9 @@ $(document).ready(function () {
     initButtonClick();
     initFormValid();
     queryData();
+
+    //tip提示
+    $(".tip").tooltip ({placement: 'top', container: 'body'});
 });
 function queryData() {
     var aoColumns = dealTableTitle();
@@ -165,15 +168,20 @@ function operateButton(cellvalue, options, rowObject) {
     var tel = rowObject['tel'];
     var bankName = rowObject['bankName'];
     var bankNo = rowObject['bankNo'];
-    return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
-        + id + "','"
-        + name + "','" + numNo + "','" + receiveName + "','" + orderCount + "','"
-        + unitPrice + "','" + inputPerson + "','" + usePerson + "','"
-        + contractType + "','" + orderTime + "','"
-        + billName + "','" + address + "','"+ wells + "','"
-        + billNo + "','" + tel + "','" + bankName + "','" + bankNo + "','"+ status + "','"
-        + forkliftFee
-        + "')\">编辑</button>";
+    if(status == 7){ //调价前合同，调价之后已经生成了一个新合同
+        return "<span class='tip' title='调价前合同不可编辑'><button type='button' disabled='disabled' class='btn btn-primary btn-small' id='editorServer'></button></span> ";
+    }else{
+        return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
+            + id + "','"
+            + name + "','" + numNo + "','" + receiveName + "','" + orderCount + "','"
+            + unitPrice + "','" + inputPerson + "','" + usePerson + "','"
+            + contractType + "','" + orderTime + "','"
+            + billName + "','" + address + "','"+ wells + "','"
+            + billNo + "','" + tel + "','" + bankName + "','" + bankNo + "','"+ status + "','"
+            + forkliftFee
+            + "')\">编辑</button>";
+    }
+
 }
 //编辑
 function editSettlement(id, name, numNo, receiveName, orderCount, unitPrice, ip, up, ct, orderTime,
@@ -280,7 +288,7 @@ function initButtonClick() {
             });
     });
     //导出excle事件
-    $('.fa-download').parent().on("click", function () {
+    $("#downContractInfo").on("click", function () {
         var numNo = $("#s_numNo").val();
         var receives = $("#s_receives").val();
         var coal = $("#s_coal").val();
@@ -369,6 +377,16 @@ function initButtonClick() {
     $("#print").on("click", function () {
          printInfo(checkBtn());
     });
+
+    //导出地付煤excel信息
+    $("#detailExcel").on("click",function () {
+        var time = $("input[name='date-range']").val();
+        var dateRange = time.split("to");
+        var beginDate = $.trim(dateRange[0]);
+        var endDate = $.trim(dateRange[1]);
+        var param = 'beginDate=' + beginDate + '&endDate=' + endDate ;
+        location.href = path + 'export_detailExcel_data?' + param;
+    });
 }
 //根据输入的追加金额计算他的应该追加交款
 function inputPrice() {
@@ -385,8 +403,25 @@ function printInfo(id) {
         swal("","只能选中一行进行打印！","warning");
         return;
     }
-    $.post(path + "printInfo", {id: id}, function (data) {
+    //填充table 值信息
+    $.post(path + "getInfoFromId", {id: id}, function (data) {
+        $("#time").html(data.createtime); $("#stName").html(data.receiveName);
+        $("#gmNum").html(data.orderCount); $("#dd").html(data.wells);
+        $("#pz").html(data.name); $("#dj").html(data.unitPrice);
+        $("#all").html(data.prepaidAmount); $("#chanche").html(data.createtime);
+        var type = data.forkliftFee;
+        if (type == 1) {
+            $("#chanche").html("包含");
+        }
+        if (type == 0) {
+            $("#chanche").html("不包含");
+        }
+        $("#mk").html("");
+        $("#printContractData").printArea();
     });
+
+    // $.post(path + "printInfo", {id: id}, function (data) {
+    // });
 }
 //结算
 function balanceSettlement(id) {

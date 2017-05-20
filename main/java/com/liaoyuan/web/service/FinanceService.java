@@ -2,6 +2,7 @@ package com.liaoyuan.web.service;
 
 import com.liaoyuan.web.entity.CustomerPayment;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PayLogs;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface FinanceService {
     int appendPayInfo(int id,String appendPay);
 
     int addLogs(PayLogs logs);
+
+    int dealBalanceInfo(String ids);
+    int cancelBalanceInfo(String ids);
+    DiaoyunBean getDiaoyunInfoFromIds(String ids,String st);
 }

@@ -78,6 +78,7 @@ function operateButton(cellvalue, options, rowObject) {
     var rid = rowObject['rid'];
     var name = rowObject['name'];
     var ast = rowObject['actualSendedTonnage'];
+    var price = rowObject['actualUnitPrice'];
     var wellsName = rowObject['wellsName'];
     var coalName = rowObject['coalName'];
     var siteName = rowObject['siteName'];
@@ -88,7 +89,7 @@ function operateButton(cellvalue, options, rowObject) {
         dealBut= "<button type='button' class='btn btn-success btn-small' onclick=\"dealDayPlan('"
             + id + "','"
             + status + "','"  + monthId + "','"+ name + "','"+ planTonnage + "','"
-            + ast + "','"+ rid + "','"
+            + ast + "','"+ rid + "','"+ price + "','"
             + wellsName + "','" + planCarNum + "','"
             + coalName + "','" + siteName
             + "')\">安排发车</button>";
@@ -96,13 +97,14 @@ function operateButton(cellvalue, options, rowObject) {
     return dealBut;
 }
 //新建调运计划
-function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,pc,coalName,siteName) {
+function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,price,wellsName,pc,coalName,siteName) {
     $("#freightTD").hide();//运费信息在填写车皮号的时候输入，这里先隐藏
     $("#hideId").val(id); //日计划的id
     $("#hideMonId").val(monthId); //对应月计划的id
     $("#hidePlanTonnages").val(planTonnage);
     $("#name").val(name);
     $("#rid").val(rid);
+    $("#unitPrice").val(price);
     $("#wellsName").val(wellsName);
     $("#coalName").val(coalName);
     $("#siteName").val(siteName);
@@ -111,6 +113,7 @@ function dealDayPlan(id,status,monthId,name,planTonnage,ast,rid,wellsName,pc,coa
     $.post(path+"checkPlanCars",{dayId:id},function (data) {
         if(data >= parseInt(pc)){
             swal("警告","已安排发车数不能大于计划发车数量","warning");
+            return false;
         }else{
             $("#myModal").modal("show");
         }
@@ -132,7 +135,7 @@ function initButtonClick() {
         var url = path + (subType == 1?"addDealDayPlan":"editDealDayPlan");
         $.post(url, {
                 tonnage: $("#ast").val(),rid: $("#rid").val(),
-                name: $("#name").val(),
+                name: $("#name").val(), unitPrice: $("#unitPrice").val(),
                 wellsName: $("#wellsName").val(),
                 coalName: $("#coalName").val(), siteName: $("#siteName").val(),
                 dayId: $("#hideId").val(),wagonNo:$("#wagonNo").val(),

@@ -1,7 +1,9 @@
 package com.liaoyuan.web.service.impl;
 
+import com.liaoyuan.web.dao.FinanceDao;
 import com.liaoyuan.web.dao.IMarkerDao;
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
@@ -9,6 +11,7 @@ import com.liaoyuan.web.utils.CreateWordT;
 import com.liaoyuan.web.utils.DocPrint;
 import com.liaoyuan.web.utils.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,14 +30,42 @@ public class MarketServiceImpl implements MarketService{
     @Autowired
     IMarkerDao iMarkerDao;
 
+    @Autowired
+    FinanceDao financeDao;
+
     @Override
     public int countContractData(ContractBean bean) {
         return iMarkerDao.countContractData(bean);
     }
 
+    //合同信息
     @Override
     public List<ContractBean> getTableContractData(ContractBean bean) {
+        return iMarkerDao.getTableContractData(bean);
+    }
 
+    //计算地付煤详细信息数据  最后一行合计
+    @Override
+    public List<ContractBean> getTableDetailContractData(ContractBean bean) {
+        List<ContractBean> list = iMarkerDao.getTableContractData(bean);
+        DataBean db = null;
+        if(list!=null && !list.isEmpty()){
+            for (ContractBean cb : list) {
+                if(!"7".equals(cb.getStatus())){//状态7是调价前的合同信息
+                    //煤款
+//                    cb.setPrepaidAmount(Double.parseDouble(String.format("%.2f",cb.getPrepaidAmount())));
+                    if(StringUtils.isBlank(bean.getSettlement())){
+                        db = financeDao.getRateInfoFromSettName(bean.getSettlement());
+                    }
+                    if(db!=null){
+                        cb.setTaxation(String.format("%.2f",cb.getPrepaidAmount()*Double.parseDouble(db.getRate())));
+                        cb.setShunting(String.format("%.2f",cb.getPrepaidAmount()*Double.parseDouble(db.getShunting())));
+                        cb.setEntruck(String.format("%.2f",cb.getPrepaidAmount()*Double.parseDouble(db.getEntruck())));
+                    }
+                    cb.setAllMoney(String.format("%.2f",cb.getPrepaidAmount()+cb.getTaxation()+cb.getShunting()+cb.getEntruck()));
+                }
+            }
+        }
         return iMarkerDao.getTableContractData(bean);
     }
 
@@ -237,8 +268,13 @@ public class MarketServiceImpl implements MarketService{
     }
 
 
-    public int bindlingCard(int id,String cardNo){
-        return iMarkerDao.bindingCard(id,cardNo);
+    @Transactional(rollbackFor=Exception.class)
+    public int bindlingCard(int id,String cardNo,String money,String numNo){
+        int rtn = iMarkerDao.bindingCard(id,cardNo);
+        if(rtn > 0){
+            iMarkerDao.insertCoalCardMoney(cardNo,money,numNo);
+        }
+        return rtn;
     }
 
     public int unBindingCard(int id){

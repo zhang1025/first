@@ -131,6 +131,7 @@
     <%--</div>--%>
 <!--新增信息-->
 <input type="hidden" id="hideId">
+<input type="hidden" id="hideMonthId">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 570px">

@@ -41,6 +41,16 @@ public class DiaoyunBean implements Serializable {
             this.tonnage =  Double.parseDouble(tonnage);
         }
     }
+    //单价
+    private double unitPrice;
+    public void setUnitPrice(String unitPrice) {
+        if(StringUtils.isBlank(unitPrice)){
+            this.unitPrice = 0;
+        }else{
+            this.unitPrice =  Double.parseDouble(unitPrice);
+        }
+    }
+
     private double freight;
     public void setFreight(String freight) {
         if(StringUtils.isBlank(freight)){
@@ -85,6 +95,18 @@ public class DiaoyunBean implements Serializable {
             this.monthId =  Integer.parseInt(monthId);
         }
     }
+
+    //合计
+    private double totalTonnage;
+    private double coalMoney;
+    private double taxation;
+    private double shunting;
+    private double entruck;
+    private double cost;
+
+    //合计金额
+    private double allMoney;
+
 
     private String type;
     private String beginDate;

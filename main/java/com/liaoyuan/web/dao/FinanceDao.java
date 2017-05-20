@@ -1,9 +1,6 @@
 package com.liaoyuan.web.dao;
 
-import com.liaoyuan.web.entity.CustomerPayment;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.DepositBean;
-import com.liaoyuan.web.entity.PayLogs;
+import com.liaoyuan.web.entity.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -30,4 +27,7 @@ public interface FinanceDao {
 
     int addLogs(PayLogs logs);
 
+    int dealBalanceInfo(List ids);
+    int cancelBalanceInfo(List ids);
+    List<DiaoyunBean> getDiaoyunInfoFromIds(List ids);
 }

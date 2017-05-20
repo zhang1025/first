@@ -23,8 +23,8 @@
 
     <!--插入调运计划-->
     <insert id="addDealDayPlan" parameterType="DiaoyunBean">
-        INSERT INTO diaoyun (rid,name,wagonNo,tonnage,wellsName,coalName,siteName,dayId,monthId) VALUES
-        (#{rid},#{name},#{wagonNo},#{tonnage},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
+        INSERT INTO diaoyun (rid,name,wagonNo,tonnage,unitPrice,wellsName,coalName,siteName,dayId,monthId) VALUES
+        (#{rid},#{name},#{wagonNo},#{tonnage},#{unitPrice},#{wellsName},#{coalName},#{siteName},#{dayId},#{monthId})
     </insert>
 
     <!--检查已经发车数量实发大于计划数量-->

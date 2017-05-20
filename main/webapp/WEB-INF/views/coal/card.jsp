@@ -84,13 +84,13 @@
                                                style="cursor: pointer;font-size: 12px" readonly="readonly"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">请刷煤卡：</span>
-                                        <input type="text" id="coalCard" class="form-control" autofocus="autofocus">
-                                        <%--<button id="StartBind" class="btn btn-primary mr5 mb10" type="button">开始绑定</button>--%>
-                                    </div>
-                                </div>
+                                <%--<div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">--%>
+                                    <%--<div class="input-group">--%>
+                                        <%--<span class="input-group-addon">请刷煤卡：</span>--%>
+                                        <%--<input type="text" id="coalCard" class="form-control" autofocus="autofocus">--%>
+                                        <%--&lt;%&ndash;<button id="StartBind" class="btn btn-primary mr5 mb10" type="button">开始绑定</button>&ndash;%&gt;--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <%--<div style="padding: 15px;float: right">--%>
                                     <%--<div class="input-group">--%>
                                         <%--<button id="addBtn" class="btn btn-success mr5 mb10" data-toggle="modal"--%>
@@ -149,6 +149,45 @@
         <!-- / .page-content-inner -->
     </div>
     <!-- / page-content-wrapper -->
+</div>
+
+<input type="hidden" id="hideNumNo">
+<div class="modal fade" id="myModalBind" tabindex="-1" role="dialog"
+     aria-labelledby="myModalBind" aria-hidden="true">
+    <div class="modal-dialog" style="width: 550px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">绑定煤卡信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="validate" class="form-horizontal group-border stripped" role="form">
+                    <div class="form-group">
+                        <label for="coalCard" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">请刷卡:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                          <input type="text" id="coalCard" name="coalCard"
+                                 class="form-control required" autofocus="autofocus">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="money" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">交款金额:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                           <input type="text" id="money" class="form-control required"
+                                  aria-required="true" placeholder="请输入交款金额">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="submitBut" class="btn btn-primary">提交</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!--新增信息-->
 <input type="hidden" id="coalCardHide">

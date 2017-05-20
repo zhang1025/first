@@ -68,6 +68,9 @@ function dealTableTitle() {
             if (status == -1) {
                 return "未通过";
             }
+            if (status == 7) {
+                return "调价后失效";
+            }
             if (status == 4) {
                 return "已结算";
             }
@@ -127,15 +130,40 @@ function initButtonClick() {
     $("#bundling").on("click",function () {
         if(checkSelect()==true){
             var coalNo = $('input:checkbox[name="check"]:checked').parent().next().next().html();
+            //合同号
+            var numNo = $('input:checkbox[name="check"]:checked').parent().next().html();
             if(!coalNo){
-                $("#myModal").modal("show");
-                binding();
+                $("#myModalBind").modal("show");
+                setTimeout(function () {
+                    $("#coalCard").focus();
+                },600);
+                $("#hideNumNo").val(numNo);
+                // binding();
             }else{
                 swal("警告","已绑定过的合同不能再次绑定","warning");
                 return false;
             }
 
         }
+    });
+    $("#submitBut").on("click",function () {
+        var coalCard =  $.trim($("#coalCard").val());
+        if(coalCard=="" || coalCard==null){
+            swal("警告","绑定煤卡不能为空","warning");
+            return false;
+        }
+        $.post(path + "bindingCard",
+            {id: checkBtn(),coalCard:coalCard,
+                money:$("#money").val(),numNo:$("#hideNumNo").val()},
+            function (data) {
+            if(data > 0){
+                $("#myModalBind").modal("hide");
+                swal("ok","绑定成功！","success");
+                queryData();
+            }else{
+                swal("failed","绑定失败","error");
+            }
+        });
     });
     $("#unBundling").on("click",function () {
         if(checkSelect()){
