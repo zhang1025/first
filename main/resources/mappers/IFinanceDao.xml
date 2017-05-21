@@ -85,4 +85,12 @@
             #{item}
         </foreach>
     </update>
+
+    <!--回款  调运信息 -->
+    <update id="paymentInfo" >
+        update diaoyun set type2=0  where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 </mapper>

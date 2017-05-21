@@ -85,33 +85,13 @@ function initButtonClick() {
         $("#hideStName").val(st);//记录结算单位
         queryBalanceDataList(id);
     });
-
-    //计算金额输入
-    $("#balance").on("click",function () {
+    $("#paymentBut").on("click",function () {
         var id = checkBtn();
         if (id == "") {
             swal("", "请至少选中一行！", "warning");
             return;
-        }
-        //填充弹出框信息，吨数 单价等
-        $.post(path+"getBalanceTotal",{ids:id,st:$("#hideStName").val()},function (data) {
-            $("#tonnage").val(data.totalTonnage);$("#unitPrice").val(data.unitPrice);
-            $("#coalMoney").val(data.coalMoney);$("#taxation").val(data.taxation);
-            $("#shunting").val(data.shunting);$("#entruck").val(data.entruck);
-            $("#freight").val(data.freight);
-        });
-        $("#hideIds").val(id);//记录选中的id
-        $("#myModalBalance").modal("show");
-    });
-
-    //取消结算 反结按钮
-    $("#cancelBalance").on("click",function () {
-        var id = checkBtn();
-        if (id == "") {
-            swal("", "请至少选中一行！", "warning");
-            return;
-        }
-        $.post(path+"cancelBalanceInfo",{ids:id},function (result) {
+        }//回款操作
+        $.post(path+"paymentInfo",{ids:id},function (result) {
             if (result > 0) {
                 swal("成功","操作成功！","success");
                 queryBalanceDataList($("#hideDayId").val());
@@ -119,12 +99,8 @@ function initButtonClick() {
                 swal("失败","操作失败","error");
             }
         });
-    });
+    })
 
-}
-//输入结算金额 算出盈亏
-function inputYK() {
-    $("#yingkui").val(parseFloat($("#sjMoney").val())-parseFloat($("#allMoney").val()));
 }
 //根据id查询调运详细信息
 function queryBalanceDataList(id) {
@@ -132,11 +108,11 @@ function queryBalanceDataList(id) {
     $("#balanceListData").show();
     var params = [
         {name: 'dayId', value: id},
-        {name: 'type', value: "1"}
+        {name: 'type2', value: "0"}
     ];
-    var noParams = [
+    var noParams = [ //未回款
         {name: 'dayId', value: id},
-        {name: 'type', value: "0"}
+        {name: 'type2', value: "1"}
     ];
     var urlBalance =  '/transport/get_diaoyunInfo_table';
     commonDataTablesNoPage("balanceListTables", urlBalance, dealBalanceTableTitle(1), params, "balanceListData");

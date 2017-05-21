@@ -108,7 +108,10 @@ public class DiaoyunBean implements Serializable {
     private double allMoney;
 
 
+    //对于大客户用户，结算单--是否已经结算  0没有 1已结算
     private String type;
+    //对于大客户用户，回款单--是否应该回款  0已回款 1未回款
+    private String type2;
     private String beginDate;
     private String endDate;
 

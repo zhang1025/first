@@ -136,6 +136,7 @@ public class FinanceServiceImpl implements FinanceService {
         return newBean;
     }
 
+    //结算操作
     public int dealBalanceInfo(String ids){
         List listIds = new ArrayList();
         for (String s : ids.split(",")) {
@@ -144,11 +145,21 @@ public class FinanceServiceImpl implements FinanceService {
        return financeDao.dealBalanceInfo(listIds);
     }
 
+    //取消结算
     public int cancelBalanceInfo(String ids){
         List listIds = new ArrayList();
         for (String s : ids.split(",")) {
             listIds.add(Integer.parseInt(s));
         }
         return financeDao.cancelBalanceInfo(listIds);
+    }
+
+    //回款操作
+    public int paymentInfo(String ids){
+        List listIds = new ArrayList();
+        for (String s : ids.split(",")) {
+            listIds.add(Integer.parseInt(s));
+        }
+        return financeDao.paymentInfo(listIds);
     }
 }

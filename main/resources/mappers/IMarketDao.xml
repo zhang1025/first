@@ -181,7 +181,7 @@
     <select id="getTableDayPlanData" parameterType="PlanBean" resultType="PlanBean">
         select d.id,d.rid,d.settlement,d.name,d.planCarNum,d.actualCarNum,d.planTonnage,d.actualSendedTonnage,
         d.planCarNum-d.actualCarNum as unsendedCarNum,
-        d.planTonnage-d.actualSendedTonnage as unsendedTonnage,d.settlement
+        d.planTonnage-d.actualSendedTonnage as unsendedTonnage,
         d.actualUnitPrice,d.wellsName,d.coalName,d.siteName,d.privateLine,d.method,d.usePerson,d.inputPerson,
         d.payId,d.createtime,d.status,d.month_id as monthId from out_day_plan d
         where 1=1

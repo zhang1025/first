@@ -29,5 +29,6 @@ public interface FinanceDao {
 
     int dealBalanceInfo(List ids);
     int cancelBalanceInfo(List ids);
+    int paymentInfo(List ids);
     List<DiaoyunBean> getDiaoyunInfoFromIds(List ids);
 }

@@ -171,7 +171,7 @@
             </div>
             <!-- 零销煤打印table -->
             <div id="printContractData">
-            <div class="row" id="printContractData1">
+            <div class="row" id="printContractData1" style="display: none">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">

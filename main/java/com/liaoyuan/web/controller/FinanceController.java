@@ -196,6 +196,17 @@ public class FinanceController extends BaseController {
         printDataTables(response, count, gridData);
     }
 
+    //回款操作
+    @RequestMapping(value = "/paymentInfo", method = RequestMethod.POST)
+    public Integer paymentInfo(String ids) throws Exception {
+        int rtn =  financeService.paymentInfo(ids);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "财务部门","回款操作","回款id="+ids+" 的调运信息"));
+        }
+        return  rtn;
+    }
+
     /**
      * 地付信息管理页面
      */

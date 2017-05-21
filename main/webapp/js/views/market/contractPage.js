@@ -417,7 +417,9 @@ function printInfo(id) {
             $("#chanche").html("不包含");
         }
         $("#mk").html("");
+        $("#printContractData1").show();
         $("#printContractData").printArea();
+        $("#printContractData1").hide();
     });
 
     // $.post(path + "printInfo", {id: id}, function (data) {

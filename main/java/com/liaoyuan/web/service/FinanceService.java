@@ -31,5 +31,6 @@ public interface FinanceService {
 
     int dealBalanceInfo(String ids);
     int cancelBalanceInfo(String ids);
+    int paymentInfo(String ids);
     DiaoyunBean getDiaoyunInfoFromIds(String ids,String st);
 }
