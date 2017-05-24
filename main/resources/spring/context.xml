@@ -30,7 +30,7 @@
     <task:annotation-driven />
     <aop:aspectj-autoproxy />
     <!-- 缓存-->
-    <import resource="context-cache.xml" />
+    <!--<import resource="context-cache.xml" />-->
     <!-- 数据源-->
     <import resource="classpath:spring/context-datasource.xml"/>
 
