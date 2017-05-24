@@ -377,16 +377,6 @@ function initButtonClick() {
     $("#print").on("click", function () {
          printInfo(checkBtn());
     });
-
-    //导出地付煤excel信息
-    $("#detailExcel").on("click",function () {
-        var time = $("input[name='date-range']").val();
-        var dateRange = time.split("to");
-        var beginDate = $.trim(dateRange[0]);
-        var endDate = $.trim(dateRange[1]);
-        var param = 'beginDate=' + beginDate + '&endDate=' + endDate ;
-        location.href = path + 'export_detailExcel_data?' + param;
-    });
 }
 //根据输入的追加金额计算他的应该追加交款
 function inputPrice() {

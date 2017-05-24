@@ -231,6 +231,24 @@ function initButtonClick() {
         var param = 'numNo=' + numNo + '&receiveName=' + receives + '&beginDate=' + beginDate + '&endDate=' + endDate + '&name=' + coal + '&status=' + status + '&contractType=' + type;
         location.href = '/market/export_excel_data?' + param;
     });
+    //导出地付煤excel信息
+    $("#detailExcel").on("click",function () {
+        var time = $("input[name='date-range']").val();
+        var dateRange = time.split("to");
+        var beginDate = $.trim(dateRange[0]);
+        var endDate = $.trim(dateRange[1]);
+        var param = 'beginDate=' + beginDate + '&endDate=' + endDate ;
+        location.href = '/market/export_detailExcel_data?' + param;
+    });
+    //导出应收与发出汇总excel信息
+    $("#receiveExcel").on("click",function () {
+        var time = $("input[name='date-range']").val();
+        var dateRange = time.split("to");
+        var beginDate = $.trim(dateRange[0]);
+        var endDate = $.trim(dateRange[1]);
+        var param = 'beginDate=' + beginDate + '&endDate=' + endDate ;
+        location.href = '/market/export_receiveExcel_data?' + param;
+    });
 
 }
 function verifyStatus(id) {

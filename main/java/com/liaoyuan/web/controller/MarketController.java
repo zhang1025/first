@@ -23,7 +23,9 @@ import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zj on 2017/3/18 0018
@@ -301,9 +303,85 @@ public class MarketController extends BaseController {
         int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
         bean.setIDisplayLength(count);
         List<ContractBean> gridData = marketService.getTableDetailContractData(bean);
+        if(null!=gridData && !gridData.isEmpty()){
+            ContractBean newCb = new ContractBean();
+            newCb.setSettlement("合计");
+            double dunshu=0;
+            double meikuan=0;
+            double shuijin=0;
+            double diaoche=0;
+            double zhuangche=0;
+            double heji=0;
+            for (ContractBean cb : gridData) {
+                dunshu += cb.getOrderCount();
+                meikuan +=cb.getPrepaidAmount();
+                shuijin += cb.getTaxation();
+                diaoche += cb.getShunting();
+                zhuangche += cb.getEntruck();
+                heji += StringUtils.isBlank(cb.getAllMoney())?0:Double.parseDouble(cb.getAllMoney());
+            }
+            newCb.setOrderCount(dunshu);
+            newCb.setPrepaidAmount(meikuan);
+            newCb.setTaxation(shuijin+"");
+            newCb.setShunting(diaoche+"");
+            newCb.setEntruck(zhuangche+"");
+            newCb.setAllMoney(heji+"");
+            gridData.add(newCb);
+        }
         columnnames = DataTableUtils.getExcelHTDeailColumnName();
         List<List<Object>> datas = DataTableUtils.getExcelHTDetailDataLists(gridData);
         String fileName = URLEncoder.encode("地付煤明细信息数据", "utf-8")+".xls";
+        ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+    }
+
+    /**
+     *导出 应收与发出汇总 excel数据
+     * 要根据结算单位查出来他都有什么品种的煤
+     */
+    @RequestMapping(value = "/export_receiveExcel_data", method = RequestMethod.GET)
+    public void exportReceiveData(ContractBean bean,HttpServletResponse response) throws Exception{
+        List<String> columnnames ;
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countContractData(bean) : bean.getIRecordsTotal();
+        bean.setIDisplayLength(count);
+        List<ContractBean> gridData = marketService.getTableDetailContractData(bean);
+
+        if(null!=gridData && !gridData.isEmpty()){
+            ContractBean newCb = new ContractBean();
+            newCb.setSettlement("合计");
+            double dunshu=0;
+            double meikuan=0;
+            double shuijin=0;
+            double diaoche=0;
+            double zhuangche=0;
+            double heji=0;
+            for (ContractBean cb : gridData) {
+                dunshu += cb.getOrderCount();
+                meikuan +=cb.getPrepaidAmount();
+                shuijin += cb.getTaxation();
+                diaoche += cb.getShunting();
+                zhuangche += cb.getEntruck();
+                heji += StringUtils.isBlank(cb.getAllMoney())?0:Double.parseDouble(cb.getAllMoney());
+            }
+            newCb.setOrderCount(dunshu);
+            newCb.setPrepaidAmount(meikuan);
+            newCb.setTaxation(shuijin+"");
+            newCb.setShunting(diaoche+"");
+            newCb.setEntruck(zhuangche+"");
+            newCb.setAllMoney(heji+"");
+            gridData.add(newCb);
+        }
+        Map<String,Integer> map = new HashMap<>();
+        //品种
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+        if(null != coals && coals.size()>0){
+            for (DataBean dataBean : coals) {
+                map.put(dataBean.getName(),0);
+            }
+        }
+        columnnames = DataTableUtils.getExcelReceiveDeailColumnName(map);
+        List<List<Object>> datas = DataTableUtils.getExcelReceiveDetailDataLists(gridData,map);
+        String fileName = URLEncoder.encode("应收账款发出汇总信息数据", "utf-8")+".xls";
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
     }
 

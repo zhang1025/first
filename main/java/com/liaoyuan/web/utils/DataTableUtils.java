@@ -1,10 +1,13 @@
 package com.liaoyuan.web.utils;
 
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zj on 2017/3/18 0018
@@ -154,7 +157,9 @@ public class DataTableUtils {
             row.add(reportData.getShunting());
             row.add(reportData.getEntruck());
             row.add(reportData.getAllMoney());
-            switch (reportData.getContractType()){
+            String type = StringUtils.isBlank(reportData.getContractType())?
+                    "":reportData.getContractType();
+            switch (type){
                 case "1": row.add("公用煤");
                     break;
                 case "2": row.add("零销煤");
@@ -173,6 +178,52 @@ public class DataTableUtils {
         }
         return datas;
     }
+
+
+    public static List<String> getExcelReceiveDeailColumnName(Map<String,Integer> map) {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("结算单位");
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            columnnames.add(entry.getKey());
+        }
+        columnnames.add("数量");
+        columnnames.add("单价");
+        columnnames.add("煤款");
+        columnnames.add("税金");
+        columnnames.add("装调费");
+        columnnames.add("铁路运费");
+        columnnames.add("金额合计");
+        columnnames.add("结算方式");
+        columnnames.add("经办人");
+        return columnnames;
+    }
+
+    public static List<List<Object>> getExcelReceiveDetailDataLists(List<ContractBean> gridData,Map<String,Integer> map) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(ContractBean reportData:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(reportData.getSettlement());
+            //设置对应的品种对应的数据
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                row.add(entry.getValue());
+            }
+            row.add(reportData.getOrderCount());
+            row.add(reportData.getUnitPrice());
+            row.add(reportData.getPrepaidAmount());
+            row.add(reportData.getTaxation());
+            row.add(reportData.getShunting()+reportData.getEntruck());
+            row.add("");
+            row.add(reportData.getAllMoney());
+            row.add(reportData.getFund());
+            row.add(reportData.getUsePerson());
+            datas.add(row);
+        }
+        return datas;
+    }
+
+
+
 
     //外运计划
     public static List<String> getExcelPlanColumnName() {

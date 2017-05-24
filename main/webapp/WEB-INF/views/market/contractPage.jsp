@@ -155,11 +155,6 @@
                                     <button id="downContractInfo" class="btn btn-primary mr5 mb10" type="button">导出合同信息</button>
                                 </div>
                             </div>
-                            <div style="padding: 5px;float: right">
-                                <div class="input-group">
-                                    <button id="detailExcel" class="btn btn-primary mr5 mb10" type="button">导出地付煤明细信息</button>
-                                </div>
-                            </div>
                             <table id="contractDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 10px" cellspacing="0" width="100%">
                             </table>

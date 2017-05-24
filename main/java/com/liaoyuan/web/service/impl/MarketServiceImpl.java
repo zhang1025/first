@@ -54,7 +54,7 @@ public class MarketServiceImpl implements MarketService{
                 if(!"7".equals(cb.getStatus())){//状态7是调价前的合同信息
                     //煤款
 //                    cb.setPrepaidAmount(Double.parseDouble(String.format("%.2f",cb.getPrepaidAmount())));
-                    if(StringUtils.isBlank(bean.getSettlement())){
+                    if(StringUtils.isNotBlank(bean.getSettlement())){
                         db = financeDao.getRateInfoFromSettName(bean.getSettlement());
                     }
                     if(db!=null){
@@ -66,7 +66,7 @@ public class MarketServiceImpl implements MarketService{
                 }
             }
         }
-        return iMarkerDao.getTableContractData(bean);
+        return list;
     }
 
     @Override
