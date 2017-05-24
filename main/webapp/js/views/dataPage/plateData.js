@@ -3,7 +3,7 @@
  */
 var path = "/common/";
 var type=1;
-var model="plateNumber";
+var model="platenumber";
 $(document).ready(function() {
     $("body").ledo();
     queryPlateData();
