@@ -133,10 +133,10 @@ function dealTableTitle() {
 
 function operateType(cellvalue, options, rowObject) {
     var type = rowObject['forkliftFee'];
-    if (type == 1) {
+    if (type == "1") {
         return "包含铲车费";
     }
-    if (type == 0) {
+    if (type == "0") {
         return "不包含";
     }
 }
