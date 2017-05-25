@@ -19,9 +19,6 @@ $(document).ready(function () {
     initButtonClick();
     initFormValid();
     queryData();
-
-    //tip提示
-    $(".tip").tooltip ({placement: 'top', container: 'body'});
 });
 function queryData() {
     var aoColumns = dealTableTitle();
@@ -45,6 +42,8 @@ function queryData() {
     ];
     var url = path + 'get_contract_table';
     commonDataTables("contractDataTables", url, aoColumns, params, "contractData");
+    //tip提示
+    $(".tip").tooltip ({placement: 'top', container: 'body'});
 }
 //处理table的公共title
 function dealTableTitle() {
@@ -169,7 +168,7 @@ function operateButton(cellvalue, options, rowObject) {
     var bankName = rowObject['bankName'];
     var bankNo = rowObject['bankNo'];
     if(status == 7){ //调价前合同，调价之后已经生成了一个新合同
-        return "<span class='tip' title='调价前合同不可编辑'><button type='button' disabled='disabled' class='btn btn-primary btn-small' id='editorServer'></button></span> ";
+        return "<span class='tip' title='调价前合同不可编辑'><button type='button' disabled='disabled' class='btn btn-primary btn-small'>编辑</button></span> ";
     }else{
         return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
             + id + "','"

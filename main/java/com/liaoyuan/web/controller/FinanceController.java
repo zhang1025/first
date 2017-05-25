@@ -216,8 +216,10 @@ public class FinanceController extends BaseController {
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
         List<DataBean> settlements = commonDataService.getListData(Constant.SETTLEMENT);
         List<DataBean> funds = commonDataService.getListData(Constant.FUND);
+        List<DataBean> wells = commonDataService.getListData(Constant.WELLS);
         List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
         modelMap.put("coals",coals);
+        modelMap.put("wells",wells);
         modelMap.put("settlements",settlements);
         modelMap.put("funds",funds);
         modelMap.put("receives",receiveName);//收货单位 客户
@@ -229,7 +231,14 @@ public class FinanceController extends BaseController {
     @RequestMapping(value = "/editContractInfo", method = RequestMethod.POST)
     public Integer editContractInfo(ContractBean bean) {
         bean.setFinancePerson((String)httpSession.getAttribute(SessionUser.SESSION_USER));
-        return marketService.editContractInfoForFinance(bean);
+        int rtn = marketService.editContractInfoForFinance(bean);
+        if(rtn > 0){
+            commonDataService.addLogs(new PayLogs(String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)),
+                    "财务部门","编辑合同信息",
+                    "结算单位="+bean.getSettlement()+",已付合同款="+bean.getPaidInvoice()+",未付合同款="+bean.getUnPaidInvoice()));
+        }
+
+        return rtn;
     }
 
     //更新审核状态

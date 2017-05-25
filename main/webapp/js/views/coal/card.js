@@ -17,9 +17,15 @@ function queryData() {
     var dateRange = time.split("to");
     var beginDate = $.trim(dateRange[0]);
     var endDate = $.trim(dateRange[1]);
+    var numNo = $("#s_numNo").val();
+    var receives = $("#s_receives").val();
+    var coal = $("#s_coal").val();
     var params = [
         {name: 'beginDate', value: beginDate},
-        {name: 'endDate', value: endDate}
+        {name: 'endDate', value: endDate},
+        {name: 'numNo', value: numNo},
+        {name: 'receiveName', value: receives},
+        {name: 'name', value: coal}
     ];
     var url = path+'/get_card_table';
     commonDataTables("cardDataTables", url, aoColumns, params, "cardData");

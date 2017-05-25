@@ -19,9 +19,16 @@ public interface ITransportDao {
 
     int dealStatusDayPlan(@Param(value = "id") int id);
 
+    //取消调运计划
+    int cancelDyPlan(@Param(value = "id") int id);
+
     //更改调运状态 已传的同时更新对应日计划和月计划的实发车以及实发吨数
     int updateDayInfo(DiaoyunBean bean);
     int updateMonthInfo(DiaoyunBean bean);
+
+
+    int updateDayInfoForCancel(DiaoyunBean bean);
+    int updateMonthInfoForCancel(DiaoyunBean bean);
 
     int checkPlanCars(@Param(value = "dayId") int dayId);
 }

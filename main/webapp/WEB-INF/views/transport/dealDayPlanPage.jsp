@@ -166,25 +166,112 @@
             <div class="modal-body">
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
-                
                         <tr>
                             <td>
                                 <div class="form-group">
                                     <label for="wagonNo" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">车皮号:</label>
+                                           style="padding-right: 1px">车皮号1:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="wagonNo" class="form-control required"
-                                               aria-required="true" placeholder="车皮号">
+                                               aria-required="true" placeholder="车皮号1">
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
                                     <label for="ast" class="col-lg-4 control-label"
-                                           style="padding-right: 1px">实发吨数:</label>
+                                           style="padding-right: 1px">实发吨数1:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
                                         <input type="text" id="ast" class="form-control required" aria-required="true"
-                                            name="number" placeholder="实发吨数">
+                                            name="number" placeholder="实发吨数1">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr_diaoyun">
+                            <td>
+                                <div class="form-group">
+                                    <label for="wagonNo2" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">车皮号2:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="wagonNo2" class="form-control"
+                                               placeholder="车皮号2">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="ast2" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">实发吨数2:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="ast2" class="form-control"
+                                               name="number" placeholder="实发吨数2">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr_diaoyun">
+                            <td>
+                                <div class="form-group">
+                                    <label for="wagonNo3" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">车皮号3:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="wagonNo3" class="form-control"
+                                               placeholder="车皮号3">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="ast3" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">实发吨数3:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="ast3" class="form-control"
+                                               placeholder="实发吨数3">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr_diaoyun">
+                            <td>
+                                <div class="form-group">
+                                    <label for="wagonNo4" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">车皮号4:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="wagonNo4" class="form-control"
+                                               placeholder="车皮号4">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="ast4" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">实发吨数4:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="ast4" class="form-control"
+                                               placeholder="实发吨数4">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="tr_diaoyun">
+                            <td>
+                                <div class="form-group">
+                                    <label for="wagonNo5" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">车皮号5:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="wagonNo5" class="form-control"
+                                               placeholder="车皮号5">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="ast5" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">实发吨数5:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="ast5" class="form-control"
+                                               placeholder="实发吨数5">
                                     </div>
                                 </div>
                             </td>

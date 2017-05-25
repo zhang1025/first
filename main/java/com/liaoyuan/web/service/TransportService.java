@@ -17,6 +17,8 @@ public interface TransportService {
 
     int dealStatusDayPlan(DiaoyunBean bean);
 
+    int cancelDyPlan(DiaoyunBean bean);
+
     int checkPlanCars( int dayId);
 
 }

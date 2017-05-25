@@ -76,6 +76,9 @@ public class ContractBean {
     }
     private String allMoney;
 
+    //财务审核的时候 输入已付合同款 和 未付合同款 最为记录
+    private String paidInvoice;
+    private String unPaidInvoice;
     //合同 煤卡卡号
     private String coalCard;
 

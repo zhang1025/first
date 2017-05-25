@@ -17,6 +17,7 @@ function queryData() {
     var numNo = $.trim($("#s_numNo").val());
     var receiveName = $("#s_receives").val();
     var coal = $("#s_coal").val();
+    var wells = $("#s_wells").val();
     var status = $("#s_status").val();
     var type = $("#s_type").val();
     var time = $("input[name='date-range']").val();
@@ -26,6 +27,7 @@ function queryData() {
     var params = [
         {name: 'numNo', value: numNo},
         {name: 'receiveName', value: receiveName},
+        {name: 'wells', value: wells},
         {name: 'name', value: coal},
         {name: 'status', value: status},
         {name: 'contractType', value: type},
@@ -80,6 +82,8 @@ function dealTableTitle() {
             }
             if (status == 4) {
                 return "已结算";
+            }if (status == 7) {
+                return "调价前合同";
             }
             return "未知";
         }
@@ -116,7 +120,6 @@ function dealTableTitle() {
         {"sTitle": "电话", "mData": "tel", "sWidth": "7%"},
         {"sTitle": "开户银行", "mData": "bankName", "sWidth": "7%"},
         {"sTitle": "账号", "mData": "bankNo", "sWidth": "7%"},
-
         {"sTitle": "结算单位", "mData": "settlement", "sWidth": "8%"},
         {"sTitle": "资金方式", "mData": "fund", "sWidth": "8%"},
         {"sTitle": "税金", "mData": "taxation", "sWidth": "7%"},
@@ -143,22 +146,26 @@ function operateButton(cellvalue, options, rowObject) {
     var settlement = rowObject['settlement'];
     var fund = rowObject['fund'];
     var taxation = rowObject['taxation'];
+    var paidInvoice = rowObject['paidInvoice'];
+    var unPaidInvoice = rowObject['unPaidInvoice'];
     var orderCount = rowObject['orderCount'];
     var unitPrice = rowObject['unitPrice'];
 
     return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
-        + id + "','"
+        + id + "','"+ paidInvoice + "','"+ unPaidInvoice + "','"
         + settlement + "','" + fund + "','"+ orderCount + "','"+ unitPrice + "','"
         + taxation
         + "')\">编辑</button>";
 }
 //编辑
-function editSettlement(id, settlement, fund,orderCount,unitPrice, taxation) {
+function editSettlement(id,pi,unpi, settlement, fund,orderCount,unitPrice, taxation) {
     subType = 2;
     $("#hideId").val(id);
-    // $("#taxation").val(taxation);
+    $("#taxation").val(taxation);
     $("#settlement").val(settlement).select2();
     $("#fund").val(fund).select2();
+    $("#paidInvoice").val(pi);
+    $("#unPaidInvoice").val(unpi);
     $("#totalId").val(orderCount*unitPrice);
 }
 function gotTaxation() {
@@ -169,7 +176,7 @@ function gotTaxation() {
             swal("警告","该结算单位暂未配置税率！","warning");
             return false;
         }
-        $("#taxation").val((parseInt(total)*data).toFixed(2));
+        $("#taxation").val((parseFloat(total)*data).toFixed(2));
     });
 }
 function initButtonClick() {
@@ -185,7 +192,8 @@ function initButtonClick() {
         var url = path+"editContractInfo";
         $.post(url, {
                 settlement: $.trim($("#settlement").val()), fund: $("#fund").val(),
-                taxation: $("#taxation").val(),
+                taxation: $("#taxation").val(), paidInvoice: $("#paidInvoice").val(),
+                unPaidInvoice: $("#unPaidInvoice").val(),
                 id: $("#hideId").val()
             },
             function (result) {

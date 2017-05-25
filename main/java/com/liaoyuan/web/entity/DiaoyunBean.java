@@ -1,6 +1,7 @@
 package com.liaoyuan.web.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
@@ -9,8 +10,24 @@ import java.io.Serializable;
  * Created by zj on 2017/3/28 0028
  */
 @Data
+@NoArgsConstructor
 public class DiaoyunBean implements Serializable {
 
+
+    public DiaoyunBean(int rid,String name,String wagonNo,double tonnage,
+                       double unitPrice,String wellsName,String coalName,
+                       String siteName,int dayId,int monthId){
+        this.rid = rid;
+        this.name = name;
+        this.wagonNo =wagonNo;
+        this.tonnage = tonnage;
+        this.unitPrice = unitPrice;
+        this.wellsName =wellsName;
+        this.coalName =coalName;
+        this.siteName = siteName;
+        this.dayId = dayId;
+        this.monthId =monthId;
+    }
     private int id;
     public void setId(String id) {
         if(StringUtils.isBlank(id)){
@@ -32,6 +49,10 @@ public class DiaoyunBean implements Serializable {
     private String name;
 
     private String wagonNo;
+    private String wagonNo2;
+    private String wagonNo3;
+    private String wagonNo4;
+    private String wagonNo5;
 
     private double tonnage;
     public void setTonnage(String tonnage) {
@@ -39,6 +60,38 @@ public class DiaoyunBean implements Serializable {
             this.tonnage = 0;
         }else{
             this.tonnage =  Double.parseDouble(tonnage);
+        }
+    }
+    private double tonnage2;
+    public void setTonnage2(String tonnage2) {
+        if(StringUtils.isBlank(tonnage2)){
+            this.tonnage2 = 0;
+        }else{
+            this.tonnage2 =  Double.parseDouble(tonnage2);
+        }
+    }
+    private double tonnage3;
+    public void setTonnage3(String tonnage3) {
+        if(StringUtils.isBlank(tonnage3)){
+            this.tonnage3 = 0;
+        }else{
+            this.tonnage3 =  Double.parseDouble(tonnage3);
+        }
+    }
+    private double tonnage4;
+    public void setTonnage4(String tonnage4) {
+        if(StringUtils.isBlank(tonnage4)){
+            this.tonnage4 = 0;
+        }else{
+            this.tonnage4 =  Double.parseDouble(tonnage4);
+        }
+    }
+    private double tonnage5;
+    public void setTonnage5(String tonnage5) {
+        if(StringUtils.isBlank(tonnage5)){
+            this.tonnage5 = 0;
+        }else{
+            this.tonnage5 =  Double.parseDouble(tonnage5);
         }
     }
     //单价

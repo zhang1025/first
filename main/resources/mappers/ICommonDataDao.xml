@@ -103,7 +103,8 @@
         insert into ${table} (name,mnc,tonnage,cost) values (#{name},#{mnc},#{tonnage},#{cost})
     </insert>
      <insert id="addSettlement" parameterType="DataBean" >
-        insert into ${table} (name,mnc,method,industry,province,type) values (#{name},#{mnc},#{method},#{industry},#{province},#{type})
+        insert into ${table} (name,mnc,method,industry,province,type,rateNo,rate,shunting,entruck)
+        values (#{name},#{mnc},#{method},#{industry},#{province},#{type},#{rateNo},#{rate},#{shunting},#{entruck})
     </insert>
 
     <update id="editCoal" parameterType="DataBean" >
@@ -113,7 +114,9 @@
         update ${table} set name=#{name},mnc=#{mnc},tonnage=#{tonnage},cost=#{cost} where id=#{id}
     </update>
      <update id="editSettlement" parameterType="DataBean" >
-        update ${table} set name=#{name},mnc=#{mnc},method=#{method},industry=#{industry},province=#{province},type=#{type}  where id=#{id}
+        update ${table} set name=#{name},mnc=#{mnc},method=#{method},industry=#{industry},
+        province=#{province},type=#{type},rateNo=#{rateNo},rate=#{rate},shunting=#{shunting},entruck=#{entruck}
+        where id=#{id}
     </update>
 
     <delete id="deleteCommon">

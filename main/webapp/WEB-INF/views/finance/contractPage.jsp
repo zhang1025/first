@@ -23,11 +23,11 @@
                                                style="width: 100px"/>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:5px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:5px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">客户名称</span>
                                         <select id="s_receives" class="select fancy-select form-control"
-                                                style="width: 150px">
+                                                style="width: 180px">
                                             <option value="">请选择</option>
                                             <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
@@ -35,7 +35,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 55px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 80px">
                                     <div class="input-group">
                                         <span class="input-group-addon">煤种</span>
                                         <select id="s_coal" class="select fancy-select form-control"
@@ -47,7 +47,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 48px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 65px">
                                     <div class="input-group">
                                         <span class="input-group-addon">合同状态</span>
                                         <select id="s_status" class="fancy-select form-control" style="width: 100px">
@@ -62,7 +62,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 50px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 70px">
                                     <div class="input-group">
                                         <span class="input-group-addon">合同类型</span>
                                         <select id="s_type" class="fancy-select form-control"
@@ -77,11 +77,23 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 300px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;width: 150px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">煤种</span>
+                                        <select id="s_wells" class="select fancy-select form-control"
+                                                style="width: 130px">
+                                            <option value="">请选择</option>
+                                            <c:forEach var="we" items="${wells}" varStatus="s">
+                                                <option value="${we.name}">${we.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding: 5px;padding-left:45px;width: 300px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">时间</span>
                                         <input type="text" id="date-range" name='date-range' class="form-control white-bg text-center"
-                                               style="cursor: pointer;font-size: 12px" readonly="readonly"/>
+                                               style="cursor: pointer;font-size: 10px" readonly="readonly"/>
                                     </div>
                                 </div>
 
@@ -185,10 +197,24 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="paidInvoice" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">已付发票额:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <input type="text" id="paidInvoice" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="unPaidInvoice" class="col-lg-4 control-label"
+                               style="padding: 1px;width: 17%">未付发票额:</label>
+                        <div class="col-lg-10" style="width: 75%;padding-left: 5px">
+                            <input type="text" id="unPaidInvoice" class="form-control required" aria-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="financePerson" class="col-lg-4 control-label"
                                style="padding: 1px;width: 17%">财务经办人:</label>
                         <div class="col-lg-10" style="width: 75%;padding-left: 5px">
-                            <input type="text" id="financePerson"
+                            <input type="text" id="financePerson" class="form-control required"
                                    placeholder="${account}" readonly="readonly">
                         </div>
                     </div>

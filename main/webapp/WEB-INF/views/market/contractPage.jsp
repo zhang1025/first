@@ -429,7 +429,7 @@
                                 <div class="form-group">
                                     <label for="billName" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">公司名称:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                                         <input type="text" id="billName" class="form-control required"
                                                aria-required="true"
                                                placeholder="公司名称">
@@ -442,7 +442,7 @@
                                 <div class="form-group">
                                     <label for="address" class="col-lg-4 control-label"
                                            style="padding: 1px;width: 17%">公司地址:</label>
-                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                    <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                                         <input type="text" id="address" class="form-control required"
                                                aria-required="true"
                                                placeholder="公司地址">

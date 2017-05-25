@@ -17,6 +17,9 @@
         <if test="status!=null and status!=''">
             and status =#{status}
         </if>
+        <if test="wells!=null and wells!=''">
+            and wells =#{wells}
+        </if>
         <if test="contractType!=null and contractType!=''">
             and contractType = #{contractType}
         </if>
@@ -85,7 +88,8 @@
     <!--财务人员更新合同信息-->
     <update id="editContractInfoForFinance" parameterType="ContractBean">
          update car_contract set settlement=#{settlement},fund=#{fund},taxation=#{taxation},
-        financePerson=#{financePerson} where id=#{id}
+        financePerson=#{financePerson},paidInvoice=#{paidInvoice},
+        unPaidInvoice=#{unPaidInvoice} where id=#{id}
     </update>
 
     <update id="lockInfo">

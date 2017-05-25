@@ -12,7 +12,7 @@
         <if test="type2!=null and type2!=''">
             and type2=#{type2}
         </if>
-         and dayId=#{dayId}
+         and dayId=#{dayId} and status!=-1
     </select>
     <select id="getTableDealPlanData" parameterType="DiaoyunBean" resultType="DiaoyunBean">
         select * from diaoyun where 1=1
@@ -22,7 +22,7 @@
         <if test="type2!=null and type2!=''">
             and type2=#{type2}
         </if>
-        and dayId=#{dayId}
+        and dayId=#{dayId} and status!=-1
         order by createtime desc
         limit ${iDisplayStart},${iDisplayLength}
     </select>
@@ -35,7 +35,7 @@
 
     <!--检查已经发车数量实发大于计划数量-->
     <select id="checkPlanCars" resultType="java.lang.Integer">
-         SELECT COUNT(*)  from diaoyun where dayId=#{dayId}
+         SELECT COUNT(*)  from diaoyun where dayId=#{dayId} and status!=-1
     </select>
     <!--更改调运信息-->
     <update id="editDealDayPlan" parameterType="DiaoyunBean">
@@ -47,6 +47,11 @@
         update diaoyun set status=1 where id=#{id}
     </update>
 
+    <!--取消调运计划-->
+    <update id="cancelDyPlan">
+        update diaoyun set status=-1 where id=#{id}
+    </update>
+
     <!--更改调运状态 已传的同时更新对应日计划和月计划的实发车以及实发吨-->
     <update id="updateDayInfo" parameterType="DiaoyunBean">
         update out_day_plan set actualCarNum=actualCarNum+1,
@@ -55,5 +60,15 @@
     <update id="updateMonthInfo" parameterType="DiaoyunBean">
         update out_month_plan set actualCarNum=actualCarNum+1,
         actualSendedTonnage=actualSendedTonnage+${tonnage} where id=#{monthId}
+    </update>
+
+    <!--更改调运状态 作废调运计划 作废的同时更新减少对应日计划和月计划的实发车以及实发吨-->
+    <update id="updateDayInfoForCancel" parameterType="DiaoyunBean">
+        update out_day_plan set actualCarNum=actualCarNum-1,
+        actualSendedTonnage=actualSendedTonnage-${tonnage} where id=#{dayId}
+    </update>
+    <update id="updateMonthInfoForCancel" parameterType="DiaoyunBean">
+        update out_month_plan set actualCarNum=actualCarNum-1,
+        actualSendedTonnage=actualSendedTonnage-${tonnage} where id=#{monthId}
     </update>
 </mapper>

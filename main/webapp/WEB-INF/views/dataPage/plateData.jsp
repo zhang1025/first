@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" id="plateNumberData">
+            <div class="row" id="platenumberData">
                 <div class="col-lg-12">
                     <!-- col-lg-12 start here -->
                     <div class="panel panel-default toggle ">
@@ -50,7 +50,7 @@
                             </h4>
                         </div>
                         <div class="panel-body">
-                            <table id="plateNumberDataTables" class="table table-striped table-bordered table-hover"
+                            <table id="platenumberDataTables" class="table table-striped table-bordered table-hover"
                                    style="font-size: 15px" cellspacing="0" width="100%">
                             </table>
                         </div>
@@ -83,7 +83,7 @@
                                style="width:30%;padding-left: 20px;padding-right: 1px">车牌名称:</label>
                         <div class="col-lg-10" style="width: 300px;padding-left: 5px">
                             <input type="text" id="name" class="form-control required" aria-required="true"
-                                   placeholder="请输入行业名称">
+                                   placeholder="请输入车牌名称">
                         </div>
                     </div>
                 </form>

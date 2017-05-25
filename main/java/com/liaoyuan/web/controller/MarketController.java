@@ -4,10 +4,7 @@ import com.liaoyuan.web.controller.base.BaseController;
 import com.liaoyuan.web.entity.*;
 import com.liaoyuan.web.service.CommonDataService;
 import com.liaoyuan.web.service.MarketService;
-import com.liaoyuan.web.utils.Constant;
-import com.liaoyuan.web.utils.DataTableUtils;
-import com.liaoyuan.web.utils.ExcelUtils;
-import com.liaoyuan.web.utils.WebCommonDataUtils;
+import com.liaoyuan.web.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -331,7 +328,10 @@ public class MarketController extends BaseController {
         columnnames = DataTableUtils.getExcelHTDeailColumnName();
         List<List<Object>> datas = DataTableUtils.getExcelHTDetailDataLists(gridData);
         String fileName = URLEncoder.encode("地付煤明细信息数据", "utf-8")+".xls";
-        ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+        Map<String,String> map = new HashMap<>();
+        map.put("title","地付煤明细信息数据");
+        map.put("date",bean.getBeginDate().substring(0,10)+" ~ "+bean.getEndDate().substring(0,10));
+        ExcelTitleUtils.exportExcel(columnnames,datas,fileName,response,map);
     }
 
     /**
@@ -382,7 +382,10 @@ public class MarketController extends BaseController {
         columnnames = DataTableUtils.getExcelReceiveDeailColumnName(map);
         List<List<Object>> datas = DataTableUtils.getExcelReceiveDetailDataLists(gridData,map);
         String fileName = URLEncoder.encode("应收账款发出汇总信息数据", "utf-8")+".xls";
-        ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+        Map<String,String> maptitle = new HashMap<>();
+        maptitle.put("title","应收账款发出汇总信息数据");
+        maptitle.put("date",bean.getBeginDate().substring(0,10)+" ~ "+bean.getEndDate().substring(0,10));
+        ExcelTitleUtils.exportExcel(columnnames,datas,fileName,response,maptitle);
     }
 
     /**
@@ -396,7 +399,7 @@ public class MarketController extends BaseController {
         bean.setEndDate(bean.getEndDate()+" 23:59:59");
         int count;
         List<PlanBean> gridData;  String fileName;
-        if(bean.getSearchType().equals("month")){
+        if("month".equals(bean.getSearchType())){
             excelName = "外运月计划信息数据";
             count = bean.getIRecordsTotal() == 0 ? marketService.countMonthPlanData(bean) : bean.getIRecordsTotal();
             bean.setIDisplayLength(count);

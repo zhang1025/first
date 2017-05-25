@@ -27,7 +27,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">客户名称</span>
                                         <select id="s_receives" class="select fancy-select form-control"
-                                                style="width: 150px">
+                                                style="width: 200px">
                                             <option value="">请选择</option>
                                             <c:forEach var="st" items="${receives}" varStatus="s">
                                                 <option value="${st.name}">${st.name}</option>
@@ -35,7 +35,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 55px">
+                                <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 100px">
                                     <div class="input-group">
                                         <span class="input-group-addon">煤种</span>
                                         <select id="s_coal" class="select fancy-select form-control"

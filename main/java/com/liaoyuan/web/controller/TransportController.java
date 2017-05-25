@@ -118,6 +118,15 @@ public class TransportController extends BaseController {
         return transportService.dealStatusDayPlan(bean);
     }
 
+
+    /**
+     * 作废调运计划
+     */
+    @RequestMapping(value = "/cancelDyPlan", method = RequestMethod.POST)
+    public Integer cancelDyPlan(DiaoyunBean bean) {
+        return transportService.cancelDyPlan(bean);
+    }
+
     /**
      * 管理销售调动页面
      */
