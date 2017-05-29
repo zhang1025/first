@@ -1,5 +1,6 @@
 package com.liaoyuan.web.utils;
 
+import com.liaoyuan.web.entity.ChengzhongBean;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
@@ -320,6 +321,50 @@ public class DataTableUtils {
             row.add(pb.getActualSendedTonnage());
             row.add(pb.getPlanCarNum()-pb.getActualCarNum());
             row.add(pb.getPlanTonnage()-pb.getActualSendedTonnage());
+            datas.add(row);
+        }
+        return datas;
+    }
+
+    // 车重信息
+    public static List<String> getExcelChezhongColumnName() {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("煤卡号");
+        columnnames.add("车种");
+        columnnames.add("车牌号");
+        columnnames.add("入矿时间");
+        columnnames.add("入矿称重人");
+        columnnames.add("入矿重量");
+        columnnames.add("出矿时间");
+        columnnames.add("出矿重量");
+        columnnames.add("出矿录入人");
+        columnnames.add("净重");
+        columnnames.add("合同号");
+        columnnames.add("客户名称");
+        columnnames.add("煤种");
+        columnnames.add("矿区");
+        return columnnames;
+    }
+
+    public static List<List<Object>> getExcelChezhongDataLists(List<ChengzhongBean> gridData) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(ChengzhongBean cz:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(cz.getCoalCard());
+            row.add(cz.getCarType());
+            row.add(cz.getCarNum());
+            row.add(cz.getIntoTime());
+            row.add(cz.getIntoCzr());
+            row.add(cz.getIntoZl());
+            row.add(cz.getOutTime());
+            row.add(cz.getOutZl());
+            row.add(cz.getOutCzr());
+            row.add(cz.getJzl());
+            row.add(cz.getCarContract());
+            row.add(cz.getReceiveName());
+            row.add(cz.getName());
+            row.add(cz.getKuangqu());
             datas.add(row);
         }
         return datas;

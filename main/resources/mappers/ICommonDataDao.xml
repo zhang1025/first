@@ -139,4 +139,15 @@
         select * from ${table} 
     </select>
 
+
+
+    <!--获取车牌信息-->
+    <select id="getChepaiInfo" resultType="DataBean">
+        select c_id as id, c_name as name  from car
+    </select>
+
+    <!--获取矿区信息 一个矿区就是一个磅房-->
+    <select id="getKuangquInfo" resultType="KuangquBean">
+        select * from kuangqu
+    </select>
 </mapper>

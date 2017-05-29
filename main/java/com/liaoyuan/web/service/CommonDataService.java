@@ -65,6 +65,10 @@ public interface CommonDataService {
 
     public List<DataBean> getListData(String model);
 
+ //查询kuangqu ---矿区数据
+ List<KuangquBean> getKuangquInfo();
+ //查询车牌
+ List<DataBean> getChepaiInfo();
 
  int addLogs(PayLogs logs);
 }

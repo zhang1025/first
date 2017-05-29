@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -422,5 +423,57 @@ public class MarketController extends BaseController {
             fileName = URLEncoder.encode("外运销售日计划信息数据", "utf-8")+".xls";
         }
         ExcelUtils.exportExcel(columnnames,datas,fileName,response);
+    }
+
+    //地付实时数据（重车轻车情况运煤情况）
+    @RequestMapping(value = "/realData", method = RequestMethod.GET)
+    public ModelAndView chengzhong(ModelMap modelMap){
+        log.info("=============重车轻车情况运煤情况============");
+        List<DataBean> coals = commonDataService.getListData(Constant.COAL);
+//        List<DataBean> platenumber = commonDataService.getListData(Constant.PLATRNUMBER);
+        List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
+        List<KuangquBean> kuangqus = commonDataService.getKuangquInfo();
+        List<DataBean> chepais = commonDataService.getChepaiInfo();
+        modelMap.put("coals",coals);
+        modelMap.put("chepais",chepais);//车牌
+        modelMap.put("kuangqus",kuangqus);//矿区 -- 磅房
+        modelMap.put("receives",receiveName);//收货单位 客户
+        modelMap.put("account",String.valueOf(httpSession.getAttribute(SessionUser.SESSION_USER)));
+        return new ModelAndView("/market/chezhong");
+    }
+    @RequestMapping(value = "/get_chezhong_table", method = RequestMethod.POST)
+    public void getChengzhongDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
+        ChengzhongBean bean = WebCommonDataUtils.getChezhongData(jsonString);
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countChengzhongData(bean) : bean.getIRecordsTotal();
+        List<ChengzhongBean> gridData = marketService.getTableChengzhongData(bean);
+        printDataTables(response, count, gridData);
+    }
+
+    /**
+     * excel数据
+     */
+    @RequestMapping(value = "/export_chezhong_excel_data", method = RequestMethod.GET)
+    public void exportChezhongDetailData(ChengzhongBean bean,HttpServletResponse response) throws Exception{
+        List<String> columnnames ;
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
+        if(StringUtils.isNotBlank(bean.getReceiveName())){
+            bean.setReceiveName(URLDecoder.decode(bean.getReceiveName(), "UTF-8"));
+        }
+        if(StringUtils.isNotBlank(bean.getName())){
+            bean.setName(URLDecoder.decode(bean.getName(), "UTF-8"));
+        }
+        if(StringUtils.isNotBlank(bean.getKuangqu())){
+            bean.setKuangqu(URLDecoder.decode(bean.getKuangqu(), "UTF-8"));
+        }
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countChengzhongData(bean) : bean.getIRecordsTotal();
+        bean.setIDisplayLength(count);
+        List<ChengzhongBean> gridData = marketService.getTableChengzhongData(bean);
+        columnnames = DataTableUtils.getExcelChezhongColumnName();
+        List<List<Object>> datas = DataTableUtils.getExcelChezhongDataLists(gridData);
+        String fileName = URLEncoder.encode("地付实时数据", "utf-8")+".xls";
+        Map<String,String> map = new HashMap<>();
+        map.put("title","地付实时数据（重车轻车情况运煤情况）");
+        map.put("date",bean.getBeginDate().substring(0,10)+" ~ "+bean.getEndDate().substring(0,10));
+        ExcelTitleUtils.exportExcel(columnnames,datas,fileName,response,map);
     }
 }

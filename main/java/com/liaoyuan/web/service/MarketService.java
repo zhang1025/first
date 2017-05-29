@@ -1,5 +1,6 @@
 package com.liaoyuan.web.service;
 
+import com.liaoyuan.web.entity.ChengzhongBean;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
@@ -52,4 +53,8 @@ public interface MarketService {
     //给合同绑定煤卡
     int bindlingCard(int id,String cardNo,String money,String numNo);
     int unBindingCard(int id);
+
+    //车重信息数据
+    int countChengzhongData(ChengzhongBean bean);
+    List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean);
 }

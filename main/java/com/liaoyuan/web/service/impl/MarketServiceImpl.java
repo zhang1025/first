@@ -2,6 +2,7 @@ package com.liaoyuan.web.service.impl;
 
 import com.liaoyuan.web.dao.FinanceDao;
 import com.liaoyuan.web.dao.IMarkerDao;
+import com.liaoyuan.web.entity.ChengzhongBean;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.DataBean;
 import com.liaoyuan.web.entity.PlanBean;
@@ -279,5 +280,15 @@ public class MarketServiceImpl implements MarketService{
 
     public int unBindingCard(int id){
         return iMarkerDao.unBindingCard(id);
+    }
+
+    @Override
+    public int countChengzhongData(ChengzhongBean bean) {
+        return iMarkerDao.countChengzhongData(bean);
+    }
+
+    @Override
+    public List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean) {
+        return iMarkerDao.getTableChengzhongData(bean);
     }
 }

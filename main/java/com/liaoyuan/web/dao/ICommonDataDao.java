@@ -1,6 +1,8 @@
 package com.liaoyuan.web.dao;
 
+import com.liaoyuan.web.entity.ChepaiBean;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.KuangquBean;
 import com.liaoyuan.web.entity.PayLogs;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -84,4 +86,11 @@ public interface ICommonDataDao {
      DataBean getInfoFromName(@Param("table") String model,@Param("name") String name);
 
      int addLogs(PayLogs logs);
+
+
+     //查询kuangqu ---矿区数据
+     List<KuangquBean> getKuangquInfo();
+
+     //查询车牌信息
+     List<DataBean> getChepaiInfo();
 }

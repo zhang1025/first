@@ -76,7 +76,31 @@ public class WebCommonDataUtils{
     }
 
     /**
-     * ContractBean
+     * ChengzhongBean
+     */
+    public static ChengzhongBean getChezhongData(String jsonString) {
+        ChengzhongBean bean = new ChengzhongBean();
+        try {
+            // 把参数 转换为Map
+            Map<String, Object> params = jsonToMap(jsonString);
+            int iDisplayLength = Integer.parseInt(params.get("iDisplayLength") + "");
+            int iDisplayStart = Integer.parseInt(params.get("iDisplayStart") + "");
+            int iRecordsTotal = Integer.parseInt(params.get("iRecordsTotal") + "");
+            BeanUtils.populate(bean, params);
+            bean.setIDisplayLength(iDisplayLength);
+            bean.setIDisplayStart(iDisplayStart);
+            bean.setIRecordsTotal(iRecordsTotal);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(bean.getEndDate())){
+                bean.setEndDate(bean.getEndDate()+" 23:59:59");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bean;
+    }
+
+    /**
+     * DepositBean
      */
     public static DepositBean getDepositBean(String jsonString) {
         DepositBean bean = new DepositBean();

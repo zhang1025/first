@@ -261,4 +261,55 @@
     <update id="unBindingCard">
         update car_contract set coalCard="",magneticCard=0 where id=#{id}
     </update>
+
+    <!--查询称重信息  重车 空车信息-->
+
+    <select id="countChengzhongData" parameterType="ChengzhongBean" resultType="java.lang.Integer">
+        select count(*) from chezhong z
+        LEFT JOIN car_contract a on z.car_contract=a.numNo
+        where  z.into_time>=#{beginDate} AND  <![CDATA[z.into_time<=#{endDate}]]>
+        <if test="receiveName!='' and receiveName!=null">
+           and a.receiveName like "%"#{receiveName}"%"
+        </if>
+        <if test="name!='' and name!=null">
+            and a.name like "%"#{name}"%"
+        </if>
+        <if test="carNum!='' and carNum!=null">
+            and  z.car_num = #{carNum}
+        </if>
+        <if test="carContract!='' and carContract!=null">
+            and  z.car_contract = #{carContract}
+        </if>
+        <if test="coalCard!='' and coalCard!=null">
+            and  z.coal_card = #{coalCard}
+        </if>
+        <if test="kuangqu!='' and kuangqu!=null">
+            and  z.kuangqu = #{kuangqu}
+        </if>
+    </select>
+
+    <select id="getTableChengzhongData" parameterType="ChengzhongBean" resultType="ChengzhongBean">
+      select z.*,a.receiveName,a.name from chezhong z
+      LEFT JOIN car_contract a on z.car_contract=a.numNo
+        where  z.into_time>=#{beginDate} AND  <![CDATA[z.into_time<=#{endDate}]]>
+        <if test="receiveName!='' and receiveName!=null">
+            and a.receiveName like "%"#{receiveName}"%"
+        </if>
+        <if test="name!='' and name!=null">
+            and a.name like "%"#{name}"%"
+        </if>
+        <if test="carNum!='' and carNum!=null">
+            and  z.car_num = #{carNum}
+        </if>
+        <if test="carContract!='' and carContract!=null">
+            and  z.car_contract = #{carContract}
+        </if>
+        <if test="coalCard!='' and coalCard!=null">
+            and  z.coal_card = #{coalCard}
+        </if>
+        <if test="kuangqu!='' and kuangqu!=null">
+            and  z.kuangqu = #{kuangqu}
+        </if>
+        order by z.into_time desc limit ${iDisplayStart},${iDisplayLength}
+    </select>
 </mapper>

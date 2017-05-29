@@ -1,5 +1,6 @@
 package com.liaoyuan.web.dao;
 
+import com.liaoyuan.web.entity.ChengzhongBean;
 import com.liaoyuan.web.entity.ContractBean;
 import com.liaoyuan.web.entity.PlanBean;
 import org.apache.ibatis.annotations.Param;
@@ -56,4 +57,8 @@ public interface IMarkerDao {
     int insertCoalCardMoney(@Param(value = "cardNo")String cardNo,
                             @Param(value = "money")String money,
                             @Param(value = "numNo")String numNo);
+
+    //车重信息数据
+    int countChengzhongData(ChengzhongBean bean);
+    List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean);
 }

@@ -1,7 +1,9 @@
 package com.liaoyuan.web.service.impl;
 
 import com.liaoyuan.web.dao.ICommonDataDao;
+import com.liaoyuan.web.entity.ChepaiBean;
 import com.liaoyuan.web.entity.DataBean;
+import com.liaoyuan.web.entity.KuangquBean;
 import com.liaoyuan.web.entity.PayLogs;
 import com.liaoyuan.web.service.CommonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +150,15 @@ public class CommonDataServiceImpl implements CommonDataService {
         return iCommonDataDao.editSettlement(bean);
     }
 
+
+    //查询kuangqu ---矿区数据
+    public List<KuangquBean> getKuangquInfo(){
+        return iCommonDataDao.getKuangquInfo();
+    }
+
+    public List<DataBean> getChepaiInfo(){
+        return iCommonDataDao.getChepaiInfo();
+    }
 
     public DataBean getSettlementForRate(DataBean bean){
        return iCommonDataDao.getSettlementForRate(bean);
