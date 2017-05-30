@@ -2,6 +2,7 @@ package com.liaoyuan.web.dao;
 
 import com.liaoyuan.web.entity.ChengzhongBean;
 import com.liaoyuan.web.entity.ContractBean;
+import com.liaoyuan.web.entity.DiaoyunBean;
 import com.liaoyuan.web.entity.PlanBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -61,4 +62,8 @@ public interface IMarkerDao {
     //车重信息数据
     int countChengzhongData(ChengzhongBean bean);
     List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean);
+
+    //查看调运信息
+    int countDiaoyunData(DiaoyunBean bean);
+    List<DiaoyunBean> getDiaoyunListData(DiaoyunBean bean);
 }

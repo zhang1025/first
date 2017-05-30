@@ -312,4 +312,34 @@
         </if>
         order by z.into_time desc limit ${iDisplayStart},${iDisplayLength}
     </select>
+
+
+    <!--查看调运信息-->
+    <select id="countDiaoyunData" parameterType="DiaoyunBean"  resultType="java.lang.Integer">
+        select count(*) from diaoyun  where  1=1
+        <if test="name!=null and name!=''">
+            and name=#{name}
+        </if>
+        <if test="coalName!=null and coalName!=''">
+            and coalName=#{coalName}
+        </if>
+        <if test="wellsName!=null and wellsName!=''">
+            and wellsName=#{wellsName}
+        </if>
+        and status=1
+    </select>
+
+    <select id="getDiaoyunListData" parameterType="DiaoyunBean" resultType="DiaoyunBean">
+        select * from diaoyun  where  1=1
+        <if test="name!=null and name!=''">
+            and name=#{name}
+        </if>
+        <if test="coalName!=null and coalName!=''">
+            and coalName=#{coalName}
+        </if>
+        <if test="wellsName!=null and wellsName!=''">
+            and wellsName=#{wellsName}
+        </if>
+        and status=1
+    </select>
 </mapper>

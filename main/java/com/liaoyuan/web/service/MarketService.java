@@ -1,9 +1,6 @@
 package com.liaoyuan.web.service;
 
-import com.liaoyuan.web.entity.ChengzhongBean;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.PlanBean;
+import com.liaoyuan.web.entity.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -57,4 +54,8 @@ public interface MarketService {
     //车重信息数据
     int countChengzhongData(ChengzhongBean bean);
     List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean);
+
+    //查看外运调运数据
+    int countDiaoyunData(DiaoyunBean bean);
+    List<DiaoyunBean> getDiaoyunListData(DiaoyunBean bean);
 }

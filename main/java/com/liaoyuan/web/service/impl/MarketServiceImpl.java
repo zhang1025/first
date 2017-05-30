@@ -2,10 +2,7 @@ package com.liaoyuan.web.service.impl;
 
 import com.liaoyuan.web.dao.FinanceDao;
 import com.liaoyuan.web.dao.IMarkerDao;
-import com.liaoyuan.web.entity.ChengzhongBean;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.PlanBean;
+import com.liaoyuan.web.entity.*;
 import com.liaoyuan.web.service.MarketService;
 import com.liaoyuan.web.utils.Constant;
 import com.liaoyuan.web.utils.CreateWordT;
@@ -291,4 +288,17 @@ public class MarketServiceImpl implements MarketService{
     public List<ChengzhongBean> getTableChengzhongData(ChengzhongBean bean) {
         return iMarkerDao.getTableChengzhongData(bean);
     }
+
+    //查看外运调运信息
+    @Override
+    public int countDiaoyunData(DiaoyunBean bean) {
+        return iMarkerDao.countDiaoyunData(bean);
+    }
+
+    @Override
+    public List<DiaoyunBean> getDiaoyunListData(DiaoyunBean bean) {
+        return iMarkerDao.getDiaoyunListData(bean);
+    }
+
+
 }

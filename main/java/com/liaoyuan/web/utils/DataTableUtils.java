@@ -1,9 +1,6 @@
 package com.liaoyuan.web.utils;
 
-import com.liaoyuan.web.entity.ChengzhongBean;
-import com.liaoyuan.web.entity.ContractBean;
-import com.liaoyuan.web.entity.DataBean;
-import com.liaoyuan.web.entity.PlanBean;
+import com.liaoyuan.web.entity.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -365,6 +362,38 @@ public class DataTableUtils {
             row.add(cz.getReceiveName());
             row.add(cz.getName());
             row.add(cz.getKuangqu());
+            datas.add(row);
+        }
+        return datas;
+    }
+
+    // 外运调运信息
+    public static List<String> getExcelDiaoyunColumnName() {
+        List<String> columnnames = new ArrayList<>();
+        columnnames.add("车皮号");
+        columnnames.add("实发吨");
+        columnnames.add("单价");
+        columnnames.add("井别");
+        columnnames.add("煤种");
+        columnnames.add("到站");
+        columnnames.add("收货单位");
+        columnnames.add("日期");
+        return columnnames;
+    }
+
+    public static List<List<Object>> getExcelDiaoyunDataLists(List<DiaoyunBean> gridData) {
+        List<List<Object>> datas=new ArrayList<>();
+
+        for(DiaoyunBean dy:gridData) {
+            List<Object> row = new ArrayList<>();
+            row.add(dy.getWagonNo());
+            row.add(dy.getTonnage());
+            row.add(dy.getUnitPrice());
+            row.add(dy.getCoalName());
+            row.add(dy.getWellsName());
+            row.add(dy.getSiteName());
+            row.add(dy.getName());
+            row.add(dy.getCreatetime());
             datas.add(row);
         }
         return datas;

@@ -430,11 +430,12 @@ public class MarketController extends BaseController {
     public ModelAndView chengzhong(ModelMap modelMap){
         log.info("=============重车轻车情况运煤情况============");
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
-//        List<DataBean> platenumber = commonDataService.getListData(Constant.PLATRNUMBER);
+        List<DataBean> wells = commonDataService.getListData(Constant.WELLS);
         List<DataBean> receiveName = commonDataService.getListData(Constant.RECEIVE);
         List<KuangquBean> kuangqus = commonDataService.getKuangquInfo();
         List<DataBean> chepais = commonDataService.getChepaiInfo();
         modelMap.put("coals",coals);
+        modelMap.put("wells",wells);//井别
         modelMap.put("chepais",chepais);//车牌
         modelMap.put("kuangqus",kuangqus);//矿区 -- 磅房
         modelMap.put("receives",receiveName);//收货单位 客户
@@ -473,6 +474,45 @@ public class MarketController extends BaseController {
         String fileName = URLEncoder.encode("地付实时数据", "utf-8")+".xls";
         Map<String,String> map = new HashMap<>();
         map.put("title","地付实时数据（重车轻车情况运煤情况）");
+        map.put("date",bean.getBeginDate().substring(0,10)+" ~ "+bean.getEndDate().substring(0,10));
+        ExcelTitleUtils.exportExcel(columnnames,datas,fileName,response,map);
+    }
+
+    /**
+     * 调运信息
+     */
+    @RequestMapping(value = "/get_diaoyun_table", method = RequestMethod.POST)
+    public void getDiaoyunDataTable(HttpServletResponse response, @RequestParam("dt_json") String jsonString) throws Exception {
+        DiaoyunBean bean = WebCommonDataUtils.getDiaoyunBean(jsonString);
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countDiaoyunData(bean) : bean.getIRecordsTotal();
+        List<DiaoyunBean> gridData = marketService.getDiaoyunListData(bean);
+        printDataTables(response, count, gridData);
+    }
+
+    /**
+     * excel数据
+     */
+    @RequestMapping(value = "/export_diaoyun_excel_data", method = RequestMethod.GET)
+    public void exportDiaoyunDetailData(DiaoyunBean bean,HttpServletResponse response) throws Exception{
+        List<String> columnnames ;
+        bean.setEndDate(bean.getEndDate()+" 23:59:59");
+        if(StringUtils.isNotBlank(bean.getName())){
+            bean.setName(URLDecoder.decode(bean.getName(), "UTF-8"));
+        }
+        if(StringUtils.isNotBlank(bean.getCoalName())){
+            bean.setCoalName(URLDecoder.decode(bean.getCoalName(), "UTF-8"));
+        }
+        if(StringUtils.isNotBlank(bean.getWellsName())){
+            bean.setWellsName(URLDecoder.decode(bean.getWellsName(), "UTF-8"));
+        }
+        int count = bean.getIRecordsTotal() == 0 ? marketService.countDiaoyunData(bean) : bean.getIRecordsTotal();
+        bean.setIDisplayLength(count);
+        List<DiaoyunBean> gridData = marketService.getDiaoyunListData(bean);
+        columnnames = DataTableUtils.getExcelDiaoyunColumnName();
+        List<List<Object>> datas = DataTableUtils.getExcelDiaoyunDataLists(gridData);
+        String fileName = URLEncoder.encode("外运实时数据", "utf-8")+".xls";
+        Map<String,String> map = new HashMap<>();
+        map.put("title","外运实时数据（火车发货基本数据）");
         map.put("date",bean.getBeginDate().substring(0,10)+" ~ "+bean.getEndDate().substring(0,10));
         ExcelTitleUtils.exportExcel(columnnames,datas,fileName,response,map);
     }
