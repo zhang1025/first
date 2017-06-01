@@ -316,7 +316,8 @@
 
     <!--查看调运信息-->
     <select id="countDiaoyunData" parameterType="DiaoyunBean"  resultType="java.lang.Integer">
-        select count(*) from diaoyun  where  1=1
+        select count(*) from diaoyun  where
+        createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
         <if test="name!=null and name!=''">
             and name=#{name}
         </if>
@@ -330,7 +331,8 @@
     </select>
 
     <select id="getDiaoyunListData" parameterType="DiaoyunBean" resultType="DiaoyunBean">
-        select * from diaoyun  where  1=1
+        select * from diaoyun  where
+        createtime>=#{beginDate} AND  <![CDATA[createtime<=#{endDate}]]>
         <if test="name!=null and name!=''">
             and name=#{name}
         </if>
@@ -340,6 +342,6 @@
         <if test="wellsName!=null and wellsName!=''">
             and wellsName=#{wellsName}
         </if>
-        and status=1
+        and status=1 limit ${iDisplayStart},${iDisplayLength}
     </select>
 </mapper>
