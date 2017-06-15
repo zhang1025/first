@@ -1,7 +1,11 @@
 
 <%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../include/taglib.jsp" %>
-
+<style type="text/css">
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 <!-- .page-content -->
 <div class="page-content sidebar-page clearfix" style="top:0;">
     <!-- .page-content-wrapper -->
@@ -146,6 +150,19 @@
                 <form id="validate" class="form-horizontal group-border stripped" role="form">
                     <table style="width: 100%">
                         <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="planMonth" class="col-lg-4 control-label"
+                                           style="padding-right: 1px">计划月份:</label>
+                                    <div class="col-lg-10" style="width: 150px;padding-left: 5px">
+                                        <input type="text" id="planMonth" class="form-control form_datetime"
+                                               aria-required="true"
+                                               style="cursor: pointer;" readonly="readonly">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
                                 <div class="form-group">
                                     <label for="name" class="col-lg-4 control-label"
@@ -166,7 +183,9 @@
                                     <label for="planCarNum" class="col-lg-4 control-label"
                                            style="padding-right: 1px">计划车数:</label>
                                     <div class="col-lg-10" style="width: 150px;padding-left: 5px">
-                                        <input type="text" id="planCarNum" class="form-control required" aria-required="true"
+                                        <input type="text" id="planCarNum" class="form-control required"
+                                               onkeyup="inputTonnage()"
+                                               aria-required="true"
                                                name="number"
                                                placeholder="计划车数">
                                     </div>

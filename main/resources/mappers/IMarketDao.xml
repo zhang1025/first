@@ -126,7 +126,7 @@
 
     </select>
     <select id="getTableMonthPlanData" parameterType="PlanBean" resultType="PlanBean">
-        select id,rid,settlement,name,planCarNum,actualCarNum,planTonnage,actualSendedTonnage,
+        select id,planMonth,rid,settlement,name,planCarNum,actualCarNum,planTonnage,actualSendedTonnage,
         planCarNum-actualCarNum as unsendedCarNum,
         planTonnage-actualSendedTonnage as unsendedTonnage,
         actualUnitPrice,wellsName,coalName,siteName,privateLine,method,usePerson,inputPerson,
@@ -137,17 +137,17 @@
     </select>
     <insert id="addMonthPlan" parameterType="PlanBean">
         insert into out_month_plan (rid,name,planCarNum,actualCarNum,inputPerson,
-        usePerson,planTonnage,actualSendedTonnage,actualUnitPrice,
+        usePerson,planTonnage,actualSendedTonnage,actualUnitPrice,planMonth,
         wellsName,coalName,siteName,privateLine,settlement,method,payId)
         values (#{rid},#{name},#{planCarNum},#{actualCarNum},#{inputPerson},#{usePerson},
-        #{planTonnage},#{actualSendedTonnage},#{actualUnitPrice},
+        #{planTonnage},#{actualSendedTonnage},#{actualUnitPrice},#{planMonth},
         #{wellsName},#{coalName},#{siteName},#{privateLine},#{settlement},#{method},#{payId});
     </insert>
     <update id="editMonthPlan" parameterType="PlanBean">
         update out_month_plan set rid=#{rid},name=#{name},planCarNum=#{planCarNum},
         actualCarNum=#{actualCarNum},usePerson=#{usePerson},planTonnage=#{planTonnage},
         usePerson=#{usePerson},actualSendedTonnage=#{actualSendedTonnage},
-        actualUnitPrice=#{actualUnitPrice},wellsName=#{wellsName},
+        actualUnitPrice=#{actualUnitPrice},wellsName=#{wellsName},planMonth=#{planMonth},
         coalName=#{coalName},siteName=#{siteName},privateLine=#{privateLine},settlement=#{settlement},
         method=#{method},payId=#{payId} where id=#{id}
     </update>

@@ -22,6 +22,8 @@ public class PlanBean implements Serializable{
         }
     }
 
+    //所属计划月数
+    private String planMonth;
 
 
     private int rid; //收货单位id

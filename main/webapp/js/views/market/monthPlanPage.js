@@ -7,6 +7,9 @@ $(document).ready(function () {
     $("body").ledo();
     //初始化时间
     initDateRangePicker();
+
+    //只选择年月
+    initDateSinglePicker("planMonth");
     $(".select").select2();
     initButtonClick();
     initFormValid();
@@ -36,6 +39,7 @@ function dealTableTitle() {
             return "<input type='checkbox' name='check' value='" + id + "'/>";
         }, "sWidth": "5%"
         },
+        {"sTitle": "计划月份", "mData": "planMonth", "sWidth": "5%"},
         {"sTitle": "计划号", "mData": "rid", "sWidth": "5%"},
         {"sTitle": "收货单位", "mData": "name", "sWidth": "10%"},
         {"sTitle": "计划车数", "mData": "planCarNum", "sWidth": "5%"},
@@ -78,6 +82,7 @@ function operateButton(cellvalue, options, rowObject) {
     var type = 2;
     var id = rowObject['id'];
     var status = rowObject['status'];
+    var planMonth = rowObject['planMonth'];
     var rid = rowObject['rid'];
     var name = rowObject['name'];
     var settlement = rowObject['settlement'];
@@ -102,7 +107,7 @@ function operateButton(cellvalue, options, rowObject) {
         + name + "','" + status + "','" + settlement + "','" + planCarNum + "','"
         + actualCarNum + "','" + inputPerson + "','" + usePerson + "','"
         + planTonnage + "','" + ast + "','" + payId + "','"
-        + actualUnitPrice + "','" + wellsName + "','"
+        + actualUnitPrice + "','" + wellsName + "','"+ planMonth + "','"
         + coalName + "','" + siteName + "','" + privateLine + "','" + method + "','" + type + "','"
         + createtime
         + "')\">编辑</button>";
@@ -119,7 +124,7 @@ function operateButton(cellvalue, options, rowObject) {
 }
 //编辑
 function editMonthPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, up, pt, ast,
-                       payId, aup, wellsName, coalName, siteName, pline, method, type, time) {
+                       payId, aup, wellsName,planMonth, coalName, siteName, pline, method, type, time) {
     if (type == 4) {
         $("#myModalLabel2").html("编辑日计划信息");
     } else {
@@ -132,6 +137,7 @@ function editMonthPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, 
     $("#settlement").val(st).select2();
     $("#name").val(rid).select2();
     $("#createtime").val(time);
+    $("#planMonth").val(planMonth);
     $("#actualSendedTonnage").val(ast);
     $("#actualCarNum").val(actualCarNum);
     $("#planTonnage").val(pt);
@@ -169,6 +175,10 @@ function newDayPlan(id, rid, name, status, st, planCarNum, actualCarNum, ip, up,
     $("#method").val(method).select2();
     $("#payId").val(payId);
 }
+//根据计划车数自动计算计划吨数= 车数*70
+function inputTonnage(){
+    $("#planTonnage").val(parseInt($("#planCarNum").val())*70);
+}
 
 function initButtonClick() {
     $("#searBtn").on("click", function () {
@@ -204,6 +214,7 @@ function initButtonClick() {
         }
         $.post(url, {
                 planCarNum: $.trim($("#planCarNum").val()), settlement: $("#settlement").val(),
+                planMonth: $("#planMonth").val(),
                 rid: $("#name").val(), name: $("#name option:selected").text(),
                 actualSendedTonnage: $("#actualSendedTonnage").val(), actualCarNum: $("#actualCarNum").val(),
                 planTonnage: $("#planTonnage").val(), wellsName: $("#wellsName").val(),

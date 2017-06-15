@@ -2385,10 +2385,8 @@ function initDateRangePicker(option){
         alwaysShowCalendars:true,
         ranges:DATE_RANGE_RANGES,
         linkedCalendars:false,
-        showWeekNumbers:true
-        // autoApply:true
-        // singleDatePicker:true,
-        // showDropdowns:true
+        showWeekNumbers:true,
+        showDropdowns:true
     };
     var tmp = DATE_RANGE_OPTIONS;
     if(option){
@@ -2404,7 +2402,18 @@ function initDateRangePicker(option){
 //----  date range picker end ----//
 
 //----  date range single start ----//
-
+//只选择年月的
+function initDateSingleYMPicker(id,option) {
+    $('#datetimepicker').datetimepicker({
+        format: 'yyyymm',
+        weekStart: 1,
+        autoclose: true,
+        startView: 3,
+        minView: 3,
+        forceParse: false,
+        language: 'zh-CN'
+    });
+}
 /**
  * 单日期插件
  * @param option
@@ -2413,7 +2422,10 @@ function initDateSinglePicker(id,option) {
     var local = {
         "showWeekNumbers":true,
         "inline":true,
-        "format": 'YYYY-MM-DD',
+        "format": 'YYYY-MM',
+        "startView": 3,//只选择年月
+        "minView": 3,
+        "forceParse": false,
         "weekLabel": "周",
         "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],
         "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
