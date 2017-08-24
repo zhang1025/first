@@ -42,6 +42,8 @@ public class DataTableUtils {
         columnnames.add("结算单位");
         columnnames.add("资金方式");
         columnnames.add("税金");
+        columnnames.add("已付发票");
+        columnnames.add("未付发票");
 
         return columnnames;
     }
@@ -111,6 +113,8 @@ public class DataTableUtils {
             row.add(reportData.getSettlement());
             row.add(reportData.getFund());
             row.add(reportData.getTaxation());
+            row.add(reportData.getPaidInvoice());
+            row.add(reportData.getUnPaidInvoice());
             datas.add(row);
         }
         return datas;
@@ -135,6 +139,8 @@ public class DataTableUtils {
         columnnames.add("经办人");
         columnnames.add("录入人");
         columnnames.add("时间");
+        columnnames.add("已付发票");
+        columnnames.add("未付发票");
 //        columnnames.add("合同状态");
         return columnnames;
     }
@@ -172,16 +178,18 @@ public class DataTableUtils {
             row.add(reportData.getUsePerson());
             row.add(reportData.getInputPerson());
             row.add(reportData.getCreatetime());
+            row.add(reportData.getPaidInvoice());
+            row.add(reportData.getUnPaidInvoice());
             datas.add(row);
         }
         return datas;
     }
 
 
-    public static List<String> getExcelReceiveDeailColumnName(Map<String,Integer> map) {
+    public static List<String> getExcelReceiveDeailColumnName(Map<String,Double> map) {
         List<String> columnnames = new ArrayList<>();
         columnnames.add("结算单位");
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
             columnnames.add(entry.getKey());
         }
         columnnames.add("数量");
@@ -196,15 +204,20 @@ public class DataTableUtils {
         return columnnames;
     }
 
-    public static List<List<Object>> getExcelReceiveDetailDataLists(List<ContractBean> gridData,Map<String,Integer> map) {
+    public static List<List<Object>> getExcelReceiveDetailDataLists(List<ContractBean> gridData,Map<String,Double> map) {
         List<List<Object>> datas=new ArrayList<>();
-
+        Map<String,Double> integerMap = map;
         for(ContractBean reportData:gridData) {
             List<Object> row = new ArrayList<>();
             row.add(reportData.getSettlement());
-            //设置对应的品种对应的数据
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                row.add(entry.getValue());
+            //设置对应的品种对应的数据  最后一行加的是总计
+            for (Map.Entry<String, Double> entry : map.entrySet()) {
+                if(StringUtils.isNotBlank(reportData.getName()) && reportData.getName().equals(entry.getKey())){
+                    row.add(reportData.getOrderCount());
+                    integerMap.put(entry.getKey(),integerMap.get(entry.getKey())+reportData.getOrderCount());
+                }else{
+                    row.add(integerMap.get(entry.getKey()));
+                }
             }
             row.add(reportData.getOrderCount());
             row.add(reportData.getUnitPrice());

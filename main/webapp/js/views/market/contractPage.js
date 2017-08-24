@@ -394,6 +394,7 @@ function printInfo(id) {
     }
     //填充table 值信息
     $.post(path + "getInfoFromId", {id: id}, function (data) {
+        $("#htNo").html(data.numNo);
         $("#time").html(data.createtime); $("#stName").html(data.receiveName);
         $("#gmNum").html(data.orderCount); $("#dd").html(data.wells);
         $("#pz").html(data.name); $("#dj").html(data.unitPrice);

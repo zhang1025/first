@@ -372,12 +372,12 @@ public class MarketController extends BaseController {
             newCb.setAllMoney(heji+"");
             gridData.add(newCb);
         }
-        Map<String,Integer> map = new HashMap<>();
+        Map<String,Double> map = new HashMap<>();
         //品种
         List<DataBean> coals = commonDataService.getListData(Constant.COAL);
         if(null != coals && coals.size()>0){
             for (DataBean dataBean : coals) {
-                map.put(dataBean.getName(),0);
+                map.put(dataBean.getName(),0.0);
             }
         }
         columnnames = DataTableUtils.getExcelReceiveDeailColumnName(map);

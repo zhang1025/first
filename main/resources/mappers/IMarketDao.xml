@@ -35,7 +35,7 @@
         orderCount*unitPrice as prepaidAmount,
         sendCount,orderCount-sendCount as leftCount,sendCount*unitPrice as sendPrice,
         (orderCount*unitPrice-sendCount*unitPrice) as leftPrice,inputPerson,usePerson,contractType,forkliftFee,
-        orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo from car_contract
+        orderTime,createtime,status,billName,address,billNo,tel,bankName,bankNo,paidInvoice,unPaidInvoice from car_contract
         where 1=1
         <include refid="search"/>
         order by name desc, createtime desc limit ${iDisplayStart},${iDisplayLength}

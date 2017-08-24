@@ -186,9 +186,9 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">购煤单位</td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="8"><span id="stName">购煤单位111111</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="8"><span id="stName"></span></td>
                                     <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">合同号</td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;"><span id="htNo">20170610</span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;"><span id="htNo"></span></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;">购煤数量</td>
@@ -200,13 +200,13 @@
                                     <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;">煤卡费</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="gmNum">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dd">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="pz">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dj">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="all">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="chanche">779.21</span></td>
-                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;" colspan="2"><span id="mk">779.21</span></td>
+                                    <td colspan="2" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="gmNum"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dd"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="pz"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"><span id="dj"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="all"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;" colspan="2"><span id="chanche"></span></td>
+                                    <td style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;" colspan="2"><span id="mk"></span></td>
                                 </tr>
                                 <tr>
                                     <td colspan="9" style="text-align: center;border: 1px solid #000000;border-bottom:1px solid #ffffff;border-right:1px solid #ffffff;"></td>

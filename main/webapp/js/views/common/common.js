@@ -2433,7 +2433,7 @@ function initDateSinglePicker(id,option) {
     };
     var tmp = {
         locale:local,
-        maxDate:moment(serverDate).subtract(1, 'days'),
+        // maxDate:moment(serverDate).subtract(1, 'days'),
         startDate:moment(serverDate).subtract(1, 'days'),
         endDate:moment(serverDate).subtract(1, 'days'),
         singleDatePicker:true,
