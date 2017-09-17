@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2017-08-24 23:26:00
+Date: 2017-09-17 14:27:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -87,7 +87,7 @@ CREATE TABLE `car_contract` (
   `paidInvoice` varchar(100) DEFAULT '0' COMMENT '已付发票',
   `unPaidInvoice` varchar(100) DEFAULT '0' COMMENT '未付发票',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of car_contract
@@ -104,6 +104,8 @@ INSERT INTO `car_contract` VALUES ('12', '20170508', '222222', '吉林亚泰水�
 INSERT INTO `car_contract` VALUES ('15', '20170507', null, '白山市大业物贸有限公司', '三区', '低质煤', '100', '20', '0', 'admin', '发的啥地方', null, null, null, '0', '2', '0', '0', '2017-05-14', '2017-05-19 00:54:13', '5', '范德萨范德萨发的说法', '耳朵是谁发斯蒂芬', '313213212', '413211212', '吨数发到付', '132131312312', '0', '0');
 INSERT INTO `car_contract` VALUES ('16', '20170505', '1290792', '中国石油天然气股份有限', '三区', '低质煤', '120', '20', '0', 'admin', '范德萨', null, null, null, '0', '2', '0', '1', '2017-05-14', '2017-05-19 00:55:18', '5', '发的撒个发达范德萨', '的份上', '3141231', '2131212121', '范德萨发的', '12141312121212', '0', '0');
 INSERT INTO `car_contract` VALUES ('17', '20170824', null, '吉林亚泰水泥有限公司', '六区', '低质煤', '12', '100', '0', 'admin', '范德萨', 'admin', '吉林亚泰集团物资贸易有限公司', '现金', '204', '1', '1', '0', '2017-08-24', '2017-08-24 21:28:56', '0', '给俄方的所得税范德萨', '天2范德萨范德萨范德萨', '2134132', '15023321222', '招商银行', '6212898998237085', '120', '100');
+INSERT INTO `car_contract` VALUES ('20', '20170911', null, '吉林亚泰水泥有限公司', '六区', '低质煤', '100', '60', '10', 'admin', '发仨人', null, null, null, '0', '1', '1', '0', '2017-09-16', '2017-09-17 14:06:15', '7', '特发的说法方式豆腐范德萨', '和国际化看个后价格跟', 'DSF4324132', '15854424122', '中国银行', '6122868763456543', '0', '0');
+INSERT INTO `car_contract` VALUES ('21', '20170911', null, '吉林亚泰水泥有限公司', '六区', '低质煤', '90', '70', '10', 'admin', '发仨人', 'admin', '吉林亚泰集团物资贸易有限公司', '现金', '1071', '1', '1', '0', '2017-09-16', '2017-09-17 14:11:52', '5', '特发的说法方式豆腐范德萨', '和国际化看个后价格跟', 'DSF4324132', '15854424122', '中国银行', '6122868763456543', '5000', '1000');
 
 -- ----------------------------
 -- Table structure for `car_type`
@@ -485,11 +487,11 @@ CREATE TABLE `dm_site` (
 -- ----------------------------
 -- Records of dm_site
 -- ----------------------------
-INSERT INTO `dm_site` VALUES ('1', '沈阳站', 'sy');
-INSERT INTO `dm_site` VALUES ('2', '鞍山', 'ass');
-INSERT INTO `dm_site` VALUES ('3', '东辽阳', 'ly');
-INSERT INTO `dm_site` VALUES ('4', '烟筒山', 'yt');
-INSERT INTO `dm_site` VALUES ('5', '辽阳站', 'ly');
+INSERT INTO `dm_site` VALUES ('1', '辽宁省沈阳站', 'sy');
+INSERT INTO `dm_site` VALUES ('2', '辽宁省鞍山', 'ass');
+INSERT INTO `dm_site` VALUES ('3', '辽宁省东辽阳', 'ly');
+INSERT INTO `dm_site` VALUES ('4', '辽宁省烟筒山', 'yt');
+INSERT INTO `dm_site` VALUES ('5', '吉林省辽阳站', 'ly');
 
 -- ----------------------------
 -- Table structure for `dm_wells`
@@ -672,7 +674,7 @@ CREATE TABLE `pay_logs` (
   `description` varchar(300) DEFAULT '',
   `createtime` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pay_logs
@@ -703,6 +705,10 @@ INSERT INTO `pay_logs` VALUES ('23', 'admin', '', '1000', '追加--客户交款1
 INSERT INTO `pay_logs` VALUES ('24', 'admin', '财务部门', '计算金额输入', '结算了id=4,2 的调运信息', '2017-05-20 23:46:25');
 INSERT INTO `pay_logs` VALUES ('25', 'admin', '财务部门', '反结按钮--取消已经结算', '取消结算id=4 的调运信息', '2017-05-20 23:46:33');
 INSERT INTO `pay_logs` VALUES ('26', 'admin', '财务部门', '编辑合同信息', '结算单位=吉林亚泰集团物资贸易有限公司,已付合同款=120,未付合同款=100', '2017-08-24 21:54:29');
+INSERT INTO `pay_logs` VALUES ('27', 'admin', '销售部门', '调整价格', '', '2017-09-17 14:01:45');
+INSERT INTO `pay_logs` VALUES ('28', 'admin', '销售部门', '调整价格', '', '2017-09-17 14:06:15');
+INSERT INTO `pay_logs` VALUES ('29', 'admin', '销售部门', '调整价格', '', '2017-09-17 14:11:52');
+INSERT INTO `pay_logs` VALUES ('30', 'admin', '财务部门', '编辑合同信息', '结算单位=吉林亚泰集团物资贸易有限公司,已付合同款=5000,未付合同款=1000', '2017-09-17 14:16:16');
 
 -- ----------------------------
 -- Table structure for `t_permission`
