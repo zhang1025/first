@@ -95,8 +95,9 @@
     <update id="lockInfo">
         update car_contract set status=2 where id=#{id}
     </update>
+    <!--解锁之后直接审核通过-->
     <update id="unlockInfo">
-        update car_contract set status=1 where id=#{id}
+        update car_contract set status=5 where id=#{id}
     </update>
 
     <!--财务审核-->

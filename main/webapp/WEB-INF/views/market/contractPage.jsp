@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                             <table id="contractDataTables" class="table table-striped table-bordered table-hover"
-                                   style="font-size: 10px" cellspacing="0" width="100%">
+                                   style="font-size: 13px" cellspacing="0" width="100%">
                             </table>
                         </div>
                     </div>

@@ -123,8 +123,8 @@ public class MarketServiceImpl implements MarketService{
             return -1;
         }
         int status = Integer.parseInt(bean.getStatus());
-        if(status!=3 && status!=2 && status!=5){
-            return -2;//3 正在发运  5审核通过 2解锁
+        if(status!=3 && status!=1 && status!=5){
+            return -2;//3 正在发运  5审核通过 1解锁
         }
         //更新合同状态无效
         iMarkerDao.updateStatusForAdjust(id);

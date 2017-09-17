@@ -146,16 +146,20 @@ function operateButton(cellvalue, options, rowObject) {
     var settlement = rowObject['settlement'];
     var fund = rowObject['fund'];
     var taxation = rowObject['taxation'];
+    var status = rowObject['status'];
     var paidInvoice = rowObject['paidInvoice'];
     var unPaidInvoice = rowObject['unPaidInvoice'];
     var orderCount = rowObject['orderCount'];
     var unitPrice = rowObject['unitPrice'];
-
-    return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
-        + id + "','"+ paidInvoice + "','"+ unPaidInvoice + "','"
-        + settlement + "','" + fund + "','"+ orderCount + "','"+ unitPrice + "','"
-        + taxation
-        + "')\">编辑</button>";
+    if(status == 7){ //调价前合同，调价之后已经生成了一个新合同
+        return "<span class='tip' title='调价前合同不可编辑'><button type='button' disabled='disabled' class='btn btn-primary btn-small'>编辑</button></span> ";
+    }else {
+        return "<button type='button' class='btn btn-primary btn-small' data-toggle='modal' data-target='#myModal' id='editorServer' onclick=\"editSettlement('"
+            + id + "','" + paidInvoice + "','" + unPaidInvoice + "','"
+            + settlement + "','" + fund + "','" + orderCount + "','" + unitPrice + "','"
+            + taxation
+            + "')\">编辑</button>";
+    }
 }
 //编辑
 function editSettlement(id,pi,unpi, settlement, fund,orderCount,unitPrice, taxation) {

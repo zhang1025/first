@@ -93,7 +93,7 @@
                             <%--<div style="padding: 5px;float: left">--%>
                             <%--</div>--%>
                             <table id="depositDataTables" class="table table-striped table-bordered table-hover"
-                                   style="font-size: 10px" cellspacing="0" width="100%">
+                                   style="font-size: 12px" cellspacing="0" width="100%">
                             </table>
                         </div>
                     </div>
