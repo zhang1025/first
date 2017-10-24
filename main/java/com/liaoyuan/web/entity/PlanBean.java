@@ -103,7 +103,7 @@ public class PlanBean implements Serializable{
         if(StringUtils.isBlank(payId)){
             this.payId = 0;
         }else{
-            this.payId =  Integer.parseInt(payId);
+            this.payId =  Integer.parseInt(payId.trim());
         }
     }
 
